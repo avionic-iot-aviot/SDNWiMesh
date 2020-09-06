@@ -15,7 +15,7 @@ def Inizio():
         os.system('uci commit network')
         os.system('/etc/init.d/network restart')
         sys.stdout.flush()
-        time.sleep(20)
+        time.sleep(40)
         print("Tutto ok")
     if ( socket.gethostname() == "Omega-1D06"):
         temp = config['Omega-1D06']['IpStation']
@@ -23,6 +23,6 @@ def Inizio():
         os.system('uci commit network')
         os.system('/etc/init.d/network restart')
         sys.stdout.flush()
-        time.sleep(20)
+        time.sleep(40)
         print("Tutto ok")
 
