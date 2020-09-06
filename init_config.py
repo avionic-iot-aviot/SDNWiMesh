@@ -1,6 +1,7 @@
 import subprocess
-subprocess.call(["ls", "-l", "/etc/resolv.conf"])
 
 
 def Inizio():
-    print("ciao")
+    if ( socket.gethostname() == "Omega-1D63"):
+        subprocess.call(["pwd"])
+
