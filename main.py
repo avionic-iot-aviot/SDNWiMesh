@@ -6,6 +6,9 @@ from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
 
+import Django
+django.VERSION
+
 
 p1 = BeaconPacket("1","10.10.0.1","10.10.0.0","100","10.10.0.1")
 print(p1.printFullPacket())
