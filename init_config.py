@@ -7,5 +7,5 @@ config.read('config.ini')
 
 def Inizio():
     if ( socket.gethostname() == "Omega-1D63"):
-        subprocess.call(["pwd"])
+        subprocess.call([f"echo {"CIao"}"])
 
