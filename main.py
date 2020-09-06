@@ -1,5 +1,6 @@
 from Packets import BeaconPacket
 from Packets import Packets
+import init_config
 import socket
 import ifaddr
 from configparser import ConfigParser
@@ -9,10 +10,11 @@ config.read('config.ini')
 
 print("\n\n\t\tSTART SDNWISE\n\n")
 
+init_config.Inizio()
+
 hostname = socket.gethostname()
 
-if (hostname == config["Omega-1D63"]):
-    print("YESS")
+
 
 # p1 = BeaconPacket("1","10.10.0.1","10.10.0.0","100","10.10.0.1")
 # print(p1.printFullPacket())
@@ -25,8 +27,6 @@ if (hostname == config["Omega-1D63"]):
 
 # print(p2.printFullPacket())
 # print(p2.printLitePacket())
-
-
 
 
 
