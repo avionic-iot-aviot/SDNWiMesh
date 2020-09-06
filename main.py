@@ -7,6 +7,8 @@ config = ConfigParser()
 config.read('config.ini')
 
 
+IpStation = ""
+IpClient = ""
 
 p1 = BeaconPacket("1","10.10.0.1","10.10.0.0","100","10.10.0.1")
 print(p1.printFullPacket())
@@ -23,15 +25,16 @@ print(p2.printLitePacket())
 
 hostname = socket.gethostname()
 ip_address = socket.gethostbyname(hostname)
-
-
 print(f"Hostname: {hostname}")
 print(f"IP Address: {ip_address}")
+
 
 adapters = ifaddr.get_adapters()
 
 for adapter in adapters:
     if (adapter.nice_name == "br-wlan"):
-        print(adapter.ips[0].ip)
+        IpStation = adapter.ips[0].ip
     if (adapter.nice_name == "apcli0"):
-        print(adapter.ips[0].ip)
+        IpClient = print(adapter.ips[0].ip)
+
+print("Client: " + IpClient, "Station: " + IpStation)
