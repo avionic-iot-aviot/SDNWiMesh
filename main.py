@@ -1,6 +1,7 @@
 from Packets import BeaconPacket
 from Packets import Packets
 import socket
+import netifaces
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
@@ -18,9 +19,6 @@ p2 = Packets.getPacketFromBytes(test)
 print(p2.printFullPacket())
 print(p2.printLitePacket())
 
-
-
-print(socket)
 
 hostname = socket.gethostname()
 ip_address = socket.gethostbyname(hostname)
