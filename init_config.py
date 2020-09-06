@@ -6,7 +6,7 @@ config.read('config.ini')
 
 
 def Inizio():
-    test = "Ciao"
     if ( socket.gethostname() == "Omega-1D63"):
-        subprocess.call(["echo ciao" , "pwd"])
+        subprocess.call([f"uci set network.wlan.ipaddr={config['Omega-1D63']['IpStation']}" , "uci commit network", "/etc/init.d/network restart"])
+        print("Tutto ok")
 
