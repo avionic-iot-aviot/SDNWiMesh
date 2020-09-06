@@ -15,10 +15,14 @@ def Inizio():
         os.system('uci commit network')
         os.system('/etc/init.d/network restart')
         sys.stdout.flush()
-        time.sleep(5)
+        time.sleep(10)
         print("Tutto ok")
     if ( socket.gethostname() == "Omega-1D06"):
-        subprocess.call(["uci set network.wlan.ipaddr=192.168.1.1" , "uci commit network", "/etc/init.d/network restart"])
+        temp = config['Omega-1D06']['IpStation']
+        os.system(f'uci set network.wlan.ipaddr={temp}')
+        os.system('uci commit network')
+        os.system('/etc/init.d/network restart')
         sys.stdout.flush()
+        time.sleep(10)
         print("Tutto ok")
 

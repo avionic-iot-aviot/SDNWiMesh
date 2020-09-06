@@ -12,6 +12,7 @@ print("\n\n\t\tSTART SDNWISE\n\n")
 
 init_config.Inizio()
 
+print("\n\tIndirizzi Ip Asseganti\n")
 hostname = socket.gethostname()
 
 
