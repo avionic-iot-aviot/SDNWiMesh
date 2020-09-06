@@ -1,11 +1,10 @@
 from Packets import BeaconPacket
 from Packets import Packets
 import socket
-import netifaces
+import ifaddr
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
-
 
 
 
@@ -25,7 +24,13 @@ print(p2.printLitePacket())
 hostname = socket.gethostname()
 ip_address = socket.gethostbyname(hostname)
 
+
 print(f"Hostname: {hostname}")
 print(f"IP Address: {ip_address}")
 
-netifaces.interfaces()
+adapters = ifaddr.get_adapters()
+
+for adapter in adapters:
+    print("IPs of network adapter " + adapter.nice_name)
+    for ip in adapter.ips:
+        print("   %s/%s" % (ip.ip, ip.network_prefix))
