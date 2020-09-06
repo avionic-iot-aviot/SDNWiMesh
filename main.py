@@ -35,6 +35,6 @@ for adapter in adapters:
     if (adapter.nice_name == "br-wlan"):
         IpStation = adapter.ips[0].ip
     if (adapter.nice_name == "apcli0"):
-        IpClient = print(adapter.ips[0].ip)
+        IpClient = adapter.ips[0].ip
 
 print("Client: " + IpClient + "\tStation: " + IpStation)
