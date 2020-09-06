@@ -1,13 +1,12 @@
 from Packets import BeaconPacket
 from Packets import Packets
 import socket
-import netifaces
+
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
 
-import Django
-django.VERSION
+
 
 
 p1 = BeaconPacket("1","10.10.0.1","10.10.0.0","100","10.10.0.1")
@@ -28,5 +27,3 @@ ip_address = socket.gethostbyname(hostname)
 
 print(f"Hostname: {hostname}")
 print(f"IP Address: {ip_address}")
-
-netifaces.interfaces()
