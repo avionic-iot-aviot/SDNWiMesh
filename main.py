@@ -32,6 +32,6 @@ adapters = ifaddr.get_adapters()
 
 for adapter in adapters:
     if (adapter.nice_name == "br-wlan"):
-        print(adapter.ips[0])
+        print(adapter.ips[0].ip)
         # for ip in adapter.ips:
         #     print("%s/%s" % (ip.ip, ip.network_prefix))
