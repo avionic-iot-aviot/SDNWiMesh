@@ -8,5 +8,5 @@ config.read('config.ini')
 def Inizio():
     test = "Ciao"
     if ( socket.gethostname() == "Omega-1D63"):
-        subprocess.call(["echo {test}"])
+        subprocess.call(["echo " + test + " "])
 
