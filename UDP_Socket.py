@@ -1,6 +1,7 @@
 import threading
 import socket
 import sys
+import time
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
@@ -58,7 +59,7 @@ def Start_Udp(ip, port):
         clientIP  = "Client IP Address:{}".format(address)
         print(clientMsg)
         print(clientIP)
-        
+
 # def Start_Udp(ip, port):
 #     # Create a UDP socket
 #     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -88,9 +89,13 @@ def SendPacket(address,data):
     msgFromClient       = data
     bytesToSend         = str.encode(msgFromClient)
     serverAddressPort   = (address, int(config['GENERAL']['Port']))
-
     UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-    UDPClientSocket.sendto(bytesToSend, serverAddressPort)
+
+    while True:
+        UDPClientSocket.sendto(bytesToSend, serverAddressPort)
+        print("Send to -> ", address)
+        time.sleep(4)
+
 
 
 # def SendPacket(data,address):
