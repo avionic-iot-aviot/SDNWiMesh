@@ -2,6 +2,7 @@ import threading
 import socket
 import sys
 import time
+import PacketsHandler
 from Packets import BeaconPacket
 from Packets import Packets
 from configparser import ConfigParser
@@ -54,7 +55,8 @@ def Start_Udp(ip, port):
         bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
         message = bytesAddressPair[0]
         address = bytesAddressPair[1]
-        
+        PacketsHandler.PacketHandler(message)
+
         # clientMsg = "Message from Client:{}".format(message)
         # clientIP  = "Client IP Address:{}".format(address)
         # print(clientMsg)
@@ -116,7 +118,7 @@ class ThreadBeacon (threading.Thread):
 
    def run(self):
       print ("Starting " + self.name)
-      UdpBroadcast("192.168.0.1", self.Myip)
+      UdpBroadcast(config.get(socket.gethostname(),'IpStation'), self.Myip)
 
 def UdpBroadcast(address,myip):
     beacon = BeaconPacket(  config.get(socket.gethostname(),'NetId'),  config.get(socket.gethostname(),'IpBroadcast')  , myip , "100", config.get(socket.gethostname(),'IpBroadcast') )

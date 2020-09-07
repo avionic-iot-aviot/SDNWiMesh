@@ -11,7 +11,7 @@ config = ConfigParser()
 config.read('config.ini')
 
 
-def PacketHandler(self, data):
+def PacketHandler(data):
     packet = Packets.getPacketFromBytes(data)
     PacketHandlerSwitchCase(int(packet.Type))
 
