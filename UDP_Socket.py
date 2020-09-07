@@ -38,11 +38,7 @@ class ThreadReceiverUdpPackets (threading.Thread):
 
    def run(self):
        print("Starting " + self.name)
-       if (socket.gethostname() == "Omega-1D63"):
-           Start_Udp("192.168.0.1", int(config['GENERAL']['Port']))
-       if (socket.gethostname() == "Omega-1D06"):
-           Start_Udp("192.168.1.1", int(config['GENERAL']['Port']))
-
+       Start_Udp( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
 
 def Start_Udp(ip, port):
     localIP     = ip
@@ -83,6 +79,7 @@ class ThreadClient (threading.Thread):
 
    def run(self):
       print ("Starting " + self.name)
+
       if (socket.gethostname() == "Omega-1D63"):
           SendPacket("8.8.8.8", "Ciaoooo")
       if (socket.gethostname() == "Omega-1D06"):
@@ -109,20 +106,20 @@ def SendPacket(address,data):
 
 
 class ThreadBeacon (threading.Thread):
-   def __init__(self, threadID, name, counter):
+   def __init__(self, threadID, name, counter, MyIp):
       threading.Thread.__init__(self)
       self.threadID = threadID
       self.name = name
       self.counter = counter
+      self.Myip = MyIp
 
    def run(self):
       print ("Starting " + self.name)
-      UdpBroadcast("192.168.0.1", "CIaooooooooo")
+      UdpBroadcast("192.168.0.1", self.Myip)
 
-def UdpBroadcast(address,data):
-
-    msgFromClient       = data
-    bytesToSend         = str.encode(msgFromClient)
+def UdpBroadcast(address,myip):
+    beacon = BeaconPacket(  config.get(socket.gethostname(),'NetId'),  config.get(socket.gethostname(),'IpBroadcast')  , myip , "100", config.get(socket.gethostname(),'IpBroadcast') )
+    bytesToSend         = beacon
     serverAddressPort   = (address, int(config['GENERAL']['Port']))
     UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
     UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
