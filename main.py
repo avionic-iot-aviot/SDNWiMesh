@@ -10,29 +10,14 @@ config = ConfigParser()
 config.read('config.ini')
 
 
+############ 0. Asseganre gli Indirizzi Ip Nuovi ############
 print("\n\n\t\tSTART SDNWISE\n\n")
 
 init_config.Inizio()
 
 print("\n\tIndirizzi Ip Asseganti\n")
-hostname = socket.gethostname()
 
-
-
-# p1 = BeaconPacket("1","10.10.0.1","10.10.0.0","100","10.10.0.1")
-# print(p1.printFullPacket())
-# print(p1.printLitePacket())
-
-# p1.getBytesFromPackets() 
-
-# test = bytearray(b'-1--46------10.10.0.1------10.10.0.0-0100------10.10.0.1Payload BEACON')
-# p2 = Packets.getPacketFromBytes(test)
-
-# print(p2.printFullPacket())
-# print(p2.printLitePacket())
-
-
-
+############ 1. Calcolo Indirizzi Ip Nuovi ############
 adapters = ifaddr.get_adapters()
 
 for adapter in adapters:
@@ -43,12 +28,34 @@ for adapter in adapters:
 
 print(f"Client: {IpClient} \tStation: {IpStation}")
 
-
-UDP_Socket.RunReceiverProcess(IpStation,4000)
-UDP_Socket.ReceiverPacket(IpStation)
-
+############ 2. Avvio Server UDP ############
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+server_address = (IpStation, config['GENERAL']['Port'])
+s.bind(server_address)
 while True:
-    UDP_Socket.SendPacket("Ciao","192.168.0.130")
+    data, address = s.recvfrom(4096)
+    print("\n\n 2. Server received: ", data.decode('utf-8'), "\n\n")
+
+    if ( socket.gethostname() == "Omega-1D06"):
+        s.sendto("CIAOOOOOo".encode('utf-8'), "192.168.0.1")
+        print("\n\n\t\tOmega-1D06 sent : ", data,"\n\n")
+
+
+
+############ 2. Avvio Server UDP ############
+
+
+# UDP_Socket.RunReceiverProcess(IpStation,4000)
+# UDP_Socket.ReceiverPacket(IpStation)
+
+# while True:
+#     UDP_Socket.SendPacket("Ciao","192.168.0.130")
+
+
+
+# MULTICAST
+
+
 # if ( socket.gethostname() == "Omega-1D63"):
 #     server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
 #     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
@@ -70,3 +77,21 @@ while True:
 #     while True:
 #         data, addr = client.recvfrom(1024)
 #         print("received message: %s"%data)
+
+
+
+# PACKETS
+
+
+# p1 = BeaconPacket("1","10.10.0.1","10.10.0.0","100","10.10.0.1")
+# print(p1.printFullPacket())
+# print(p1.printLitePacket())
+
+# p1.getBytesFromPackets() 
+
+# test = bytearray(b'-1--46------10.10.0.1------10.10.0.0-0100------10.10.0.1Payload BEACON')
+# p2 = Packets.getPacketFromBytes(test)
+
+# print(p2.printFullPacket())
+# print(p2.printLitePacket())
+
