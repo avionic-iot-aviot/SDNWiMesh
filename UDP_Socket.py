@@ -123,15 +123,15 @@ class ThreadBeacon (threading.Thread):
 def UdpBroadcast(address,myip):
     beacon = BeaconPacket(  config.get(socket.gethostname(),'NetId'),  config.get(socket.gethostname(),'IpBroadcast')  , myip , "100", config.get(socket.gethostname(),'IpBroadcast') )
     bytesToSend         = beacon.getBytesFromPackets() 
-    serverAddressPort   = (address, int(config['GENERAL']['Port']))
+    # serverAddressPort   = (address, int(config['GENERAL']['Port']))
+    serverAddressPort   = ('<broadcast>', int(config['GENERAL']['Port']))
     UDPClientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM,socket.IPPROTO_UDP)
     UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
     UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
     UDPClientSocket.settimeout(0.2)
-    
+
     while True:
-        UDPClientSocket.sendto(bytesToSend, ('<broadcast>', serverAddressPort))
-        #UDPClientSocket.sendto(bytesToSend, serverAddressPort)
+        UDPClientSocket.sendto(bytesToSend, serverAddressPort)
         print("Beacon Message Send!", address)
         time.sleep(4)
 
