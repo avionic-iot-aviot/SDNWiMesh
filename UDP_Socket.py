@@ -1,6 +1,9 @@
 import threading
 import socket
 import sys
+from configparser import ConfigParser
+config = ConfigParser()
+config.read('config.ini')
 
 # def RunReceiverProcess(ip,port):
 #     # Create a UDP socket
@@ -32,13 +35,29 @@ class ThreadServer (threading.Thread):
    def run(self):
        print("Starting " + self.name)
        if (socket.gethostname() == "Omega-1D63"):
-           Start_Udp("192.168.0.1", 4000)
+           Start_Udp("192.168.0.1", config['GENERAL']['Port'])
        if (socket.gethostname() == "Omega-1D06"):
-           Start_Udp("192.168.1.1", 4000)
+           Start_Udp("192.168.1.1", config['GENERAL']['Port'])
 
 
 def Start_Udp(ip, port):
-    print("\n\n\t\t Server received CIAOOOOO")
+    localIP     = ip
+    localPort   = port
+    bufferSize  = 1024
+
+    UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+    UDPServerSocket.bind((localIP, localPort))
+
+    print("UDP server up and listening")
+
+    while(True):
+        bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
+        message = bytesAddressPair[0]
+        address = bytesAddressPair[1]
+        clientMsg = "Message from Client:{}".format(message)
+        clientIP  = "Client IP Address:{}".format(address)
+        print(clientMsg)
+        print(clientIP)
 # def Start_Udp(ip, port):
 #     # Create a UDP socket
 #     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -64,9 +83,18 @@ class ThreadClient (threading.Thread):
       if (socket.gethostname() == "Omega-1D06"):
           SendPacket("192.168.1.130", "CIaooooooooo")
 
-def SendPacket(data,address):
-    print("\n\n\t\tServer EIIIIII")
+def SendPacket(address,data):
+    msgFromClient       = data
+    bytesToSend         = str.encode(msgFromClient)
+    serverAddressPort   = (address, config['GENERAL']['Port'])
+
+    UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+    UDPClientSocket.sendto(bytesToSend, serverAddressPort)
+
+
 # def SendPacket(data,address):
 #     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #     s.sendto(data.encode('utf-8'), address)
 #     print("\n\n\t\tServer Sent to [",address,"] : ", data,"\n\n")
+
+
