@@ -40,7 +40,7 @@ thread1.start()
 thread2.start()
 
 temp1 = socket.gethostname()
-print(config.get(temp1,'Port'))
+print(config.get(temp1,'Id'))
 
 ############ 2. Avvio Server UDP ############
 
