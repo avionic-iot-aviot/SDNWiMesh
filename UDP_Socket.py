@@ -54,10 +54,11 @@ def Start_Udp(ip, port):
         bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
         message = bytesAddressPair[0]
         address = bytesAddressPair[1]
-        clientMsg = "Message from Client:{}".format(message)
-        clientIP  = "Client IP Address:{}".format(address)
-        print(clientMsg)
-        print(clientIP)
+        
+        # clientMsg = "Message from Client:{}".format(message)
+        # clientIP  = "Client IP Address:{}".format(address)
+        # print(clientMsg)
+        # print(clientIP)
 
 # def Start_Udp(ip, port):
 #     # Create a UDP socket
@@ -128,7 +129,7 @@ def UdpBroadcast(address,myip):
     UDPClientSocket.settimeout(0.2)
     while True:
         UDPClientSocket.sendto(bytesToSend, serverAddressPort)
-        print("Message Broadcast Send!", address)
+        print("Beacon Message Send!", address)
         time.sleep(4)
 
 
