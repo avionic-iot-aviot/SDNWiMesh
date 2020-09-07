@@ -38,14 +38,16 @@ class ThreadServer (threading.Thread):
 
 
 def Start_Udp(ip, port):
-    # Create a UDP socket
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    # Bind the socket to the port
-    server_address = (ip, port)
-    s.bind(server_address)
-    while True:
-        data, address = s.recvfrom(4096)
-        print("\n\n\t\t Server received from [", address, "] :" , data.decode('utf-8'), "\n\n")
+    print("\n\n\t\t Server received CIAOOOOO")
+# def Start_Udp(ip, port):
+#     # Create a UDP socket
+#     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+#     # Bind the socket to the port
+#     server_address = (ip, port)
+#     s.bind(server_address)
+#     while True:
+#         data, address = s.recvfrom(4096)
+#         print("\n\n\t\t Server received from [", address, "] :" , data.decode('utf-8'), "\n\n")
 
 
 class ThreadClient (threading.Thread):
@@ -63,6 +65,8 @@ class ThreadClient (threading.Thread):
           SendPacket("192.168.1.130", "CIaooooooooo")
 
 def SendPacket(data,address):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.sendto(data.encode('utf-8'), address)
-    print("\n\n\t\tServer Sent to [",address,"] : ", data,"\n\n")
+    print("\n\n\t\tServer EIIIIII")
+# def SendPacket(data,address):
+#     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+#     s.sendto(data.encode('utf-8'), address)
+#     print("\n\n\t\tServer Sent to [",address,"] : ", data,"\n\n")
