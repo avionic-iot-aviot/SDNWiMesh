@@ -39,8 +39,8 @@ thread2 = UDP_Socket.ThreadBeacon(2, "Thread-Client", 2)
 thread1.start()
 thread2.start()
 
-socket.gethostname()
-print(int(config[socket.gethostname()]['Port']))
+temp1 = socket.gethostname()
+print(config.get(temp1,'Port'))
 
 ############ 2. Avvio Server UDP ############
 
