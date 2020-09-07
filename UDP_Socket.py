@@ -81,9 +81,9 @@ class ThreadClient (threading.Thread):
    def run(self):
       print ("Starting " + self.name)
       if (socket.gethostname() == "Omega-1D63"):
-          SendPacket("192.168.0.130", "Ciaoooo")
+          SendPacket("8.8.8.8", "Ciaoooo")
       if (socket.gethostname() == "Omega-1D06"):
-          SendPacket("192.168.1.130", "CIaooooooooo")
+          SendPacket("192.168.0.1", "CIaooooooooo")
 
 def SendPacket(address,data):
     msgFromClient       = data
