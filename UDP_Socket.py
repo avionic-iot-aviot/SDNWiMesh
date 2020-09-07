@@ -124,7 +124,7 @@ def UdpBroadcast(address,myip):
     beacon = BeaconPacket(  config.get(socket.gethostname(),'NetId'),  config.get(socket.gethostname(),'IpBroadcast')  , myip , "100", config.get(socket.gethostname(),'IpBroadcast') )
     bytesToSend         = beacon.getBytesFromPackets() 
     # serverAddressPort   = (address, int(config['GENERAL']['Port']))
-    serverAddressPort   = (config.get(socket.gethostname(),'IpBroadcast'), int(config['GENERAL']['Port']))
+    serverAddressPort   = ( config.get(socket.gethostname(),'IpBroadcast') , int(config['GENERAL']['Port']) )
     UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
     # UDPClientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM,socket.IPPROTO_UDP)
     # UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
