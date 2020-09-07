@@ -13,18 +13,18 @@ config.read('config.ini')
 
 def PacketHandler(data):
     packet = Packets.getPacketFromBytes(data)
-    PacketHandlerSwitchCase(int(packet.Type))
+    if(int(packet.Type) == 0):
+        TypeBeacon(packet)
+    if(int(packet.Type) == 1):
+        TypeData(packet)
+    if(int(packet.Type) != 1 or int(packet.Type) != 0):
+        print("Pacchetto di tipo sconosciuto")
 
-def PacketHandlerSwitchCase(i):
-    switcher = {
-        0: TypeBeacon(),
-        1: print('Pacchetto di Path'),
-        2: TypeData()
-    }
-    return switcher.get(i, "Tipo di pacchetto invalido")
 
-def TypeBeacon():
-    print("Beacon Ricevuto")
+def TypeBeacon(packet):
+    if ( packet.Source != config.get(socket.gethostname(),'IpStation') ):
+        print("Beacon Ricevuto")
 
-def TypeData():
-    print("Data Ricevuto")
+def TypeData(packet):
+    if ( packet.Source != config.get(socket.gethostname(),'IpStation') ):
+        print("Data Ricevuto")
