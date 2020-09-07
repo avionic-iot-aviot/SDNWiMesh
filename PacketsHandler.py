@@ -14,7 +14,7 @@ config.read('config.ini')
 def PacketHandler(data):
     packet = Packets.getPacketFromBytes(data)
     print ("-->", int(packet.Type))
-    packet.printLitePacket()
+    print ("-->", packet.printLitePacket() )
     if(int(packet.Type) == 0):
         TypeBeacon(packet)
     if(int(packet.Type) == 1):
