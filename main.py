@@ -5,6 +5,7 @@ import socket
 import ifaddr
 import time
 import UDP_Socket
+import threading
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
@@ -29,16 +30,14 @@ for adapter in adapters:
 print(f"Client: {IpClient} \tStation: {IpStation}")
 
 ############ 2. Avvio Server UDP ############
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-server_address = (IpStation, config['GENERAL']['Port'])
-s.bind(server_address)
-while True:
-    data, address = s.recvfrom(4096)
-    print("\n\n 2. Server received: ", data.decode('utf-8'), "\n\n")
 
-    if ( socket.gethostname() == "Omega-1D06"):
-        s.sendto("CIAOOOOOo".encode('utf-8'), "192.168.0.1")
-        print("\n\n\t\tOmega-1D06 sent : ", data,"\n\n")
+# Create new threads
+thread1 = UDP_Socket.ThreadServer(1, "Thread-Server", 1)
+thread2 = UDP_Socket.ThreadServer(2, "Thread-Client", 2)
+
+# Start new Threads
+thread1.start()
+thread2.start()
 
 
 
