@@ -22,6 +22,8 @@ def PacketHandler(data):
 
 
 def TypeBeacon(packet):
+    print ( "@ -> ", packet.Source)
+    print ("# -> ", config.get(socket.gethostname(),'IpStation') )
     if ( packet.Source != config.get(socket.gethostname(),'IpStation') ):
         print("Beacon Ricevuto")
 
