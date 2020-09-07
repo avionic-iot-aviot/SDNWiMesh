@@ -32,8 +32,8 @@ print(f"Client: {IpClient} \tStation: {IpStation}")
 ############ 2. Avvio Server UDP ############
 
 # Create new threads
-thread1 = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-Server", 1)
-thread2 = UDP_Socket.ThreadBeacon(2, "Thread-Client", 2)
+thread1 = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver", 1)
+thread2 = UDP_Socket.ThreadBeacon(2, "Thread-Beacon", 2,IpStation)
 
 # Start new Threads
 thread1.start()
