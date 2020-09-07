@@ -32,14 +32,15 @@ print(f"Client: {IpClient} \tStation: {IpStation}")
 ############ 2. Avvio Server UDP ############
 
 # Create new threads
-thread1 = UDP_Socket.ThreadServer(1, "Thread-Server", 1)
-thread2 = UDP_Socket.ThreadClient(2, "Thread-Client", 2)
+thread1 = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-Server", 1)
+thread2 = UDP_Socket.ThreadBeacon(2, "Thread-Client", 2)
 
 # Start new Threads
 thread1.start()
 thread2.start()
 
-
+socket.gethostname()
+print(int(config[socket.gethostname()]['Port']))
 
 ############ 2. Avvio Server UDP ############
 

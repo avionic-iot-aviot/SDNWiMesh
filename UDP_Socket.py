@@ -2,9 +2,12 @@ import threading
 import socket
 import sys
 import time
+from Packets import BeaconPacket
+from Packets import Packets
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
+
 
 # def RunReceiverProcess(ip,port):
 #     # Create a UDP socket
@@ -26,7 +29,7 @@ config.read('config.ini')
 #         print("\n\n 2. Server received: ", data.decode('utf-8'), "\n\n")
 
 
-class ThreadServer (threading.Thread):
+class ThreadReceiverUdpPackets (threading.Thread):
    def __init__(self, threadID, name, counter):
       threading.Thread.__init__(self)
       self.threadID = threadID
@@ -86,6 +89,7 @@ class ThreadClient (threading.Thread):
           SendPacket("192.168.0.1", "CIaooooooooo")
 
 def SendPacket(address,data):
+    #beacon = BeaconPacket(int(config['GENERAL']['Port']),)
     msgFromClient       = data
     bytesToSend         = str.encode(msgFromClient)
     serverAddressPort   = (address, int(config['GENERAL']['Port']))
@@ -102,5 +106,32 @@ def SendPacket(address,data):
 #     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #     s.sendto(data.encode('utf-8'), address)
 #     print("\n\n\t\tServer Sent to [",address,"] : ", data,"\n\n")
+
+
+class ThreadBeacon (threading.Thread):
+   def __init__(self, threadID, name, counter):
+      threading.Thread.__init__(self)
+      self.threadID = threadID
+      self.name = name
+      self.counter = counter
+
+   def run(self):
+      print ("Starting " + self.name)
+      UdpBroadcast("192.168.0.1", "CIaooooooooo")
+
+def UdpBroadcast(address,data):
+
+    msgFromClient       = data
+    bytesToSend         = str.encode(msgFromClient)
+    serverAddressPort   = (address, int(config['GENERAL']['Port']))
+    UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+    UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+
+    UDPClientSocket.settimeout(0.2)
+    while True:
+        UDPClientSocket.sendto(bytesToSend, serverAddressPort)
+        print("Message Broadcast Send!", address)
+        time.sleep(4)
 
 
