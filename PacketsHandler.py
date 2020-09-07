@@ -17,8 +17,6 @@ def PacketHandler(data):
         TypeBeacon(packet)
     if(int(packet.Type) == 1):
         TypeData(packet)
-    if(int(packet.Type) != 1 or int(packet.Type) != 0):
-        print("Pacchetto di tipo sconosciuto")
 
 
 def TypeBeacon(packet):
