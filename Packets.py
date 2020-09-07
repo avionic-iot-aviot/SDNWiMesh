@@ -133,7 +133,7 @@ class Packets:
 
     def LengthCalcolator(self):
         temp = len(self.NetId) + len(self.Destination) + len(self.Source) +len(self.Type) + len(self.TTL) +len(self.NextHop) +len(self.Payload)
-        print(temp)
+        #print(temp)
         self.Length = str(temp)
 
 class BeaconPacket(Packets):
@@ -146,6 +146,6 @@ class BeaconPacket(Packets):
 class DataPacket(Packets):
     
     def __init__(self,NetId,Destination,Source,TTL,NextHop):
-        super().__init__(NetId,"",Destination,Source,"3",TTL,NextHop,"Payload DATA")
+        super().__init__(NetId,"",Destination,Source,"1",TTL,NextHop,"Payload DATA")
         super().LengthCalcolator()
 

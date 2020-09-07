@@ -130,7 +130,7 @@ def UdpBroadcast(address,myip):
     UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
     UDPClientSocket.settimeout(0.2)
 
-    while True:
+    while True: 
         UDPClientSocket.sendto(bytesToSend, serverAddressPort)
         print("Beacon Message Send!", address)
         time.sleep(4)
