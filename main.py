@@ -33,7 +33,7 @@ print(f"Client: {IpClient} \tStation: {IpStation}")
 
 # Create new threads
 thread1 = UDP_Socket.ThreadServer(1, "Thread-Server", 1)
-thread2 = UDP_Socket.ThreadServer(2, "Thread-Client", 2)
+thread2 = UDP_Socket.ThreadClient(2, "Thread-Client", 2)
 
 # Start new Threads
 thread1.start()
