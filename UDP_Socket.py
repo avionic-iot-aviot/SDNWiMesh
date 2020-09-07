@@ -35,9 +35,9 @@ class ThreadServer (threading.Thread):
    def run(self):
        print("Starting " + self.name)
        if (socket.gethostname() == "Omega-1D63"):
-           Start_Udp("192.168.0.1", config['GENERAL']['Port'])
+           Start_Udp("192.168.0.1", int(config['GENERAL']['Port']))
        if (socket.gethostname() == "Omega-1D06"):
-           Start_Udp("192.168.1.1", config['GENERAL']['Port'])
+           Start_Udp("192.168.1.1", int(config['GENERAL']['Port']))
 
 
 def Start_Udp(ip, port):
@@ -86,7 +86,7 @@ class ThreadClient (threading.Thread):
 def SendPacket(address,data):
     msgFromClient       = data
     bytesToSend         = str.encode(msgFromClient)
-    serverAddressPort   = (address, config['GENERAL']['Port'])
+    serverAddressPort   = (address, int(config['GENERAL']['Port']))
 
     UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
     UDPClientSocket.sendto(bytesToSend, serverAddressPort)
