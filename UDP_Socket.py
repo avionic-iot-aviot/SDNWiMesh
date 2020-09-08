@@ -49,7 +49,7 @@ def Start_Udp(ip, port):
     UDPServerSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP) # UDP
     UDPServerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
     UDPServerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-    UDPServerSocket.bind((localIP, localPort ))
+    UDPServerSocket.bind(("", localPort ))
 
    #  UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
    #  UDPServerSocket.bind((localIP, localPort))
@@ -106,7 +106,7 @@ def SendPacket(address,MyIp):
     while True:
         UDPClientSocket.sendto(bytesToSend, serverAddressPort)
         print("Send to -> ", address)
-        time.sleep(4)
+        time.sleep(6)
 
 # def SendPacket(data,address):
 #     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
