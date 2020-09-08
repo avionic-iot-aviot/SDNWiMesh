@@ -92,14 +92,16 @@ class ThreadClient (threading.Thread):
       #if (socket.gethostname() == "Omega-1D63"):
       #    SendPacket("8.8.8.8", "Ciaoooo")
       if (socket.gethostname() == "Omega-1D06"):
-          SendPacket("192.168.0.1", "CIaooooooooo",self.MyIp)
+          SendPacket("192.168.0.1",self.MyIp)
 
-def SendPacket(address,data,MyIp):
+def SendPacket(address,MyIp):
     #beacon = BeaconPacket(int(config['GENERAL']['Port']),)
     pckdata = Packets (config.get(socket.gethostname(),'NetId'), 0 , address, MyIp, "1","100", "address","Pck Data!!!!" )
     bytesToSend         = pckdata.getBytesFromPackets()
-    serverAddressPort   = (address, int(config['GENERAL']['Port']))
-    UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+    serverAddressPort   = (address, int(config['GENERAL']['PortB']))
+    UDPClientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM,socket.IPPROTO_UDP)
+   #  UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+    
 
     while True:
         UDPClientSocket.sendto(bytesToSend, serverAddressPort)
