@@ -96,7 +96,7 @@ class ThreadClient (threading.Thread):
 
 def SendPacket(address,MyIp):
     #beacon = BeaconPacket(int(config['GENERAL']['Port']),)
-    pckdata = Packets (config.get(socket.gethostname(),'NetId'), 0 , address, MyIp, "1","100", "address","Pck Data!!!!" )
+    pckdata = Packets (config.get(socket.gethostname(),'NetId'), "0" , address, MyIp, "1","100", "address","Pck Data!!!!" )
     bytesToSend         = pckdata.getBytesFromPackets()
     serverAddressPort   = (address, int(config['GENERAL']['PortB']))
     UDPClientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM,socket.IPPROTO_UDP)
