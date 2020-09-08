@@ -13,8 +13,6 @@ config.read('config.ini')
 
 def PacketHandler(data):
     packet = Packets.getPacketFromBytes(data)
-    print ("-->", int(packet.Type))
-    print ("-->", packet.printLitePacket() )
     if(int(packet.Type) == 0):
         TypeBeacon(packet)
     if(int(packet.Type) == 1):
@@ -22,11 +20,9 @@ def PacketHandler(data):
 
 
 def TypeBeacon(packet):
-    print ( "@ -> ", packet.Source)
-    print ("# -> ", config.get(socket.gethostname(),'IpStation') )
     if ( packet.Source != config.get(socket.gethostname(),'IpStation') ):
-        print("Beacon Ricevuto")
+        print("Beacon Ricevuto from: ",packet.Source)
 
 def TypeData(packet):
     if ( packet.Source != config.get(socket.gethostname(),'IpStation') ):
-        print("Data Ricevuto")
+        print("Data Ricevuto from: ",packet.Source)
