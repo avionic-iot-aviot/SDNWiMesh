@@ -14,6 +14,7 @@ class Packets:
         self.TTL = TTL
         self.NextHop = NextHop
         self.Payload = Payload
+        self.LengthCalcolator()
 
     def printFullPacket(self):
         return f"\nNetId:[{self.NetId}] Length:[{self.Length}] Destination:[{self.Destination}] Source:[{self.Source}] Type:[{self.Type}] TTL:[{self.TTL}] NextHop:[{self.NextHop}] Payload:[{self.Payload}]\n"
