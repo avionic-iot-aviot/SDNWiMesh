@@ -45,9 +45,14 @@ def Start_Udp(ip, port):
     localIP     = ip
     localPort   = port
     bufferSize  = 1024
+    
+    UDPServerSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP) # UDP
+    UDPServerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    UDPServerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+    UDPServerSocket.bind(("", int(config['GENERAL']['PortB']) ))
 
-    UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-    UDPServerSocket.bind((localIP, localPort))
+   #  UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+   #  UDPServerSocket.bind((localIP, localPort))
 
     print("UDP server up and listening")
 
@@ -83,8 +88,8 @@ class ThreadClient (threading.Thread):
    def run(self):
       print ("Starting " + self.name)
 
-      if (socket.gethostname() == "Omega-1D63"):
-          SendPacket("8.8.8.8", "Ciaoooo")
+      #if (socket.gethostname() == "Omega-1D63"):
+      #    SendPacket("8.8.8.8", "Ciaoooo")
       if (socket.gethostname() == "Omega-1D06"):
           SendPacket("192.168.0.1", "CIaooooooooo")
 
@@ -99,8 +104,6 @@ def SendPacket(address,data):
         UDPClientSocket.sendto(bytesToSend, serverAddressPort)
         print("Send to -> ", address)
         time.sleep(4)
-
-
 
 # def SendPacket(data,address):
 #     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -124,12 +127,11 @@ def UdpBroadcast(address,myip):
     beacon = BeaconPacket(  config.get(socket.gethostname(),'NetId'),  config.get(socket.gethostname(),'IpBroadcast')  , myip , "100", config.get(socket.gethostname(),'IpBroadcast') )
     bytesToSend         = beacon.getBytesFromPackets() 
     # serverAddressPort   = (address, int(config['GENERAL']['Port']))
-    serverAddressPort   = ( config.get(socket.gethostname(),'IpBroadcast') , int(config['GENERAL']['Port']) )
-    UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-    # UDPClientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM,socket.IPPROTO_UDP)
-    # UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-    # UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-    # UDPClientSocket.settimeout(0.2)
+    serverAddressPort   = ('<broadcast>', int(config['GENERAL']['Port']))
+    UDPClientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM,socket.IPPROTO_UDP)
+    UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+    UDPClientSocket.settimeout(0.2)
 
     while True: 
         UDPClientSocket.sendto(bytesToSend, serverAddressPort)
