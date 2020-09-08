@@ -79,11 +79,12 @@ def Start_Udp(ip, port):
 
 
 class ThreadClient (threading.Thread):
-   def __init__(self, threadID, name, counter):
+   def __init__(self, threadID, name, counter,myip):
       threading.Thread.__init__(self)
       self.threadID = threadID
       self.name = name
       self.counter = counter
+      self.MyIp = myip
 
    def run(self):
       print ("Starting " + self.name)
@@ -91,13 +92,13 @@ class ThreadClient (threading.Thread):
       #if (socket.gethostname() == "Omega-1D63"):
       #    SendPacket("8.8.8.8", "Ciaoooo")
       if (socket.gethostname() == "Omega-1D06"):
-          SendPacket("192.168.0.1", "CIaooooooooo")
+          SendPacket("192.168.0.1", "CIaooooooooo",MyIp)
 
-def SendPacket(address,data):
+def SendPacket(address,data,MyIp):
     #beacon = BeaconPacket(int(config['GENERAL']['Port']),)
-    msgFromClient       = data
-    bytesToSend         = str.encode(msgFromClient)
-    serverAddressPort   = (address, int(config['GENERAL']['Port']))
+    pckdata = Packets (config.get(socket.gethostname(),'NetId'), 0 , address, MyIp, "1","100", "address","Pck Data!!!!" )
+    bytesToSend         = pckdata.getBytesFromPackets()
+    serverAddressPort   = (address, int(config['GENERAL']['PortB']))
     UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 
     while True:
