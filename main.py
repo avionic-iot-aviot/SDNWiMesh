@@ -34,11 +34,14 @@ print(f"Client: {IpClient} \tStation: {IpStation}")
 # Create new threads
 thread1 = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver", 1)
 thread2 = UDP_Socket.ThreadBeacon(2, "Thread-Beacon", 2,IpStation)
-thread2 = UDP_Socket.ThreadClient(3, "Thread-DATA", 3, IpStation)
+if (socket.gethostname() == "Omega-1D06"):
+    thread3 = UDP_Socket.ThreadClient(3, "Thread-DATA", 3, IpStation)
 
 # Start new Threads
 thread1.start()
 thread2.start()
+if (socket.gethostname() == "Omega-1D06"):
+    thread3.start()
 
 ############ 2. Avvio Server UDP ############
 
