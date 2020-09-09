@@ -32,16 +32,18 @@ print(f"Client: {IpClient} \tStation: {IpStation}")
 ############ 2. Avvio Server UDP ############
 
 # Create new threads
-thread1 = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver", 1)
-thread2 = UDP_Socket.ThreadBeacon(2, "Thread-Beacon", 2,IpStation)
-if (socket.gethostname() == "Omega-1D06"):
-    thread3 = UDP_Socket.ThreadClient(3, "Thread-DATA", 3, IpStation)
+ThreadUdpReceiver = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver", int(config['GENERAL']['Port']) )
+
+pckBeacon = BeaconPacket (config.get(socket.gethostname(),'NetId'), (config.get(socket.gethostname(),'IpBroadcast') ) , IpStation, "100", (config.get(socket.gethostname(),'IpBroadcast') ) )
+ThreadUdpBeacon = UDP_Socket.ThreadBeacon(2, "Thread-Beacon", pckBeacon, int(config['GENERAL']['Port']))
+# if (socket.gethostname() == "Omega-1D06"):
+#     thread3 = UDP_Socket.ThreadClient(3, "Thread-DATA", 3, IpStation)
 
 # Start new Threads
-thread1.start()
-thread2.start()
-if (socket.gethostname() == "Omega-1D06"):
-    thread3.start()
+ThreadUdpReceiver.start()
+ThreadUdpBeacon.start()
+# if (socket.gethostname() == "Omega-1D06"):
+#     thread3.start()
 
 ############ 2. Avvio Server UDP ############
 
