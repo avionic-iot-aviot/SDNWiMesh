@@ -34,8 +34,8 @@ print(f"Client: {IpClient} \tStation: {IpStation}")
 # Create new threads
 ThreadUdpReceiver = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver", int(config['GENERAL']['Port']) )
 
-pckBeacon = BeaconPacket (config.get(socket.gethostname(),'NetId'), (config.get(socket.gethostname(),'IpBroadcast') ) , IpStation, "100", (config.get(socket.gethostname(),'IpBroadcast') ) )
-ThreadUdpBeacon = UDP_Socket.ThreadBeacon(2, "Thread-Beacon", pckBeacon, int(config['GENERAL']['Port']))
+pckBeacon = BeaconPacket ( config.get(socket.gethostname(),'NetId'), config.get(socket.gethostname(),'IpBroadcast') , IpStation, "100", config.get(socket.gethostname(),'IpBroadcast') )
+ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['Port']) )
 # if (socket.gethostname() == "Omega-1D06"):
 #     thread3 = UDP_Socket.ThreadClient(3, "Thread-DATA", 3, IpStation)
 
