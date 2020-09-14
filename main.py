@@ -19,9 +19,10 @@ init_config.SetDeviceOnStart()
 
 print("\n\tIndirizzi Ip Asseganti\n")
 
-
+print( netifaces.interfaces() )
 addrs = netifaces.ifaddresses('lo0')
 print( addrs[netifaces.AF_INET] )
+
 
 ############ 1. Calcolo Indirizzi Ip Nuovi ############
 print( config['GENERAL-OMEGA']['StationInterface'], type(config['GENERAL-OMEGA']['StationInterface']) )
