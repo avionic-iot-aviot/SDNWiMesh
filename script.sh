@@ -4,4 +4,5 @@ opkg update
 opkg install nano
 opkg install git git-http ca-bundle
 opkg install python3
-opkg install python-pip
+opkg install python-urllib3
+opkg install python3-pip
