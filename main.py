@@ -3,6 +3,7 @@ from Packets import Packets
 import init_config
 import socket
 import ifaddr
+import netifaces
 import time
 import UDP_Socket
 import threading
@@ -14,20 +15,21 @@ config.read('config.ini')
 ############ 0. Asseganre gli Indirizzi Ip Nuovi ############
 print("\n\n\t\tSTART SDNWISE\n\n")
 
-init_config.Inizio()
+init_config.SetDeviceOnStart()
 
 print("\n\tIndirizzi Ip Asseganti\n")
 
-############ 1. Calcolo Indirizzi Ip Nuovi ############
-adapters = ifaddr.get_adapters()
 
-for adapter in adapters:
-    if (adapter.nice_name == "br-wlan"):
-        IpStation = adapter.ips[0].ip
-    if (adapter.nice_name == "apcli0"):
-        IpClient = adapter.ips[0].ip
+############ 1. Calcolo Indirizzi Ip Nuovi ############
+
+IpStation = init_config.GetIps( config['GENERAL-OMEGA']['StationInterface'] )
+IpClient = init_config.GetIps( config['GENERAL-OMEGA']['ClientInterface'] )
 
 print(f"Client: {IpClient} \tStation: {IpStation}")
+
+IpDefaultGateway = init_config.GetDefaultGateway( config['GENERAL-OMEGA']['ClientInterface'] )
+
+print(f"Default Gateway: {IpDefaultGateway}")
 
 ############ 2. Avvio Server UDP ############
 

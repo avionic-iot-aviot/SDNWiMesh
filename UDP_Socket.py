@@ -134,19 +134,19 @@ def SendUdpPacketBroadcastLoop(beacon,port):
       time.sleep(int(config['GENERAL']['BeaconSleep']))
 
 
-class ThreadReport (threading.Thread):
-   def __init__(self, threadID, name, report, port):
-      threading.Thread.__init__(self)
-      self.threadID = threadID
-      self.name = name
-      self.report = report
-      self.port = port
+# class ThreadReport (threading.Thread):
+#    def __init__(self, threadID, name, report, port):
+#       threading.Thread.__init__(self)
+#       self.threadID = threadID
+#       self.name = name
+#       self.report = report
+#       self.port = port
 
-   def run(self):
-      print ("Starting " + self.name)
-      SendUdpReportUnicast(self.report, self.port)
+#    def run(self):
+#       print ("Starting " + self.name)
+#       SendUdpReportUnicast(self.report, self.port)
 
-def SendUdpReportUnicast(report, port):
+# def SendUdpReportUnicast(report, port):
 
 
 
