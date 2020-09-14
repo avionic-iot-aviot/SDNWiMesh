@@ -25,7 +25,7 @@ print( config['GENERAL-OMEGA']['StationInterface'], type(config['GENERAL-OMEGA']
 IpStation = init_config.GetIps( config['GENERAL-OMEGA']['StationInterface'] )
 IpClient = init_config.GetIps( config['GENERAL-OMEGA']['ClientInterface'] )
 
-print(f"Client: {IpClient} \tStation: {IpStation}")
+print(f'Client: {IpClient} \t Station: {IpStation}')
 
 IpDefaultGateway = init_config.GetDefaultGateway( config['GENERAL-OMEGA']['ClientInterface'] )
 
