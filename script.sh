@@ -9,6 +9,9 @@ opkg install python-urllib3
 opkg install python3-pip
 
 python3 -m pip install --upgrade pip
+pip3.6 install wheel
+pip3.6 install pytz
+
 
 
 
