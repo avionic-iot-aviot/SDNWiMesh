@@ -21,7 +21,7 @@ print("\n\tIndirizzi Ip Asseganti\n")
 
 
 ############ 1. Calcolo Indirizzi Ip Nuovi ############
-
+print( config['GENERAL-OMEGA']['StationInterface'], type(config['GENERAL-OMEGA']['StationInterface']) )
 IpStation = init_config.GetIps( config['GENERAL-OMEGA']['StationInterface'] )
 IpClient = init_config.GetIps( config['GENERAL-OMEGA']['ClientInterface'] )
 
