@@ -28,7 +28,7 @@ def SetDeviceOnStart():
         print("Tutto ok")
 
 def GetIps(interface):
-    addrs = netifaces.ifaddresses(interface)
+    addrs = netifaces.ifaddresses('br-wlan')
     #print ( ((addrs[2])[0])['addr'] )
     return ((addrs[2])[0])['addr']
 
