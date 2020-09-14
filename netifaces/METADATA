@@ -1,3 +1,26 @@
+Metadata-Version: 2.1
+Name: netifaces
+Version: 0.10.9
+Summary: Portable network interface information.
+Home-page: https://github.com/al45tair/netifaces
+Author: Alastair Houghton
+Author-email: alastair@alastairs-place.net
+License: MIT License
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Topic :: System :: Networking
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.5
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+
 netifaces 0.10.8
 ================
 
@@ -185,3 +208,5 @@ Hopefully skipping the version number should remove any confusion.  In
 addition starting with 0.10.0 Python 3 is now supported and other
 features/bugfixes have been included as well.  See the CHANGELOG for a
 more complete list of changes.
+
+
