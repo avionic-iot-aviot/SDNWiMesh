@@ -12,7 +12,8 @@ python3 -m pip install --upgrade pip
 pip3.6 install wheel
 pip3.6 install pytz
 
-
+opkg install python3-setuptools
+opkg install python3-dev
 
 
 cd /tmp
@@ -20,3 +21,12 @@ rm -rf SDNPy
 git clone https://github.com/CarmeloRicci/SDNPy.git
 cd SDNPy 
 python3 main.py
+
+cd /tmp
+rm -rf SDNPy-master
+wget https://github.com/CarmeloRicci/SDNPy/archive/master.zip
+unzip master.zip
+rm master.zip
+cd SDNPy-master
+python3 main.py
+
