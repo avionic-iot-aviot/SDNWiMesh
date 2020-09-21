@@ -36,7 +36,8 @@ def GetIp(interface):
 
 def GetDefaultGateway(interface):
     temp = GetIp(interface)
-    temp1 = "" + (temp.split("."))[0] + "." + (temp.split("."))[1] + "." + (temp.split("."))[2] + "." + "1"
+    temp2 = temp.split(".")
+    temp1 = "" + temp2[0] + "." + temp2[1] + "." + temp2[2] + "." + "1"
     print ( temp1 , type(temp1) )
     return temp1
 
