@@ -22,8 +22,9 @@ print("\n\tIndirizzi Ip Asseganti\n")
 
 
 
-print( os.popen('echo Helloo!!').read() )
+test =  os.popen('ifconfig br-wlan').read()
 
+print (test.split("\n"))
 
 
 
