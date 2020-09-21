@@ -26,7 +26,7 @@ test =  os.popen('ifconfig br-wlan').read()
 
 print (   test.split("\n")   )
 for element in test:
-    print ("--> ", test[element].replace(' ',''))
+    print ("--> ", element.replace(' ','') )
 
 
 
