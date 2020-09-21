@@ -1,4 +1,5 @@
 from Packets import BeaconPacket
+from Packets import ReportPacket
 from Packets import Packets
 import init_config
 import socket
@@ -32,21 +33,18 @@ IpDefaultGateway = init_config.GetDefaultGateway( config['GENERAL-OMEGA']['Clien
 
 print(f"Default Gateway: {IpDefaultGateway}")
 
-############ 2. Avvio Server UDP ############
+############ 2. Run Threads ############
 
-# Create new threads
 ThreadUdpReceiver = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver", int(config['GENERAL']['Port']) )
 
 pckBeacon = BeaconPacket ( config.get(socket.gethostname(),'NetId'), config.get(socket.gethostname(),'IpBroadcast') , IpStation, "100", config.get(socket.gethostname(),'IpBroadcast') )
 ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['Port']) )
-# if (socket.gethostname() == "Omega-1D06"):
-#     thread3 = UDP_Socket.ThreadClient(3, "Thread-DATA", 3, IpStation)
 
-# Start new Threads
+pckReort = ReportPacket ( config.get(socket.gethostname(),'NetId'), config.get(socket.gethostname(),'IpBroadcast') , IpStation, "100", config.get(socket.gethostname(),'IpBroadcast') )
+ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), IpClient, IpDefaultGateway ) 
+
 ThreadUdpReceiver.start()
 ThreadUdpBeacon.start()
-# if (socket.gethostname() == "Omega-1D06"):
-#     thread3.start()
 
 ############ 2. Avvio Server UDP ############
 

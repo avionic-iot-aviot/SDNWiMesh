@@ -3,6 +3,7 @@ import socket
 import sys
 import time
 import PacketsHandler
+from Packets import ReportPacket
 from Packets import BeaconPacket
 from Packets import Packets
 from configparser import ConfigParser
@@ -148,10 +149,31 @@ def SendUdpPacketBroadcastLoop(beacon,port):
 
 # def SendUdpReportUnicast(report, port):
 
+class ThreadReport (threading.Thread):
+   def __init__(self, threadID, name, port, s_address, d_address):
+      threading.Thread.__init__(self)
+      self.threadID = threadID
+      self.name = name
+      self.port = port
+      self.s_address = s_address
+      self.d_address = d_address
 
+   def run(self):
+      print ("Starting " + self.name)
+      SendUdpPacketUnicastLoop(self.port, self.s_address, self.d_address)
 
-
-
+def SendUdpPacketUnicastLoop(port,src,dst):
+   serverAddressPort   = (dst, port)
+   UDPClientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM,socket.IPPROTO_UDP)
+   UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+   UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+   UDPClientSocket.settimeout(0.2)
+   while True:
+      pckReort = ReportPacket ( config.get(socket.gethostname(),'NetId'), dst , src, "100", dst )
+      bytesToSend = pckReort.getBytesFromPackets()
+      UDPClientSocket.sendto(bytesToSend, serverAddressPort)
+      print("Unicast Report Send!")
+      time.sleep(int(config['GENERAL']['BeaconSleep']))
 
 def SendUdpPacketBroadcast(data,port):
     bytesToSend         = data
