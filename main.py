@@ -23,8 +23,18 @@ print("\n\tIndirizzi Ip Asseganti\n")
 
 adapters = ifaddr.get_adapters()
 
-print ( adapters["br-wlan"] )
-print ( adapters["apcli0"] )
+
+print ( adapters.["br-wlan"] )
+print ( adapters.["apcli0"] )
+
+for adapter in adapters:
+    if (adapter.nice_name == "br-wlan") 
+    print("IPs of network adapter " + adapter.nice_name, " --> " + adapters.ips[0])
+
+for adapter in adapters:
+    if (adapter.nice_name == "apcli0") 
+    print("IPs of network adapter " + adapter.nice_name, " --> " + adapters.ips[0])
+
 
 # for adapter in adapters:
 #     if () 
