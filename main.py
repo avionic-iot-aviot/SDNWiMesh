@@ -23,21 +23,15 @@ print("\n\tIndirizzi Ip Asseganti\n")
 
 adapters = ifaddr.get_adapters()
 
-for adapter in adapters:
-    print("IPs of network adapter " + adapter.nice_name)
-    for ip in adapter.ips:
-        print("   %s/%s" % (ip.ip, ip.network_prefix))
+print ( adapter["br-wlan"] )
+print ( adapter["apcli0"] )
 
+# for adapter in adapters:
+#     if () 
+#     print("IPs of network adapter " + adapter.nice_name)
 
-test =  os.popen('ifconfig br-wlan').read()
-
-temp = ""
-for x in test:
-  temp = temp + x
-
-for x in temp.split("\n"):
-    
-    print ("--> ", x)
+#     for ip in adapter.ips:
+#         print("   %s/%s" % (ip.ip, ip.network_prefix))
 
 
 # for element in test.split("\n"):
