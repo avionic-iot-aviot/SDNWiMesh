@@ -28,6 +28,7 @@ for adapter in adapters:
         IpStation = adapter.ips[0].ip
     if (adapter.nice_name == "apcli0"):
         IpClient = adapter.ips[0].ip
+        
 print ( IpStation , IpClient)
 # for adapter in adapters:
 #     if () 
