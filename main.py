@@ -26,11 +26,11 @@ adapters = ifaddr.get_adapters()
 
 for adapter in adapters:
     if (adapter.nice_name == "br-wlan"):
-        print("IPs of network adapter " + adapter.nice_name, " --> " + adapters.ips.ip[0])
+        print("IPs of network adapter " + adapter.nice_name, " --> " + adapter.ips[0].ip)
 
 for adapter in adapters:
     if (adapter.nice_name == "apcli0"):
-        print("IPs of network adapter " + adapter.nice_name, " --> " + adapters.ips.ip[0])
+        print("IPs of network adapter " + adapter.nice_name, " --> " + adapter.ips[0].ip)
 
 
 # for adapter in adapters:
