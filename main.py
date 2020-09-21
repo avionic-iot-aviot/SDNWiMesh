@@ -45,7 +45,7 @@ ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERA
 
 ThreadUdpReceiver.start()
 ThreadUdpBeacon.start()
-
+ThreadUdpReport.start()
 ############ 2. Avvio Server UDP ############
 
 
