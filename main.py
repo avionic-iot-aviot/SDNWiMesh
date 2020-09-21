@@ -24,9 +24,12 @@ print("\n\tIndirizzi Ip Asseganti\n")
 
 test =  os.popen('ifconfig br-wlan').read()
 
-for element in test.split("\n"):
-    print ("--> ", element )
-    print ("\n")
+temp1 = test.split("\n")
+
+print ( type(temp1) )
+# for element in test.split("\n"):
+#     print ("--> ", element )
+#     print ("\n")
 
 
 
