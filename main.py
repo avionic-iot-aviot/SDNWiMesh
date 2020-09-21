@@ -21,6 +21,14 @@ init_config.SetDeviceOnStart()
 print("\n\tIndirizzi Ip Asseganti\n")
 
 
+adapters = ifaddr.get_adapters()
+
+for adapter in adapters:
+    print("IPs of network adapter " + adapter.nice_name)
+    for ip in adapter.ips:
+        print("   %s/%s" % (ip.ip, ip.network_prefix))
+
+
 test =  os.popen('ifconfig br-wlan').read()
 
 temp = ""
@@ -28,7 +36,9 @@ for x in test:
   temp = temp + x
 
 for x in temp.split("\n"):
+    
     print ("--> ", x)
+
 
 # for element in test.split("\n"):
 #     print ("--> ", element )
