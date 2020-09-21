@@ -36,10 +36,10 @@ def GetIp(interface):
 
 def GetDefaultGateway(interface):
     temp = GetIp(interface)
-    temp2 = temp.split(".")
-    temp1 = "" + temp2[0] + "." + temp2[1] + "." + temp2[2] + "." + "1"
-    print ( temp1 , type(temp1) )
-    return temp1
+    temp1 = temp.split(".")
+    temp2 = "" + temp1[0] + "." + temp1[1] + "." + temp1[2] + "." + "1"
+    #print ( temp1 , type(temp1) )
+    return temp2
 
     # gateway = ''
     # addrs = netifaces.ifaddresses(interface)
