@@ -21,34 +21,10 @@ init_config.SetDeviceOnStart()
 print("\n\tIndirizzi Ip Asseganti\n")
 
 
-adapters = ifaddr.get_adapters()
-
-for adapter in adapters:
-    if (adapter.nice_name == "br-wlan"):
-        IpStation = adapter.ips[0].ip
-    if (adapter.nice_name == "apcli0"):
-        IpClient = adapter.ips[0].ip
-        
-print ( IpStation , IpClient)
-# for adapter in adapters:
-#     if () 
-#     print("IPs of network adapter " + adapter.nice_name)
-
-#     for ip in adapter.ips:
-#         print("   %s/%s" % (ip.ip, ip.network_prefix))
-
-
-# for element in test.split("\n"):
-#     print ("--> ", element )
-#     print ("\n")
-
-
-
-
 ############ 1. Calcolo Indirizzi Ip Nuovi ############
 print( config['GENERAL-OMEGA']['StationInterface'], type(config['GENERAL-OMEGA']['StationInterface']) )
-IpStation = init_config.GetIps( config['GENERAL-OMEGA']['StationInterface'] )
-IpClient = init_config.GetIps( config['GENERAL-OMEGA']['ClientInterface'] )
+IpStation = init_config.GetIp( config['GENERAL-OMEGA']['StationInterface'] )
+IpClient = init_config.GetIp( config['GENERAL-OMEGA']['ClientInterface'] )
 
 print(f'Client: {IpClient} \t Station: {IpStation}')
 
