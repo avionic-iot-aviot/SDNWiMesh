@@ -21,16 +21,13 @@ init_config.SetDeviceOnStart()
 print("\n\tIndirizzi Ip Asseganti\n")
 
 
-
 test =  os.popen('ifconfig br-wlan').read()
 
-temp1 = test.split("\n")
+temp = ""
+for x in test:
+  temp = temp + x
+print (type(temp), len(temp), temp ) 
 
-for x in temp1:
-  print("--> ",x)
-
-print ( type(temp1) )
-print ( len(temp1) )
 # for element in test.split("\n"):
 #     print ("--> ", element )
 #     print ("\n")
