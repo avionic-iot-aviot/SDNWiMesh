@@ -36,7 +36,9 @@ def GetIp(interface):
 
 def GetDefaultGateway(interface):
     temp = GetIp(interface)
-    return "" + (temp.split("."))[0] + "." + (temp.split("."))[1] + "." + (temp.split("."))[2] + "." + "1"
+    temp1 = "" + (temp.split("."))[0] + "." + (temp.split("."))[1] + "." + (temp.split("."))[2] + "." + "1"
+    print ( temp1 , type(temp1) )
+    return temp1
 
     # gateway = ''
     # addrs = netifaces.ifaddresses(interface)

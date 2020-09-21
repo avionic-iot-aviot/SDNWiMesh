@@ -42,6 +42,7 @@ ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getByte
 
 ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), IpClient, IpDefaultGateway ) 
 
+
 ThreadUdpReceiver.start()
 ThreadUdpBeacon.start()
 
