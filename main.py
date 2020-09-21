@@ -3,7 +3,8 @@ from Packets import Packets
 import init_config
 import socket
 import ifaddr
-import netifaces
+import subprocess
+import os
 import time
 import UDP_Socket
 import threading
@@ -19,9 +20,13 @@ init_config.SetDeviceOnStart()
 
 print("\n\tIndirizzi Ip Asseganti\n")
 
-print( netifaces.interfaces() )
-addrs = netifaces.ifaddresses('lo0')
-print( addrs[netifaces.AF_INET] )
+
+
+print( os.popen('echo Helloo!!').read() )
+
+
+
+
 
 
 ############ 1. Calcolo Indirizzi Ip Nuovi ############

@@ -3,7 +3,7 @@ import socket
 import sys
 import os
 import time
-import netifaces
+
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
@@ -27,18 +27,18 @@ def SetDeviceOnStart():
         time.sleep(40)
         print("Tutto ok")
 
-def GetIps(interface):
-    addrs = netifaces.ifaddresses('br-wlan')
-    #print ( ((addrs[2])[0])['addr'] )
-    return ((addrs[2])[0])['addr']
+# def GetIps(interface):
+#     addrs = netifaces.ifaddresses('br-wlan')
+#     #print ( ((addrs[2])[0])['addr'] )
+#     return ((addrs[2])[0])['addr']
 
 
-def GetDefaultGateway(interface):
-    gateway = ''
-    addrs = netifaces.ifaddresses(interface)
-    print ( addrs )
+# def GetDefaultGateway(interface):
+#     gateway = ''
+#     addrs = netifaces.ifaddresses(interface)
+#     print ( addrs )
 
-    for obj in netifaces.gateways()[2]:
-        if ( ((obj)[0])[1] == interface ):
-            gateway = ((obj)[0])[0]
-    return gateway
+#     for obj in netifaces.gateways()[2]:
+#         if ( ((obj)[0])[1] == interface ):
+#             gateway = ((obj)[0])[0]
+#     return gateway
