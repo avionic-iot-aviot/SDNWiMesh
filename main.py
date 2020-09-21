@@ -23,7 +23,6 @@ print("\n\tIndirizzi Ip Asseganti\n")
 
 adapters = ifaddr.get_adapters()
 
-
 # print ( adapters.["br-wlan"] )
 # print ( adapters.["apcli0"] )
 
