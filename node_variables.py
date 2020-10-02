@@ -1,7 +1,7 @@
 
 # IP
 IpStation = ""
-IpBroadcast = ""
+IpClient = ""
 IpDefaultGateway = ""
 
 # Neighbor
