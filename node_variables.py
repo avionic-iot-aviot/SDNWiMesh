@@ -5,4 +5,4 @@ IpClient = ""
 IpDefaultGateway = ""
 
 # Neighbor
-list_neighbor = [""]
+list_neighbor = []
