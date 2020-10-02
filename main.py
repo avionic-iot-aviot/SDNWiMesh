@@ -19,6 +19,8 @@ config.read('config.ini')
 ############ 0. Asseganre gli Indirizzi Ip Nuovi ############
 
 print("\n--> melo: ", node_variable.melo)
+node_variable.melo = 100
+print("\n--> melo: ", node_variable.melo)
 print("\n\n\t\tSTART SDNWISE\n\n")
 
 init_config.SetDeviceOnStart()
