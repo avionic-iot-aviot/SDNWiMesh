@@ -6,6 +6,7 @@ import PacketsHandler
 from Packets import ReportPacket
 from Packets import BeaconPacket
 from Packets import Packets
+import node_variables
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
