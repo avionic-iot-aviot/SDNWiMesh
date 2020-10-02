@@ -10,7 +10,6 @@ import time
 import UDP_Socket
 import threading
 import node_variable
-config.x = 1
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
