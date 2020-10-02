@@ -92,7 +92,7 @@ def SendUdpPacketUnicastLoop(port,src,dst):
    UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
    UDPClientSocket.settimeout(0.2)
    while True:
-      pckReort = ReportPacket ( config.get(socket.gethostname(),'NetId'), dst , src, "100", dst )
+      pckReort = ReportPacket ( config.get(socket.gethostname(),'NetId'), dst , src, "100", dst, node_variables.list_neighbor)
       bytesToSend = pckReort.getBytesFromPackets()
       UDPClientSocket.sendto(bytesToSend, serverAddressPort)
       print("Unicast Report Send!")
