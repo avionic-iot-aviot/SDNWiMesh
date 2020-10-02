@@ -143,4 +143,5 @@ def PrintBasicInfo(NeighborInfo,OtherInfo):
          print("[Nei-INFO] Network ID: ", node_variables.list_neighbor )
       if (OtherInfo == 1):
          print(" --- ")
+      print("\n")
       time.sleep(int(config['GENERAL']['InfoSleep']))

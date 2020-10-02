@@ -43,12 +43,12 @@ ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getByte
 
 ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpClient, node_variables.IpDefaultGateway ) 
 
-ThreadUdpReport = UDP_Socket.ThreadPrintInfoNode(4,"Thread-Info")
+ThreadPrintInfo = UDP_Socket.ThreadPrintInfoNode(4,"Thread-Info")
 
 ThreadUdpReceiver.start()
 ThreadUdpBeacon.start()
 ThreadUdpReport.start()
-
+ThreadPrintInfo.start()
 
 
 ############ 2. Avvio Server UDP ############
