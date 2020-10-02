@@ -9,12 +9,16 @@ import os
 import time
 import UDP_Socket
 import threading
+import node_variable
+config.x = 1
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
 
 
 ############ 0. Asseganre gli Indirizzi Ip Nuovi ############
+
+print("\n--> melo: ", node_variable.melo)
 print("\n\n\t\tSTART SDNWISE\n\n")
 
 init_config.SetDeviceOnStart()
