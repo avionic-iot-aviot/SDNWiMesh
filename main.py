@@ -9,7 +9,7 @@ import os
 import time
 import UDP_Socket
 import threading
-import node_variable
+import node_variables
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
@@ -17,9 +17,6 @@ config.read('config.ini')
 
 ############ 0. Asseganre gli Indirizzi Ip Nuovi ############
 
-print("\n--> melo: ", node_variable.melo)
-node_variable.melo = 100
-print("\n--> melo: ", node_variable.melo)
 print("\n\n\t\tSTART SDNWISE\n\n")
 
 init_config.SetDeviceOnStart()
@@ -29,28 +26,58 @@ print("\n\tIndirizzi Ip Asseganti\n")
 
 ############ 1. Calcolo Indirizzi Ip Nuovi ############
 print( config['GENERAL-OMEGA']['StationInterface'], type(config['GENERAL-OMEGA']['StationInterface']) )
-IpStation = init_config.GetIp( config['GENERAL-OMEGA']['StationInterface'] )
-IpClient = init_config.GetIp( config['GENERAL-OMEGA']['ClientInterface'] )
+node_variables.IpStation = init_config.GetIp( config['GENERAL-OMEGA']['StationInterface'] )
+node_variables.IpClient = init_config.GetIp( config['GENERAL-OMEGA']['ClientInterface'] )
 
-print(f'Client: {IpClient} \t Station: {IpStation}')
+print(f'Client: {node_variables.IpClient} \t Station: {node_variables.IpStation}')
 
-IpDefaultGateway = init_config.GetDefaultGateway( config['GENERAL-OMEGA']['ClientInterface'] )
+node_variables.IpDefaultGateway = init_config.GetDefaultGateway( config['GENERAL-OMEGA']['ClientInterface'] )
 
-print(f"Default Gateway: {IpDefaultGateway}")
+print(f"Default Gateway: {node_variables.IpDefaultGateway}")
 
 ############ 2. Run Threads ############
 
 ThreadUdpReceiver = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver", int(config['GENERAL']['Port']) )
 
-pckBeacon = BeaconPacket ( config.get(socket.gethostname(),'NetId'), config.get(socket.gethostname(),'IpBroadcast') , IpStation, "100", config.get(socket.gethostname(),'IpBroadcast') )
+pckBeacon = BeaconPacket ( config.get(socket.gethostname(),'NetId'), config.get(socket.gethostname(),'IpBroadcast') , node_variables.IpStation, "100", config.get(socket.gethostname(),'IpBroadcast') )
 ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['Port']) )
 
-ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), IpClient, IpDefaultGateway ) 
+ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpClient, node_variables.IpDefaultGateway ) 
 
 
 ThreadUdpReceiver.start()
 ThreadUdpBeacon.start()
 ThreadUdpReport.start()
+
+
+
+class ThreadPrintInfoNode (threading.Thread):
+   def __init__(self, threadID, name, port):
+      threading.Thread.__init__(self)
+      self.threadID = threadID
+      self.name = name
+      self.port = port
+
+   def run(self):
+       print("Starting " + self.name)
+       #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
+       PrintBasicInfo()
+       NeighborInfo() 
+
+def PrintBasicInfo():
+    while True:
+      print("\n[B-INFO] Network ID: ", config.get(socket.gethostname(),'NetId') )
+      print("[B-INFO] Node ID: ", config.get(socket.gethostname(),'Id') )
+      print("[B-INFO] SINK: ", config.get(socket.gethostname(),'Sink') )
+      print("[B-INFO] Ip Station: ", node_variables.IpStation )
+      print("[B-INFO] Ip Client: ", node_variables.IpClient )
+      print("[B-INFO] Default Gateway: ", node_variables.IpDefaultGateway )
+      time.sleep(int(config['GENERAL']['InfoSleep']))
+
+def NeighborInfo():
+    while True:
+      print("[Nei-INFO] Network ID: ", node_variables.list_neighbor )
+      time.sleep(int(config['GENERAL']['InfoSleep']))
 ############ 2. Avvio Server UDP ############
 
 

@@ -33,7 +33,6 @@ def GetIp(interface):
     # #print ( ((addrs[2])[0])['addr'] )
     # return ((addrs[2])[0])['addr']
 
-
 def GetDefaultGateway(interface):
     temp = GetIp(interface)
     temp1 = temp.split(".")
