@@ -1,4 +1,0 @@
-creating build/temp.macosx-10.9-x86_64-3.8/build
-creating build/temp.macosx-10.9-x86_64-3.8/build/temp.macosx-10.9-x86_64-3.8
-gcc -Wno-unused-result -Wsign-compare -Wunreachable-code -fno-common -dynamic -DNDEBUG -g -fwrapv -O3 -Wall -arch x86_64 -g -I/Library/Frameworks/Python.framework/Versions/3.8/include/python3.8 -c build/temp.macosx-10.9-x86_64-3.8/conftest-0.c -o build/temp.macosx-10.9-x86_64-3.8/build/temp.macosx-10.9-x86_64-3.8/conftest-0.o
-gcc build/temp.macosx-10.9-x86_64-3.8/build/temp.macosx-10.9-x86_64-3.8/conftest-0.o -o build/temp.macosx-10.9-x86_64-3.8/conftest

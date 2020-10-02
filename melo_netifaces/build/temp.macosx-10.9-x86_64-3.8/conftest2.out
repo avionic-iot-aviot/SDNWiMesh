@@ -1,1 +1,0 @@
-gcc -Wno-unused-result -Wsign-compare -Wunreachable-code -fno-common -dynamic -DNDEBUG -g -fwrapv -O3 -Wall -arch x86_64 -g -DHAVE_GETIFADDRS=1 -I/Library/Frameworks/Python.framework/Versions/3.8/include/python3.8 -c build/temp.macosx-10.9-x86_64-3.8/conftest-1.c -o build/temp.macosx-10.9-x86_64-3.8/build/temp.macosx-10.9-x86_64-3.8/conftest-1.o

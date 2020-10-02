@@ -1,4 +1,0 @@
-creating build/temp.macosx-10.15-x86_64-2.7/build
-creating build/temp.macosx-10.15-x86_64-2.7/build/temp.macosx-10.15-x86_64-2.7
-cc -fno-strict-aliasing -fno-common -dynamic -g -Os -pipe -fno-common -fno-strict-aliasing -fwrapv -DENABLE_DTRACE -DMACOSX -DNDEBUG -Wall -Wstrict-prototypes -Wshorten-64-to-32 -iwithsysroot /usr/local/libressl/include -DNDEBUG -g -fwrapv -Os -Wall -Wstrict-prototypes -DENABLE_DTRACE -arch x86_64 -pipe -I/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7 -c build/temp.macosx-10.15-x86_64-2.7/conftest-0.c -o build/temp.macosx-10.15-x86_64-2.7/build/temp.macosx-10.15-x86_64-2.7/conftest-0.o
-cc build/temp.macosx-10.15-x86_64-2.7/build/temp.macosx-10.15-x86_64-2.7/conftest-0.o -o build/temp.macosx-10.15-x86_64-2.7/conftest
