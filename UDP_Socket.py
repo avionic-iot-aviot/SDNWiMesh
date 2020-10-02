@@ -129,10 +129,9 @@ class ThreadPrintInfoNode (threading.Thread):
    def run(self):
        print("Starting " + self.name)
        #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
-       PrintBasicInfo()
-       NeighborInfo() 
+       PrintBasicInfo(1,0)
 
-def PrintBasicInfo():
+def PrintBasicInfo(NeighborInfo,OtherInfo):
     while True:
       print("\n[B-INFO] Network ID: ", config.get(socket.gethostname(),'NetId') )
       print("[B-INFO] Node ID: ", config.get(socket.gethostname(),'Id') )
@@ -140,9 +139,8 @@ def PrintBasicInfo():
       print("[B-INFO] Ip Station: ", node_variables.IpStation )
       print("[B-INFO] Ip Client: ", node_variables.IpClient )
       print("[B-INFO] Default Gateway: ", node_variables.IpDefaultGateway )
-      time.sleep(int(config['GENERAL']['InfoSleep']))
-
-def NeighborInfo():
-    while True:
-      print("[Nei-INFO] Network ID: ", node_variables.list_neighbor )
+      if (NeighborInfo == 1):
+         print("[Nei-INFO] Network ID: ", node_variables.list_neighbor )
+      if (OtherInfo == 1):
+         print(" --- ")
       time.sleep(int(config['GENERAL']['InfoSleep']))
