@@ -43,6 +43,7 @@ ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getByte
 
 ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpClient, node_variables.IpDefaultGateway ) 
 
+ThreadUdpReport = Packets.ThreadPrintInfoNode(4,"Thread-Info")
 
 ThreadUdpReceiver.start()
 ThreadUdpBeacon.start()
@@ -50,33 +51,6 @@ ThreadUdpReport.start()
 
 
 
-class ThreadPrintInfoNode (threading.Thread):
-   def __init__(self, threadID, name, port):
-      threading.Thread.__init__(self)
-      self.threadID = threadID
-      self.name = name
-      self.port = port
-
-   def run(self):
-       print("Starting " + self.name)
-       #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
-       PrintBasicInfo()
-       NeighborInfo() 
-
-def PrintBasicInfo():
-    while True:
-      print("\n[B-INFO] Network ID: ", config.get(socket.gethostname(),'NetId') )
-      print("[B-INFO] Node ID: ", config.get(socket.gethostname(),'Id') )
-      print("[B-INFO] SINK: ", config.get(socket.gethostname(),'Sink') )
-      print("[B-INFO] Ip Station: ", node_variables.IpStation )
-      print("[B-INFO] Ip Client: ", node_variables.IpClient )
-      print("[B-INFO] Default Gateway: ", node_variables.IpDefaultGateway )
-      time.sleep(int(config['GENERAL']['InfoSleep']))
-
-def NeighborInfo():
-    while True:
-      print("[Nei-INFO] Network ID: ", node_variables.list_neighbor )
-      time.sleep(int(config['GENERAL']['InfoSleep']))
 ############ 2. Avvio Server UDP ############
 
 

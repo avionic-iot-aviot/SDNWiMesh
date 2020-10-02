@@ -1,3 +1,11 @@
+import init_config
+import socket
+import ifaddr
+import subprocess
+import os
+import time
+import threading
+import node_variables
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
@@ -155,3 +163,29 @@ class DataPacket(Packets):
         super().__init__(NetId,"",Destination,Source,"2",TTL,NextHop,"Payload DATA")
         super().LengthCalcolator()
 
+class ThreadPrintInfoNode (threading.Thread):
+   def __init__(self, threadID, name):
+      threading.Thread.__init__(self)
+      self.threadID = threadID
+      self.name = name
+
+   def run(self):
+       print("Starting " + self.name)
+       #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
+       PrintBasicInfo()
+       NeighborInfo() 
+
+def PrintBasicInfo():
+    while True:
+      print("\n[B-INFO] Network ID: ", config.get(socket.gethostname(),'NetId') )
+      print("[B-INFO] Node ID: ", config.get(socket.gethostname(),'Id') )
+      print("[B-INFO] SINK: ", config.get(socket.gethostname(),'Sink') )
+      print("[B-INFO] Ip Station: ", node_variables.IpStation )
+      print("[B-INFO] Ip Client: ", node_variables.IpClient )
+      print("[B-INFO] Default Gateway: ", node_variables.IpDefaultGateway )
+      time.sleep(int(config['GENERAL']['InfoSleep']))
+
+def NeighborInfo():
+    while True:
+      print("[Nei-INFO] Network ID: ", node_variables.list_neighbor )
+      time.sleep(int(config['GENERAL']['InfoSleep']))
