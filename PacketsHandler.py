@@ -42,3 +42,6 @@ def UpdateNeighborList(ip):
 
 def FindIpInTheNeighborList(ip):
     return ip in node_variables.list_neighbor
+
+def SendReportToSink(packet):
+    print ( packet.TTL )
