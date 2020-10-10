@@ -34,22 +34,22 @@ def TypeBeacon(packet):
         if (config.get(socket.gethostname(),'Sink') == "NO"):
             UpdateNeighborList(packet.Source)
             packet.ChangeDst(config['GENERAL']['IpSink'])
-            data=packet.getBytesFromPackets(packet)
+            data=packet.getBytesFromPackets()
             UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
         else:
             if (packet.TTL == "100" ):
                 UpdateNeighborList(packet.Source)
-                data=packet.getBytesFromPackets(packet)
+                data=packet.getBytesFromPackets()
                 UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
             else: 
-                data=packet.getBytesFromPackets(packet)
+                data=packet.getBytesFromPackets()
                 UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
 
 
 def TypeReport(packet):
     if ( packet.Source != config.get(socket.gethostname(),'IpStation') ):
         print("Report Ricevuto from: ", packet.Source)
-        data=packet.getBytesFromPackets(packet)
+        data=packet.getBytesFromPackets()
         UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
 
 
