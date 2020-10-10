@@ -28,6 +28,7 @@ def PacketHandler(data, address):
         print("NO - non è per me")
         packet.DecreaseTTL()
         print("@@@@@@@ ", packet.TTL)
+        data = packet.getBytesFromPackets()
         UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
 
 
