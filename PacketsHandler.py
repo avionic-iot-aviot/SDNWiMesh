@@ -14,7 +14,7 @@ config.read('config.ini')
 
 def PacketHandler(data, address):
     packet = Packets.getPacketFromBytes(data)
-    packets.printLitePacket()
+    packet.printLitePacket()
     print (packet.Destination,config.get(socket.gethostname(),'IpStation'))
     if (packet.Destination == config.get(socket.gethostname(),'IpStation') ):
         print ("Yess - è per me")
