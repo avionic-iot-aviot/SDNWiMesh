@@ -16,6 +16,7 @@ def PacketHandler(data, address):
     packet = Packets.getPacketFromBytes(data)
     print (packet.Destination,config.get(socket.gethostname(),'IpStation'))
     if (packet.Destination == config.get(socket.gethostname(),'IpStation') ):
+        print ("Non è per me")
         if(int(packet.Type) == 0):
             TypeBeacon(packet)
         if(int(packet.Type) == 1):
@@ -23,8 +24,9 @@ def PacketHandler(data, address):
         if(int(packet.Type) == 2):
             TypeData(packet)
     else:
+        print("è per me")
         packet.DecreaseTTL()
-        print("@@@@@@@ ",packet.TTL)
+        print("@@@@@@@ ", packet.TTL)
         UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
 
 

@@ -30,3 +30,10 @@ rm master.zip
 cd SDNPy-master
 python3 main.py
 
+
+
+opkg update
+
+opkg install python3
+
+opkg install python3-pip
