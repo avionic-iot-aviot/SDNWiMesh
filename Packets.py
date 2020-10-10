@@ -85,7 +85,7 @@ class Packets:
             frame7 = bytearray(self.NextHop,'utf-8')
             frame8 = bytearray(self.Payload,'utf-8')
             frame = frame1 + frame2 + frame3 + frame4 + frame5 + frame6 + frame7 + frame8
-            print(frame)
+            ##print(frame)
             return frame
         else:
             print("Error Packet Size")
