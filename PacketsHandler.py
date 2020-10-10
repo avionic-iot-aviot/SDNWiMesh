@@ -30,15 +30,31 @@ def PacketHandler(data, address):
 def TypeBeacon(packet):
     if ( packet.Source != config.get(socket.gethostname(),'IpStation') ):
         print("Beacon Ricevuto from: ",packet.Source)
-        UpdateNeighborList(packet.Source)
+        if (config.get(socket.gethostname(),'Sink') == "NO"):
+            UpdateNeighborList(packet.Source)
+            packet.ChangeDst(config['GENERAL']['IpSink'])
+            data=packet.getBytesFromPackets(packet)
+            UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
+        else:
+            if (packet.TTL == "100" ):
+                UpdateNeighborList(packet.Source)
+                data=packet.getBytesFromPackets(packet)
+                UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
+            else: 
+                data=packet.getBytesFromPackets(packet)
+                UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
+
 
 def TypeReport(packet):
     if ( packet.Source != config.get(socket.gethostname(),'IpStation') ):
-        print("Report Ricevuto from: ",packet.Source)
+        print("Report Ricevuto from: ", packet.Source)
+        data=packet.getBytesFromPackets(packet)
+        UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
+
 
 def TypeData(packet):
     if ( packet.Source != config.get(socket.gethostname(),'IpStation') ):
-        print("Data Ricevuto from: ",packet.Source)
+        print("Data Ricevuto from: ", packet.Source)
 
 
 def UpdateNeighborList(ip):

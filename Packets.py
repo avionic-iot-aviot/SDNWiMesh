@@ -148,6 +148,9 @@ class Packets:
     def DecreaseTTL(self):
         temp = int(self.TTL) - 1
         self.TTL = str(temp)
+    
+    def ChangeDst(self,NewDest):
+        self.Destination = NewDest
 
 class BeaconPacket(Packets):
     
