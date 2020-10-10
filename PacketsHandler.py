@@ -46,7 +46,8 @@ def TypeBeacon(packet):
                 UpdateNeighborList(packet.Source)
                 data=packet.getBytesFromPackets()
                 UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
-            else: 
+            else:
+                print("&&&&&& ", packet.TTL)
                 data=packet.getBytesFromPackets()
                 UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
 
