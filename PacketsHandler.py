@@ -14,6 +14,7 @@ config.read('config.ini')
 
 def PacketHandler(data, address):
     packet = Packets.getPacketFromBytes(data)
+    print (packet.Destination,config.get(socket.gethostname(),'IpStation'))
     if (packet.Destination == config.get(socket.gethostname(),'IpStation') ):
         if(int(packet.Type) == 0):
             TypeBeacon(packet)
