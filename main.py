@@ -51,8 +51,8 @@ else:
 
 ThreadPrintInfo = UDP_Socket.ThreadPrintInfoNode(4,"Thread-Info")
 
-
-ThreadUdpBeacon.start()
+if (config.get(socket.gethostname(),'Sink') == "NO"):
+    ThreadUdpBeacon.start()
 ThreadUdpReceiver.start()
 ThreadUdpReport.start()
 ThreadPrintInfo.start()
