@@ -35,6 +35,9 @@ node_variables.IpDefaultGateway = init_config.GetDefaultGateway( config['GENERAL
 print(f"Default Gateway: {node_variables.IpDefaultGateway}")
 
 ############ 2. Run Threads ############
+if (config.get(socket.gethostname(),'Sink') == "SI"):
+    node_variables.IpClient = node_variables.IpStation
+
 
 ThreadUdpReceiver = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver", int(config['GENERAL']['Port']) )
 
