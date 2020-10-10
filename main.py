@@ -39,16 +39,17 @@ print(f"Default Gateway: {node_variables.IpDefaultGateway}")
 ThreadUdpReceiver = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver", int(config['GENERAL']['Port']) )
 
 
-pckBeacon = BeaconPacket ( config.get(socket.gethostname(),'NetId'), node_variables.IpDefaultGateway , node_variables.IpStation, "100", node_variables.IpDefaultGateway )
+pckBeacon = BeaconPacket ( config.get(socket.gethostname(),'NetId'), node_variables.IpDefaultGateway , node_variables.IpStation, "100", node_variables.IpDefaultGateway, node_variables.IpClient )
 ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['Port']) )
-
-ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpClient, node_variables.IpDefaultGateway ) 
+if (config.get(socket.gethostname(),'Sink') == "NO"):
+    ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpClient, node_variables.IpDefaultGateway ) 
+else:
+    ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpStation, node_variables.IpDefaultGateway ) 
 
 ThreadPrintInfo = UDP_Socket.ThreadPrintInfoNode(4,"Thread-Info")
 
-if (config.get(socket.gethostname(),'Sink') == "NO"):
-    ThreadUdpBeacon.start()
 
+ThreadUdpBeacon.start()
 ThreadUdpReceiver.start()
 ThreadUdpReport.start()
 ThreadPrintInfo.start()
