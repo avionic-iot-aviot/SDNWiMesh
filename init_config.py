@@ -16,7 +16,7 @@ def SetDeviceOnStart():
     os.system('uci commit network')
     os.system('/etc/init.d/network restart')
     sys.stdout.flush()
-    time.sleep(40)
+    time.sleep(50)
     print("Tutto ok")
 
 def GetIp(interface):
