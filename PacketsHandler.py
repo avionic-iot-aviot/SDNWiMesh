@@ -14,12 +14,17 @@ config.read('config.ini')
 
 def PacketHandler(data, address):
     packet = Packets.getPacketFromBytes(data)
-    if(int(packet.Type) == 0):
-        TypeBeacon(packet)
-    if(int(packet.Type) == 1):
-        TypeReport(packet)
-    if(int(packet.Type) == 2):
-        TypeData(packet)
+    if (packet.Destination == config.get(socket.gethostname(),'IpStation') ):
+        if(int(packet.Type) == 0):
+            TypeBeacon(packet)
+        if(int(packet.Type) == 1):
+            TypeReport(packet)
+        if(int(packet.Type) == 2):
+            TypeData(packet)
+    else:
+        packet.DecreaseTTL()
+        UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
+
 
 
 def TypeBeacon(packet):

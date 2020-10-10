@@ -144,11 +144,16 @@ class Packets:
         temp = len(self.NetId) + len(self.Destination) + len(self.Source) +len(self.Type) + len(self.TTL) +len(self.NextHop) +len(self.Payload)
         #print(temp)
         self.Length = str(temp)
+    
+    def DecreaseTTL(self):
+        temp = int(self.TTL) - 1
+        self.TTL = str(temp)
 
 class BeaconPacket(Packets):
     
     def __init__(self,NetId,Destination,Source,TTL,NextHop):
-        super().__init__(NetId,"",Destination,Source,"0",TTL,NextHop,"Payload BEACON")
+        #super().__init__(NetId,"",Destination,Source,"0",TTL,NextHop,"Payload BEACON")
+        super().__init__(NetId,"",Destination,Source,"0",TTL,NextHop,"")
         super().LengthCalcolator()
 
 class ReportPacket(Packets):
