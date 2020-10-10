@@ -93,7 +93,7 @@ def SendUdpPacketUnicastLoop(port,src,dst):
    UDPClientSocket.settimeout(0.2)
    while True:
       node_variables.list_neighbor
-      pckReort = ReportPacket ( config.get(socket.gethostname(),'NetId'), config['GENERAL']['IpSink'], src, "100", dst, ', '.join(node_variables.list_neighbor) )
+      pckReort = ReportPacket ( config.get(socket.gethostname(),'NetId'), config['GENERAL']['IpSink'], src, "100", dst, config.get(socket.gethostname(),'Id') + " " + ', '.join(node_variables.list_neighbor) )
       bytesToSend = pckReort.getBytesFromPackets()
       UDPClientSocket.sendto(bytesToSend, serverAddressPort)
       print("Unicast Report Send!")
