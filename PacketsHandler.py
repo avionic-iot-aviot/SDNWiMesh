@@ -17,8 +17,8 @@ def PacketHandler(data, address):
     packet.printLitePacket()
     print (packet.Destination,config.get(socket.gethostname(),'IpStation'))
     if (packet.Destination == config.get(socket.gethostname(),'IpStation') ):
-        print ("Yess - è per me")
-        print("######## ", packet.TTL)
+        #print ("Yess - è per me")
+        #print("######## ", packet.TTL)
         if(int(packet.Type) == 0):
             TypeBeacon(packet)
         if(int(packet.Type) == 1):
@@ -26,9 +26,9 @@ def PacketHandler(data, address):
         if(int(packet.Type) == 2):
             TypeData(packet)
     else:
-        print("NO - non è per me")
+        #print("NO - non è per me")
         packet.DecreaseTTL()
-        print("@@@@@@@ ", packet.TTL)
+        #print("@@@@@@@ ", packet.TTL)
         data = packet.getBytesFromPackets()
         UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
 
@@ -45,12 +45,12 @@ def TypeBeacon(packet):
             UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
         else:
             if (int(packet.TTL) == 100 ):
-                print("¶¶¶¶¶¶¶ ", packet.TTL)
+                #print("¶¶¶¶¶¶¶ ", packet.TTL)
                 UpdateNeighborList(packet.Source)
                 data=packet.getBytesFromPackets()
                 UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
             else:
-                print("&&&&&& ", packet.TTL)
+                #print("&&&&&& ", packet.TTL)
                 data=packet.getBytesFromPackets()
                 UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
 
