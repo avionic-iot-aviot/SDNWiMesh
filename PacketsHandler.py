@@ -40,6 +40,7 @@ def TypeBeacon(packet):
         if (config.get(socket.gethostname(),'Sink') == "NO"):
             UpdateNeighborList(packet.Source)
             packet.ChangeDst(config['GENERAL']['IpSink'])
+            packet.DecreaseTTL()
             data=packet.getBytesFromPackets()
             UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
         else:
