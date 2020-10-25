@@ -27,7 +27,7 @@ class ThreadSendDataAudio (threading.Thread):
 
 
 def AudioFile():
-    
+    time.sleep(15)
     while True:
         obj = wave.open('/tmp/SDNPy-master/sound.wav', 'r')
         print("Number of channels", obj.getnchannels())
