@@ -8,6 +8,7 @@ import subprocess
 import os
 import time
 import UDP_Socket
+import AudioFile
 import threading
 import node_variables
 from configparser import ConfigParser
@@ -52,9 +53,13 @@ ThreadPrintInfo = UDP_Socket.ThreadPrintInfoNode(4,"Thread-Info")
 
 if (config.get(socket.gethostname(),'Sink') == "NO"):
     ThreadUdpBeacon.start()
+
+ThreadAudioFile = AudioFile.ThreadSendDataAudio(4,"Tread-Audio")
+
 ThreadUdpReceiver.start()
 ThreadUdpReport.start()
 ThreadPrintInfo.start()
+ThreadAudioFile.start()
 
 
 ############ 2. Avvio Server UDP ############

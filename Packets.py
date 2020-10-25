@@ -167,7 +167,7 @@ class ReportPacket(Packets):
 
 class DataPacket(Packets):
     
-    def __init__(self,NetId,Destination,Source,TTL,NextHop):
+    def __init__(self,NetId,Destination,Source,TTL,NextHop,Payload):
         super().__init__(NetId,"",Destination,Source,"2",TTL,NextHop,"Payload DATA")
         super().LengthCalcolator()
 
