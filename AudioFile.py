@@ -38,6 +38,6 @@ def AudioFile():
             tmp = obj.readframes(int(config['FileWave']['Frame']))
             frame = frame + len(tmp)
             print("Frame ["+ str(x) + "]   lette: " + str(frame))
-            time.sleep(int(config['FileWave']['TimeSleepBetweenTwoFrame']))
+            #time.sleep(int(config['FileWave']['TimeSleepBetweenTwoFrame']))
         obj.close()
         time.sleep(int(config['FileWave']['TimeSleepBetweenTwoPlay']))
