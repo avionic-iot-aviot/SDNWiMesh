@@ -65,6 +65,8 @@ def TypeReport(packet):
 def TypeData(packet):
     if ( packet.Source != config.get(socket.gethostname(),'IpStation') ):
         print("Data Ricevuto from: ", packet.Source)
+        data=packet.getBytesFromPackets()
+        UDP_Socket.SendUdpPacketUnicast(data,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
 
 
 def UpdateNeighborList(ip):
