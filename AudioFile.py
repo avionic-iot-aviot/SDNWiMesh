@@ -42,6 +42,6 @@ def AudioFile():
             UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
             frame = frame + len(tmp)
             print("Frame ["+ str(x) + "]   lette: " + str(frame))
-            time.sleep(int(config['FileWave']['TimeSleepBetweenTwoFrame']))
+            time.sleep(float(config['FileWave']['TimeSleepBetweenTwoFrame']))
         obj.close()
         time.sleep(int(config['FileWave']['TimeSleepBetweenTwoPlay']))
