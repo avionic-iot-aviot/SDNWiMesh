@@ -39,7 +39,7 @@ def AudioFile():
         for x in range(0, 2601600, 80):
             tmp = obj.readframes(int(config['FileWave']['Frame']))
             pckData = DataPacket(config.get(socket.gethostname(),'NetId'),(config['GENERAL']['IpSink']), node_variables.IpStation, "100",node_variables.IpDefaultGateway,tmp)
-            UDP_Socket.SendUdpPacketUnicast(pckData,node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
+            UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),node_variables.IpDefaultGateway,int(config['GENERAL']['Port']))
             frame = frame + len(tmp)
             print("Frame ["+ str(x) + "]   lette: " + str(frame))
             #time.sleep(int(config['FileWave']['TimeSleepBetweenTwoFrame']))
