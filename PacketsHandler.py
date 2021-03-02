@@ -57,11 +57,11 @@ def TypeReport(packet):
 
 
 def TypeData(packet):
-    if (packet.Source != config.get(socket.gethostname(), 'IpStation')):
+    if (packet.Destination==str(config['GENERAL']['IpSink'])):
         print("Data Ricevuto from: ", packet.Source)
         data = packet.getBytesFromPackets()
-        UDP_Socket.SendUdpPacketUnicast(
-            data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))
+       # UDP_Socket.SendUdpPacketUnicast(
+            #data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))
 
 
 def UpdateNeighborList(ip):
