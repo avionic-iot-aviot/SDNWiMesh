@@ -57,11 +57,11 @@ def GetNeighboors():
         result = subprocess.Popen("ip neigh", shell=True, stdout=subprocess.PIPE)
         s = result.stdout.read()
         s1 = s.decode('utf-8', 'ignore')
-        list = s1.splitlines()
-        print("Arp table size:", len(list))
+        list = s1.splitlines()        
         size = len(list)
-        print("Network Scanning")
+        print("Network Scanning..arp stabilizing")
         if size < 250:
+            print("Arp table size:", len(list))
             flag = False
             for h in list:
                 field = h.split(" ")
