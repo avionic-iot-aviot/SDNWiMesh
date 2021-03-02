@@ -60,10 +60,9 @@ def GetNeighboors():
     neigh = []
     for h in list:
         field = h.split(" ")
-        if str(config['GENERAL']['IpSink'])[:-2] in str(field[0]) and str(field[2]) == "br-lan" and str(field[5])!="router" and str(field[7])!="FAILED" :
+        if str(config['GENERAL']['IpSink'])[:-2] in str(field[0]) and str(field[2]) == "br-lan" and str(field[5])!="router" :
             neigh.append(str(field[0]))
-    if len(neigh)==0:
-        neigh.append('null')
+  
     return neigh
 
 
