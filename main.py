@@ -20,20 +20,20 @@ config.read('config.ini')
 
 print("\n\n\t\tSTART SDNWISE\n\n")
 
-init_config.SetDeviceOnStart()
+#init_config.SetDeviceOnStart()
 
-print("\n\tIndirizzi Ip Asseganti\n")
+#print("\n\tIndirizzi Ip Asseganti\n")
 
 
 ############ 1. Calcolo Indirizzi Ip Nuovi ############
-node_variables.IpStation = init_config.GetIp( config['GENERAL-OMEGA']['StationInterface'] )
-node_variables.IpClient = init_config.GetIp( config['GENERAL-OMEGA']['ClientInterface'] )
+ip = init_config.GetIp( config['GENERAL']['StationInterface'] )
+#node_variables.IpClient = init_config.GetIp( config['GENERAL-OMEGA']['ClientInterface'] )
 
-print(f'Client: {node_variables.IpClient} \t Station: {node_variables.IpStation}')
+#print(f'Client: {node_variables.IpClient} \t Station: {node_variables.IpStation}')
 
-node_variables.IpDefaultGateway = init_config.GetDefaultGateway( config['GENERAL-OMEGA']['ClientInterface'] )
+#node_variables.IpDefaultGateway = init_config.GetDefaultGateway( config['GENERAL-OMEGA']['ClientInterface'] )
 
-print(f"Default Gateway: {node_variables.IpDefaultGateway}")
+#print(f"Default Gateway: {node_variables.IpDefaultGateway}")
 
 ############ 2. Run Threads ############
 if (config.get(socket.gethostname(),'Sink') == "SI"):
@@ -44,22 +44,22 @@ ThreadUdpReceiver = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver",
 pckBeacon = BeaconPacket ( config.get(socket.gethostname(),'NetId'), node_variables.IpDefaultGateway , node_variables.IpStation, "100", node_variables.IpDefaultGateway, config.get(socket.gethostname(),'Id') + " " + node_variables.IpClient )
 ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['Port']) )
 
-if (config.get(socket.gethostname(),'Sink') == "NO"):
-    ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpClient, node_variables.IpDefaultGateway ) 
-else:
-    ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpStation, node_variables.IpDefaultGateway ) 
+#if (config.get(socket.gethostname(),'Sink') == "NO"):
+ #   ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpClient, node_variables.IpDefaultGateway ) 
+#else:
+#    ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpStation, node_variables.IpDefaultGateway ) 
 
-ThreadPrintInfo = UDP_Socket.ThreadPrintInfoNode(4,"Thread-Info")
+#ThreadPrintInfo = UDP_Socket.ThreadPrintInfoNode(4,"Thread-Info")
 
-if (config.get(socket.gethostname(),'Sink') == "NO"):
-    ThreadUdpBeacon.start()
+#if (config.get(socket.gethostname(),'Sink') == "NO"):
+ThreadUdpBeacon.start() #da indentare correttamente
 
-ThreadAudioFile = AudioFile.ThreadSendDataAudio(4,"Tread-Audio")
+#ThreadAudioFile = AudioFile.ThreadSendDataAudio(4,"Tread-Audio")
 
 ThreadUdpReceiver.start()
-ThreadUdpReport.start()
-ThreadPrintInfo.start()
-ThreadAudioFile.start()
+#ThreadUdpReport.start()
+#ThreadPrintInfo.start()
+#ThreadAudioFile.start()
 
 
 ############ 2. Avvio Server UDP ############

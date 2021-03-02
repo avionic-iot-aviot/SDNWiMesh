@@ -11,11 +11,13 @@ from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
 
+#verifco se il pacchetto è per me o no
 
 def PacketHandler(data, address):
     packet = Packets.getPacketFromBytes(data)
     packet.printLitePacket()
-    print (packet.Destination,config.get(socket.gethostname(),'IpStation'))
+    #print (packet.Destination,config.get(socket.gethostname(),'IpStation'))
+    
     if (packet.Destination == config.get(socket.gethostname(),'IpStation') ):
         #print ("Yess - è per me")
         #print("######## ", packet.TTL)

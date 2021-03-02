@@ -156,18 +156,18 @@ class BeaconPacket(Packets):
     
     def __init__(self,NetId,Destination,Source,TTL,NextHop,Payload):
         #super().__init__(NetId,"",Destination,Source,"0",TTL,NextHop,"Payload BEACON")
-        super().__init__(NetId,"",Destination,Source,"0",TTL,NextHop,Payload)
+        super().__init__(NetId,"",Destination,Source,"0",TTL,NextHop,Payload)  #0 beacon
         super().LengthCalcolator()
 
 class ReportPacket(Packets):
     
     def __init__(self,NetId,Destination,Source,TTL,NextHop,Payload):
-        super().__init__(NetId,"",Destination,Source,"1",TTL,NextHop,Payload)
+        super().__init__(NetId,"",Destination,Source,"1",TTL,NextHop,Payload)  #1 report
         super().LengthCalcolator()
 
 class DataPacket(Packets):
     
     def __init__(self,NetId,Destination,Source,TTL,NextHop,Payload):
-        super().__init__(NetId,"",Destination,Source,"2",TTL,NextHop,"Payload DATA")
+        super().__init__(NetId,"",Destination,Source,"2",TTL,NextHop,"Payload DATA")  #2 data
         super().LengthCalcolator()
 
