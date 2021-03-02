@@ -26,7 +26,7 @@ print("\n\n\t\tSTART SDNWISE\n\n")
 
 
 ############ 1. Calcolo Indirizzi Ip Nuovi ############
-ip = init_config.GetIp( config['GENERAL']['StationInterface'] )
+nodeIP = init_config.GetIp( config['GENERAL']['StationInterface'] )
 #node_variables.IpClient = init_config.GetIp( config['GENERAL-OMEGA']['ClientInterface'] )
 
 #print(f'Client: {node_variables.IpClient} \t Station: {node_variables.IpStation}')
@@ -36,12 +36,12 @@ ip = init_config.GetIp( config['GENERAL']['StationInterface'] )
 #print(f"Default Gateway: {node_variables.IpDefaultGateway}")
 
 ############ 2. Run Threads ############
-if (config.get(socket.gethostname(),'Sink') == "SI"):
+if (nodeIP==config['GENERAL']['IpSink']):
     node_variables.IpClient = node_variables.IpStation
 
 ThreadUdpReceiver = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver", int(config['GENERAL']['Port']) )
 
-pckBeacon = BeaconPacket ( config.get(socket.gethostname(),'NetId'), node_variables.IpDefaultGateway , node_variables.IpStation, "100", node_variables.IpDefaultGateway, config.get(socket.gethostname(),'Id') + " " + node_variables.IpClient )
+pckBeacon = BeaconPacket (config['GENERAL-OMEGA']['NetId'], config['GENERAL']['IpSink'] , nodeIP, config['GENERAL']['TTL'], config['GENERAL']['IpSink'], "" )
 ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['Port']) )
 
 #if (config.get(socket.gethostname(),'Sink') == "NO"):
@@ -51,7 +51,7 @@ ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getByte
 
 #ThreadPrintInfo = UDP_Socket.ThreadPrintInfoNode(4,"Thread-Info")
 
-if (ip==config['GENERAL']['IpSink']):
+if (nodeIP!=config['GENERAL']['IpSink']):
     ThreadUdpBeacon.start() #da indentare correttamente
 
 #ThreadAudioFile = AudioFile.ThreadSendDataAudio(4,"Tread-Audio")
