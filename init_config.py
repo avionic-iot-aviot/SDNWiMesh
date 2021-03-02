@@ -56,6 +56,7 @@ def GetNeighboors():
     s1 = s.decode('utf-8', 'ignore')
     list = s1.splitlines()
     print("Arp table size:", len(list))
+    
     neigh = []
     for h in list:
         field = h.split(" ")
@@ -63,7 +64,10 @@ def GetNeighboors():
             neigh.append(str(field[0]))
     return neigh
 
+
+
+
 def ScanNetwork():
-    os.system("nmap -sn "+str(config['GENERAL']['IpSink'])[:-1]+"0/24")
+    os.system("fping -g "+str(config['GENERAL']['IpSink'])[:-1]+"0/24")
     sys.stdout.flush()
     return
