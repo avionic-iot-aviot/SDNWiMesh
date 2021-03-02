@@ -62,7 +62,7 @@ def GetNeighboors():
         field = h.split(" ")
         if str(config['GENERAL']['IpSink'])[:-2] in str(field[0]) and str(field[2]) == "br-lan" and str(field[5])!="router" :
             neigh.append(str(field[0]))
-  
+    print ("VICINIII", str(neigh))
     return neigh
 
 
