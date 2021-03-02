@@ -43,7 +43,7 @@ def TypeBeacon(packet):
     if (packet.Destination==str(config['GENERAL']['IpSink'])):
         data = packet.getBytesFromPackets()
         
-        print("Paket: ", packet.printLitePacket(Packet.getPacketFromBytes(data)))
+        print("Paket: ", packet.printLitePacket(Packets.getPacketFromBytes(data)))
         #UDP_Socket.SendUdpPacketUnicast(
             #data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))
     
