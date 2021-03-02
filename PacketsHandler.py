@@ -17,7 +17,7 @@ config.read('config.ini')
 def PacketHandler(data, address):
     packet = Packets.getPacketFromBytes(data)
     packet.printLitePacket()
-    #print (packet.Destination,config.get(socket.gethostname(),'IpStation'))
+    print ("Paket: ",packet)
 
     if (packet.Destination == str(config['GENERAL']['IpSink'])):
         #print ("Yess - è per me")
