@@ -26,7 +26,7 @@ print("\n\n\t\tSTART SDNWISE\n\n")
 
 
 ############ 1. Calcolo Indirizzi Ip Nuovi ############
-nodeIP = init_config.GetIp( config['GENERAL']['StationInterface'] )
+nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
 #node_variables.IpClient = init_config.GetIp( config['GENERAL-OMEGA']['ClientInterface'] )
 
 #print(f'Client: {node_variables.IpClient} \t Station: {node_variables.IpStation}')
