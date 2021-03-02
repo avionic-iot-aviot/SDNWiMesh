@@ -39,11 +39,11 @@ def PacketHandler(data, address):
 
 def TypeBeacon(packet):
 
-    print("Beacon Ricevuto from: ", packet.Source)
+    
     if (packet.Destination==str(config['GENERAL']['IpSink'])):
-        data = packet.getBytesFromPackets()
-        
-        Packets.getPacketFromBytes(data).printLitePacket()
+        #data = packet.getBytesFromPackets()
+        #Packets.getPacketFromBytes(data).printLitePacket()
+        print("Beacon Ricevuto from: ", packet.Source)
         #UDP_Socket.SendUdpPacketUnicast(
             #data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))
     
