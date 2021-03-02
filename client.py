@@ -1,7 +1,7 @@
 import socket
 import sys
 
-ip = "192.168.3.2"
+ip = "192.168.3.1"
 port = 3567
 
 # Create socket for server
@@ -13,7 +13,5 @@ while True:
     send_data = input("Type some text to send =>");
     s.sendto(send_data.encode('utf-8'), (ip, port))
     print("\n\n 1. Client Sent : ", send_data, "\n\n")
-    data, address = s.recvfrom(4096)
-    print("\n\n 2. Client received : ", data.decode('utf-8'), "\n\n")
 # close the socket
 s.close()

@@ -56,8 +56,9 @@ if (str(nodeIP)!=str(config['GENERAL']['IpSink'])):
     ThreadUdpBeacon.start() #da indentare correttamente
 
 #ThreadAudioFile = AudioFile.ThreadSendDataAudio(4,"Tread-Audio")
-
-ThreadUdpReceiver.start()
+if (str(nodeIP)==str(config['GENERAL']['IpSink'])):
+    print("Processo avviato. Sono il sink: ", str(nodeIP))
+    ThreadUdpReceiver.start()
 #ThreadUdpReport.start()
 #ThreadPrintInfo.start()
 #ThreadAudioFile.start()
