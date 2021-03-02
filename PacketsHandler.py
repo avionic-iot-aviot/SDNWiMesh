@@ -19,7 +19,7 @@ def PacketHandler(data, address):
     packet.printLitePacket()
     #print (packet.Destination,config.get(socket.gethostname(),'IpStation'))
 
-    if (packet.Destination == config.get(socket.gethostname(), 'IpStation')):
+    if (packet.Destination == str(config['GENERAL']['IpSink'])):
         #print ("Yess - è per me")
         # print("######## ", packet.TTL)
         if(int(packet.Type) == 0):
