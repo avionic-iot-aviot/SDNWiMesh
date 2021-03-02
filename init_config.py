@@ -63,3 +63,7 @@ def GetNeighboors():
             neigh.append(str(field[0]))
     return neigh
 
+def ScanNetwork():
+    result = subprocess.Popen("nmap -sn 192.168.3.0/24", shell=True, stdout=subprocess.PIPE)
+    s = result.stdout.read()
+    return

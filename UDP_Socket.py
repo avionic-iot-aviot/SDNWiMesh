@@ -79,6 +79,11 @@ class ThreadReport (threading.Thread):
       print ("Starting " + self.name)
       SendUdpPacketUnicastLoop(self.port, self.s_address, self.d_address)
 
+
+
+
+
+
 def SendUdpPacketUnicastLoop(port,src,dst):
    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
    print("Do Ctrl+c to exit the program !!")
@@ -145,3 +150,17 @@ def PrintBasicInfo(NeighborInfo,OtherInfo):
          print(" --- ")
       print("\n")
       time.sleep(int(config['GENERAL']['InfoSleep']))
+
+
+
+
+class ThreadScanNet (threading.Thread):
+   def __init__(self, threadID, name):
+      threading.Thread.__init__(self)
+      self.threadID = threadID
+      self.name = name
+
+   def run(self):
+       print("Starting " + self.name)
+       init_config.ScanNetwork()
+       time.sleep(int(config['GENERAL']['ScanNetSleep']))
