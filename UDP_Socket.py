@@ -58,7 +58,7 @@ def SendUdpPacketBroadcastLoop(beacon,port):
    # Let's send data through UDP protocol
    while True:     
       s.sendto(beacon, (config['GENERAL']['IpSink'], port))
-      print("\n\n 1. Node Send : ", beacon, "\n\n")
+      print("\n\n 1. Node Send Beacon: ", beacon, "\n\n")
       # close the socket
       print("Beacon Send!")
       time.sleep(int(config['GENERAL']['BeaconSleep']))
@@ -79,18 +79,23 @@ class ThreadReport (threading.Thread):
       SendUdpPacketUnicastLoop(self.port, self.s_address, self.d_address)
 
 def SendUdpPacketUnicastLoop(port,src,dst):
-   serverAddressPort   = (dst, port)
-   UDPClientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM,socket.IPPROTO_UDP)
-   UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-   UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-   UDPClientSocket.settimeout(0.2)
+   s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
+   print("Do Ctrl+c to exit the program !!")
+   # Let's send data through UDP protocol
    while True:
-      node_variables.list_neighbor
       pckReort = ReportPacket ( config.get(socket.gethostname(),'NetId'), config['GENERAL']['IpSink'], src, "100", dst, ', '.join(node_variables.list_neighbor) )
       bytesToSend = pckReort.getBytesFromPackets()
-      UDPClientSocket.sendto(bytesToSend, serverAddressPort)
+
+      s.sendto(bytesToSend, (dst, port))
+      print("\n\n 1. Node Send Report : ", bytesToSend, "\n\n")
+      # close the socket
       print("Unicast Report Send!")
       time.sleep(int(config['GENERAL']['BeaconSleep']))
+
+
+     
+
+  
 
 
 # --- Generic Function For Send Udp Packets --- #

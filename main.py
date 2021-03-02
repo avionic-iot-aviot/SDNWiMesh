@@ -45,7 +45,7 @@ pckBeacon = BeaconPacket (config['GENERAL-OMEGA']['NetId'], config['GENERAL']['I
 ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['Port']) )
 
 #if (config.get(socket.gethostname(),'Sink') == "NO"):
- #   ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpClient, node_variables.IpDefaultGateway ) 
+ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), nodeIP, config['GENERAL']['IpSink']  ) 
 #else:
 #    ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpStation, node_variables.IpDefaultGateway ) 
 
@@ -54,12 +54,13 @@ ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getByte
 if (str(nodeIP)!=str(config['GENERAL']['IpSink'])):
     print("Processo avviato. Non sono il sink: ", str(nodeIP))
     ThreadUdpBeacon.start() #da indentare correttamente
+    ThreadUdpReport.start()
 
 #ThreadAudioFile = AudioFile.ThreadSendDataAudio(4,"Tread-Audio")
 if (str(nodeIP)==str(config['GENERAL']['IpSink'])):
     print("Processo avviato. Sono il sink: ", str(nodeIP))
     ThreadUdpReceiver.start()
-#ThreadUdpReport.start()
+#
 #ThreadPrintInfo.start()
 #ThreadAudioFile.start()
 
