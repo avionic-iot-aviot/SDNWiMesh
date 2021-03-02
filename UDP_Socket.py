@@ -10,7 +10,7 @@ import node_variables
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
-
+ttl=1
 # --- Thread Receiver Udp Packets --- #
 class ThreadReceiverUdpPackets (threading.Thread):
    def __init__(self, threadID, name, port):
@@ -34,6 +34,7 @@ def UdpSocketReceiver(port):
     while True:
        print("####### Node is listening #######")
        data, address = s.recvfrom(4096)
+       #s.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
        print("\n\n 2. Node received: ", data.decode('utf-8'), "\n\n")
        PacketsHandler.PacketHandler(data,address)
 
