@@ -70,6 +70,6 @@ def GetNeighboors():
 def ScanNetwork():
     for i in range(255): 
     #os.system("fping -a -g "+str(config['GENERAL']['IpSink'])[:-1]+"0/24")
-        os.system("ping 192.168.3."+i)
+        os.system("ping 192.168.3."+str(i))
         sys.stdout.flush()
     return
