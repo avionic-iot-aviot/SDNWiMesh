@@ -64,6 +64,6 @@ def GetNeighboors():
     return neigh
 
 def ScanNetwork():
-    result = subprocess.Popen("nmap -sn"+str(config['GENERAL']['IpSink'])[:-1]+"0/24", shell=True, stdout=subprocess.PIPE)
+    result = subprocess.Popen("nmap -sn "+str(config['GENERAL']['IpSink'])[:-1]+"0/24", shell=True, stdout=subprocess.PIPE)
     s = result.stdout.read()
     return
