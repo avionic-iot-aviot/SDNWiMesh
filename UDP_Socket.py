@@ -8,6 +8,7 @@ from Packets import BeaconPacket
 from Packets import Packets
 import node_variables
 from configparser import ConfigParser
+import init_config
 config = ConfigParser()
 config.read('config.ini')
 ttl=1
@@ -83,9 +84,8 @@ def SendUdpPacketUnicastLoop(port,src,dst):
    print("Do Ctrl+c to exit the program !!")
    # Let's send data through UDP protocol
    while True:
-      pckReort = ReportPacket ( config.get(socket.gethostname(),'NetId'), config['GENERAL']['IpSink'], src, "100", dst, ', '.join(node_variables.list_neighbor) )
-      bytesToSend = pckReort.getBytesFromPackets()
-
+      pckReort = ReportPacket ( config['GENERAL']['NetId'], dst, src, config['GENERAL']['TTL'], dst, str(init_config.GetNeighboors) )
+      bytesToSend = pckReort.getBytesFromPackets() 
       s.sendto(bytesToSend, (dst, port))
       print("\n\n 1. Node Send Report : ", bytesToSend, "\n\n")
       # close the socket

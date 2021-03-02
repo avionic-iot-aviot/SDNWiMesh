@@ -48,3 +48,18 @@ def GetDefaultGateway(interface):
     #     if ( ((obj)[0])[1] == interface ):
     #         gateway = ((obj)[0])[0]
     # return gateway
+
+
+def GetNeighboors():
+    result = subprocess.Popen("ip neigh", shell=True, stdout=subprocess.PIPE)
+    s = result.stdout.read()
+    s1 = s.decode('utf-8', 'ignore')
+    list = s1.splitlines()
+    print("Arp table size:", len(list))
+    neigh = []
+    for h in list:
+        field = h.split(" ")
+        if str(field[2]) == "br-lan" and str(field[5]) != "router":
+            neigh.append(str(field[0]))
+    return neigh
+

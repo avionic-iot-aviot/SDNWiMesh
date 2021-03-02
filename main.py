@@ -27,11 +27,11 @@ print("\n\n\t\tSTART SDNWISE\n\n")
 
 ############ 1. Calcolo Indirizzi Ip Nuovi ############
 nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
-#node_variables.IpClient = init_config.GetIp( config['GENERAL-OMEGA']['ClientInterface'] )
+#node_variables.IpClient = init_config.GetIp( config['GENERAL']['ClientInterface'] )
 
 #print(f'Client: {node_variables.IpClient} \t Station: {node_variables.IpStation}')
 
-#node_variables.IpDefaultGateway = init_config.GetDefaultGateway( config['GENERAL-OMEGA']['ClientInterface'] )
+#node_variables.IpDefaultGateway = init_config.GetDefaultGateway( config['GENERAL']['ClientInterface'] )
 
 #print(f"Default Gateway: {node_variables.IpDefaultGateway}")
 
@@ -41,7 +41,7 @@ nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
 
 ThreadUdpReceiver = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver", int(config['GENERAL']['Port']) )
 
-pckBeacon = BeaconPacket (config['GENERAL-OMEGA']['NetId'], config['GENERAL']['IpSink'] , nodeIP, config['GENERAL']['TTL'], config['GENERAL']['IpSink'], "" )
+pckBeacon = BeaconPacket (config['GENERAL']['NetId'], config['GENERAL']['IpSink'] , nodeIP, config['GENERAL']['TTL'], config['GENERAL']['IpSink'], "" )
 ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['Port']) )
 
 #if (config.get(socket.gethostname(),'Sink') == "NO"):
