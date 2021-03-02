@@ -59,11 +59,11 @@ def GetNeighboors():
     neigh = []
     for h in list:
         field = h.split(" ")
-        if str(field[2]) == "br-lan" and str(field[5]) != "router":
+        if str(config['GENERAL']['IpSink'])[:-2] in str(field[0]):
             neigh.append(str(field[0]))
     return neigh
 
 def ScanNetwork():
-    result = subprocess.Popen("nmap -sn 192.168.3.0/24", shell=True, stdout=subprocess.PIPE)
+    result = subprocess.Popen("nmap -sn"+str(config['GENERAL']['IpSink'])[:-1]+"0/24", shell=True, stdout=subprocess.PIPE)
     s = result.stdout.read()
     return
