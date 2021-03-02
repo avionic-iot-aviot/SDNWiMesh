@@ -51,26 +51,19 @@ def GetDefaultGateway(interface):
 
 
 def GetNeighboors():
-    result = subprocess.Popen("ip neigh", shell=True, stdout=subprocess.PIPE)
-    s = result.stdout.read()
-    s1 = s.decode('utf-8', 'ignore')
-    list = s1.splitlines()
-    print("Arp table size:", len(list))
-    
-    neigh = []
-    for h in list:
-        field = h.split(" ")
-        if str(config['GENERAL']['IpSink'])[:-2] in str(field[0]) and str(field[2]) == "br-lan" and str(field[5])!="router" :
-            neigh.append(str(field[0]))
-    print ("VICINIII", str(neigh))
+    result = subprocess.Popen("fping -A -D -a -q -g -a -i 1 -r 0 192.168.3.0/24",shell=True, stdout=subprocess.PIPE)
+    s=result.stdout.read()
+    s1=s.decode('utf-8', 'ignore')
+    neigh=s1.splitlines()
+    print(neigh)
     return neigh
 
 
 
 
-def ScanNetwork():
+#def ScanNetwork():
    
-    os.system("fping -A -D -a -q -g -a -i 1 -r 0 "+str(config['GENERAL']['IpSink'])[:-1]+"0/24")
+ #   os.system("fping -A -D -a -q -g -a -i 1 -r 0 "+str(config['GENERAL']['IpSink'])[:-1]+"0/24")
         #os.system("ping -c 1 192.168.3."+str(i+1))
-    sys.stdout.flush()
-    return
+  #  sys.stdout.flush()
+   # return
