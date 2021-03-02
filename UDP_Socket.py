@@ -162,7 +162,8 @@ class ThreadScanNet (threading.Thread):
 
    def run(self):
       while True:
-         time.sleep(int(config['GENERAL']['ScanNetSleep']))
+         
          print("Starting " + self.name)
          init_config.ScanNetwork()
+         time.sleep(int(config['GENERAL']['ScanNetSleep']))
          
