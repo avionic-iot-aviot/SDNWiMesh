@@ -51,8 +51,8 @@ ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getByte
 
 #ThreadPrintInfo = UDP_Socket.ThreadPrintInfoNode(4,"Thread-Info")
 
-#if (config.get(socket.gethostname(),'Sink') == "NO"):
-ThreadUdpBeacon.start() #da indentare correttamente
+if (ip==config['GENERAL']['IpSink']):
+    ThreadUdpBeacon.start() #da indentare correttamente
 
 #ThreadAudioFile = AudioFile.ThreadSendDataAudio(4,"Tread-Audio")
 
