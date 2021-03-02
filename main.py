@@ -52,6 +52,7 @@ ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getByte
 #ThreadPrintInfo = UDP_Socket.ThreadPrintInfoNode(4,"Thread-Info")
 
 if (nodeIP!=config['GENERAL']['IpSink']):
+    print("Processo avviato. Non sono il sink")
     ThreadUdpBeacon.start() #da indentare correttamente
 
 #ThreadAudioFile = AudioFile.ThreadSendDataAudio(4,"Tread-Audio")
