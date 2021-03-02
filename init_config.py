@@ -60,12 +60,12 @@ def GetNeighboors():
         list = s1.splitlines()
         print("Arp table size:", len(list))
         size = len(list)
-        print(size)
+        print("Network Scanning")
         if size < 250:
             flag = False
             for h in list:
                 field = h.split(" ")
-                if '192.168.3' in str(field[0]) and str(field[2]) == "br-lan" and str(field[5]) != "router" and str(field[8]) != "FAILED":
+                if str(config['GENERAL']['IpSink'])[:-2] in str(field[0]) and str(field[2]) == "br-lan" and str(field[5]) != "router" and str(field[8]) != "FAILED":
                     neigh.append(str(field[0]))
 
     return neigh
