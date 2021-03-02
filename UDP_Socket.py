@@ -84,7 +84,8 @@ def SendUdpPacketUnicastLoop(port,src,dst):
    print("Do Ctrl+c to exit the program !!")
    # Let's send data through UDP protocol
    while True:
-      pckReort = ReportPacket ( config['GENERAL']['NetId'], dst, src, config['GENERAL']['TTL'], dst, ", ".join(init_config.GetNeighboors) )
+      neigh=init_config.GetNeighboors()
+      pckReort = ReportPacket ( config['GENERAL']['NetId'], dst, src, config['GENERAL']['TTL'], dst, ", ".join(neigh))
       bytesToSend = pckReort.getBytesFromPackets() 
       s.sendto(bytesToSend, (dst, port))
       print("\n\n 1. Node Send Report : ", bytesToSend, "\n\n")
