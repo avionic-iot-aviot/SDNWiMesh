@@ -36,8 +36,8 @@ nodeIP = init_config.GetIp( config['GENERAL']['StationInterface'] )
 #print(f"Default Gateway: {node_variables.IpDefaultGateway}")
 
 ############ 2. Run Threads ############
-if (nodeIP==config['GENERAL']['IpSink']):
-    node_variables.IpClient = node_variables.IpStation
+#if (str(nodeIP)==str(config['GENERAL']['IpSink'])):
+    #node_variables.IpClient = node_variables.IpStation
 
 ThreadUdpReceiver = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver", int(config['GENERAL']['Port']) )
 
@@ -51,8 +51,8 @@ ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getByte
 
 #ThreadPrintInfo = UDP_Socket.ThreadPrintInfoNode(4,"Thread-Info")
 
-if (nodeIP!=config['GENERAL']['IpSink']):
-    print("Processo avviato. Non sono il sink")
+if (str(nodeIP)!=str(config['GENERAL']['IpSink'])):
+    print("Processo avviato. Non sono il sink: ", str(nodeIP))
     ThreadUdpBeacon.start() #da indentare correttamente
 
 #ThreadAudioFile = AudioFile.ThreadSendDataAudio(4,"Tread-Audio")
