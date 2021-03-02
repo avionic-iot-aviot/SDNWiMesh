@@ -16,8 +16,7 @@ config.read('config.ini')
 
 def PacketHandler(data, address):
     packet = Packets.getPacketFromBytes(data)
-    packet.printLitePacket()
-    print ("Paket: ",packet)
+    print (packet.printLitePacket())
 
     if (packet.Destination == str(config['GENERAL']['IpSink'])):
         #print ("Yess - è per me")
