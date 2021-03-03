@@ -60,7 +60,7 @@ def GetNeighboors():
         list = s1.splitlines()        
         size = len(list)
         print("Network Scanning..arp stabilizing")
-        if size < 250:
+        if size < int(config['GENERAL']['NumberOfNodes']):
             print("Arp table size:", len(list))
             flag = False
             for h in list:
