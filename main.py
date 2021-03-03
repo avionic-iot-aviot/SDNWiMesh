@@ -58,6 +58,8 @@ ThreadScanNetwork = UDP_Socket.ThreadScanNet(4,"Thread-Network")
 #    ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpStation, node_variables.IpDefaultGateway ) 
 
 #ThreadPrintInfo = UDP_Socket.ThreadPrintInfoNode(4,"Thread-Info")
+ThreadAudioFile = AudioFile.ThreadSendDataAudio(5,"Tread-Audio")
+
 
 if (str(nodeIP)!=str(config['GENERAL']['IpSink'])):
     print("Processo avviato. Non sono il sink: ", str(nodeIP))
@@ -66,7 +68,7 @@ if (str(nodeIP)!=str(config['GENERAL']['IpSink'])):
     ThreadAudioFile.start()
   
 
-ThreadAudioFile = AudioFile.ThreadSendDataAudio(5,"Tread-Audio")
+
 
 if (str(nodeIP)==str(config['GENERAL']['IpSink'])):
     print("Processo avviato. Sono il sink: ", str(nodeIP))
