@@ -40,11 +40,10 @@ def TypeBeacon(packet):
 
     
     if (packet.Destination==str(config['GENERAL']['IpSink'])):
-        #data = packet.getBytesFromPackets()
+        data = packet.getBytesFromPackets()
         #Packets.getPacketFromBytes(data).printLitePacket()
         print("Beacon Ricevuto from: ", packet.Source)
-        #UDP_Socket.SendUdpPacketUnicast(
-            #data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))
+        UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController']))
     
 
 
@@ -52,17 +51,14 @@ def TypeReport(packet):
     if (packet.Destination==str(config['GENERAL']['IpSink'])):
         print("Report Ricevuto from: ", packet.Source)
         data = packet.getBytesFromPackets()
-        #UDP_Socket.SendUdpPacketUnicast(
-         #   data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))
+        UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController']))
 
 
 def TypeData(packet):
     if (packet.Destination==str(config['GENERAL']['IpSink'])):
         print("Data Ricevuto from: ", packet.Source)
         data = packet.getBytesFromPackets()
-       # UDP_Socket.SendUdpPacketUnicast(
-            #data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))
-
+        UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController']))
 
 def UpdateNeighborList(ip):
     if (FindIpInTheNeighborList(ip) == 0):

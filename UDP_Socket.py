@@ -105,23 +105,12 @@ def SendUdpPacketUnicastLoop(port,src,dst):
 
 
 # --- Generic Function For Send Udp Packets --- #
-def SendUdpPacketBroadcast(data,port):
-    bytesToSend         = data
-    serverAddressPort   = ('<broadcast>', port)
-    UDPClientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM,socket.IPPROTO_UDP)
-    UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-    UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-    UDPClientSocket.sendto(bytesToSend, serverAddressPort)
-    print("Broadcast Packet Send!")
 
 def SendUdpPacketUnicast(data,address,port):
-    bytesToSend         = data
-    serverAddressPort   = (address, port)
-    UDPClientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM,socket.IPPROTO_UDP)
-    UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-    UDPClientSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-    UDPClientSocket.sendto(bytesToSend, serverAddressPort)
-    print("Unicast Packet Send!")
+   s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
+   s.sendto(data, (address, port))
+   print("\n\n 1. Sink Sent to controller: ", data, "\n\n")
+
 
 
 
