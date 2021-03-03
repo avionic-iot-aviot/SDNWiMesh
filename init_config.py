@@ -73,8 +73,16 @@ def GetNeighboors():
 
 
 
-def ScanNetwork():
+def ScanNetwork():    
+    os.system("ip neigh flush ./")    
+    sys.stdout.flush()
     os.system("fping -A -D -a -q -g -a -i 1 -r 0 "+str(config['GENERAL']['IpSink'])[:-1]+"0/24")
     #os.system("ping -c 1 192.168.3."+str(i+1))
     sys.stdout.flush()
+    os.system("rm -rf /tmp/luci*")
+    sys.stdout.flush()
+    os.system("sync | echo 3 > /proc/sys/vm/drop_caches")
+    sys.stdout.flush()
+
+    
     return
