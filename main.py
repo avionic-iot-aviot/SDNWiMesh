@@ -44,6 +44,12 @@ ThreadUdpReceiver = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver",
 pckBeacon = BeaconPacket (config['GENERAL']['NetId'], config['GENERAL']['IpSink'] , nodeIP, config['GENERAL']['TTL'], config['GENERAL']['IpSink'], "" )
 ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['Port']) )
 
+
+pckBeaconS = BeaconPacket (config['GENERAL']['NetId'], config['GENERAL']['IpController'] , nodeIP, config['GENERAL']['TTL'], config['GENERAL']['IpController'], "" )
+ThreadUdpBeaconS = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['Port']) )
+
+
+
 #if (config.get(socket.gethostname(),'Sink') == "NO"):
 ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), nodeIP, config['GENERAL']['IpSink']  ) 
 
@@ -57,12 +63,14 @@ if (str(nodeIP)!=str(config['GENERAL']['IpSink'])):
     print("Processo avviato. Non sono il sink: ", str(nodeIP))
     ThreadUdpBeacon.start() #da indentare correttamente
     ThreadUdpReport.start()
+  
 
 ThreadAudioFile = AudioFile.ThreadSendDataAudio(5,"Tread-Audio")
 
 if (str(nodeIP)==str(config['GENERAL']['IpSink'])):
     print("Processo avviato. Sono il sink: ", str(nodeIP))
     ThreadUdpReceiver.start()
+    ThreadUdpBeaconS.start()
 
 ThreadScanNetwork.start()
 #
