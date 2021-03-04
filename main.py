@@ -78,8 +78,9 @@ if (str(nodeIP)==str(config['GENERAL']['IpSink'])):
     print("Processo avviato. Sono il sink: ", str(nodeIP))
     ThreadUdpReceiver.start()
     ThreadUdpBeaconS.start()
+    ThreadUdpReceiverFromController.start()
 
-ThreadUdpReceiverFromController.start()
+
 
 ThreadScanNetwork.start()
 #
