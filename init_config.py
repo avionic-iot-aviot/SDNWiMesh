@@ -52,14 +52,14 @@ def GetDefaultGateway(interface):
 
 def GetNeighboors():
     neigh=[]
-    flag=True
-    while flag:
-        result = subprocess.Popen("fping -A -D -a -q -g -a -i 1 -r 0 "+str(config['GENERAL']['IpSink'])[:-1]+"0/24", shell=True, stdout=subprocess.PIPE)
-        s = result.stdout.read()
-        s1 = s.decode('utf-8', 'ignore')
-        neigh = s1.splitlines()        
+    #flag=True
+    #while flag:
+    result = subprocess.Popen("fping -A -D -a -q -g -a -i 1 -r 0 "+str(config['GENERAL']['IpSink'])[:-1]+"0/24", shell=True, stdout=subprocess.PIPE)
+    s = result.stdout.read()
+    s1 = s.decode('utf-8', 'ignore')
+    neigh = s1.splitlines()        
         #size = len(list)
-        print("Network Scanning..arp stabilizing")
+    print("Network Scanning..arp stabilizing")
         #if size < int(config['GENERAL']['NumberOfNodes']):
             #print("Arp table size:", len(list))
             #flag = False
