@@ -1,4 +1,5 @@
 from Packets import BeaconPacket
+from Packets import FunctionPacket
 from Packets import Packets
 import init_config
 import socket
@@ -10,6 +11,7 @@ import node_variables
 from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
+from AudioFile import GetAudio
 
 # verifco se il pacchetto è per me o no
 
@@ -27,6 +29,8 @@ def PacketHandler(data, address):
             TypeReport(packet)
         if(int(packet.Type) == 2):
             TypeData(packet)
+        if(int(packet.Type) == 3):
+            TypeFunction(packet)
     else:
         #print("NO - non è per me")
         packet.DecreaseTTL()
@@ -42,23 +46,35 @@ def TypeBeacon(packet):
     if (packet.Destination==str(config['GENERAL']['IpSink']) and init_config.GetIp(config['GENERAL']['StationInterface'])==str(config['GENERAL']['IpSink']) ):
         data = packet.getBytesFromPackets()
         #Packets.getPacketFromBytes(data).printLitePacket()
-        print("Beacon Ricevuto from: ", packet.Source)
+        print("Beacon Received from: ", packet.Source)
         UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController']))
     
 
 
 def TypeReport(packet):
     if (packet.Destination==str(config['GENERAL']['IpSink'])and init_config.GetIp(config['GENERAL']['StationInterface'])==str(config['GENERAL']['IpSink'])):
-        print("Report Ricevuto from: ", packet.Source)
+        print("Report Received from: ", packet.Source)
         data = packet.getBytesFromPackets()
         UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController']))
 
 
 def TypeData(packet):
     if (packet.Destination==str(config['GENERAL']['IpSink'])and init_config.GetIp(config['GENERAL']['StationInterface'])==str(config['GENERAL']['IpSink'])):
-        print("Data Ricevuto from: ", packet.Source)
+        print("Data Received from: ", packet.Source)
         data = packet.getBytesFromPackets()
         UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController']))
+
+
+def TypeFunction(packet):
+    if (packet.NextHop==str(config['GENERAL']['IpSinkOnWan']) and init_config.GetIp(config['GENERAL']['StationWanInterface'])==str(config['GENERAL']['IpSinkOnWan'])):
+        print("Function PKT Received from: ", packet.Source)
+        data = packet.getBytesFromPackets()
+        UDP_Socket.SendUdpPacketUnicast(data, packet.Destination, int(config['GENERAL']['Port']))
+    if (packet.Destination == init_config.GetIp(config['GENERAL']['StationInterface'])):
+        GetAudio()
+
+
+
 
 def UpdateNeighborList(ip):
     if (FindIpInTheNeighborList(ip) == 0):

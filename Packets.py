@@ -172,3 +172,10 @@ class DataPacket(Packets):
         super().__init__(NetId,"",Destination,Source,"2",TTL,NextHop,Payload)  #2 data
         super().LengthCalcolator()
 
+
+class FunctionPacket(Packets):    
+    def __init__(self,NetId,Destination,Source,TTL,NextHop,Payload):
+        #super().__init__(NetId,"",Destination,Source,"2",TTL,NextHop,"Payload DATA")  #2 data
+        super().__init__(NetId,"",Destination,Source,"3",TTL,NextHop,Payload)  #2 data
+        super().LengthCalcolator()
+

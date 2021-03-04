@@ -23,13 +23,43 @@ class ThreadReceiverUdpPackets (threading.Thread):
    def run(self):
        print("Starting " + self.name)
        #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
-       UdpSocketReceiver( self.port )
+       UdpSocketReceiverFromNode( self.port )
+       
 
-def UdpSocketReceiver(port):
+def UdpSocketReceiverFromNode(port):
     # Create a UDP socket
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     # Bind the socket to the port
     server_address = (config['GENERAL']['IpSink'], port)
+    s.bind(server_address)
+   
+    while True:
+       print("####### Node is listening #######")
+       data, address = s.recvfrom(4096)
+       #s.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
+       #print("\n\n 2. Node received: ", data.decode('utf-8'), "\n\n")
+       PacketsHandler.PacketHandler(data,address)
+
+
+class ThreadReceiverUdpPacketsFromController (threading.Thread):
+   def __init__(self, threadID, name, port,ip):
+      threading.Thread.__init__(self)
+      self.threadID = threadID
+      self.name = name
+      self.port = port
+      self.ip= ip
+
+   def run(self):
+       print("Starting " + self.name)
+       #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
+       UdpSocketReceiverFromController(self.ip, self.port )
+
+
+def UdpSocketReceiverFromController(ip,port):
+    # Create a UDP socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    # Bind the socket to the port
+    server_address = (ip, port)
     s.bind(server_address)
    
     while True:
@@ -109,7 +139,7 @@ def SendUdpPacketUnicastLoop(port,src,dst):
 def SendUdpPacketUnicast(data,address,port):
    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
    s.sendto(data, (address, port))
-   print("\n\n 1. Sink Sent to controller: ", data, "\n\n")
+   print("\n\n 1. Packet sent: ", data, "\n\n")
 
 
 

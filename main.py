@@ -41,6 +41,10 @@ nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
 
 ThreadUdpReceiver = UDP_Socket.ThreadReceiverUdpPackets(1, "Thread-UdpReceiver", int(config['GENERAL']['Port']) )
 
+ThreadUdpReceiverFromController = UDP_Socket.ThreadReceiverUdpPacketsFromController(6, "Thread-UdpReceiverFromController",config['GENERAL']['IpSinkOnWan'], int(config['GENERAL']['PortFromController']) )
+
+
+
 pckBeacon = BeaconPacket (config['GENERAL']['NetId'], config['GENERAL']['IpSink'] , nodeIP, config['GENERAL']['TTL'], config['GENERAL']['IpSink'], "" )
 ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['Port']) )
 
