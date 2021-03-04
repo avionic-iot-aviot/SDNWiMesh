@@ -50,7 +50,7 @@ ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getByte
 
 
 pckBeaconS = BeaconPacket (config['GENERAL']['NetId'], config['GENERAL']['IpController'] , nodeIP, config['GENERAL']['TTL'], config['GENERAL']['IpController'], "" )
-ThreadUdpBeaconS = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['Port']) )
+ThreadUdpBeaconS = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['PortController']) )
 
 
 
