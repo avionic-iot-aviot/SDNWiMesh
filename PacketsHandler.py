@@ -31,7 +31,7 @@ def PacketHandler(data, address):
         if(int(packet.Type) == 2):
             TypeData(packet)
         if(int(packet.Type) == 3):
-            TypeData(packet)
+            TypeFunction(packet)
     #else:
         #print("NO - non è per me")
        # packet.DecreaseTTL()
@@ -41,7 +41,7 @@ def PacketHandler(data, address):
             #data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))
     if (packet.NextHop == str(config['GENERAL']['IpSinkOnWan'])):        
         if(int(packet.Type) == 3):
-            TypeData(packet)
+            TypeFunction(packet)
     
 
 
@@ -72,6 +72,7 @@ def TypeData(packet):
 
 
 def TypeFunction(packet):
+    print("Sono nella TypeFunction")
     if (packet.NextHop==str(config['GENERAL']['IpSinkOnWan']) and init_config.GetIp(config['GENERAL']['StationWanInterface'])==str(config['GENERAL']['IpSinkOnWan'])):
         print("Function PKT Received from: ", packet.Source)
         data = packet.getBytesFromPackets()
