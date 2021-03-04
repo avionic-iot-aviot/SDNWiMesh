@@ -177,7 +177,7 @@ def PrintBasicInfo(NeighborInfo,OtherInfo):
 
 
 
-class ThreadScanNet (threading.Thread):
+class ThreadFlusSystem(threading.Thread):
    def __init__(self, threadID, name):
       threading.Thread.__init__(self)
       self.threadID = threadID
@@ -186,6 +186,6 @@ class ThreadScanNet (threading.Thread):
    def run(self):
       while True:
          print("Starting " + self.name)
-         init_config.ScanNetwork()
+         init_config.FlusSystem()
          time.sleep(int(config['GENERAL']['ScanNetSleep']))
          

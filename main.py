@@ -57,7 +57,7 @@ ThreadUdpBeaconS = UDP_Socket.ThreadBeacon( 7, "Thread-Beacon", pckBeacon.getByt
 #if (config.get(socket.gethostname(),'Sink') == "NO"):
 ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), nodeIP, config['GENERAL']['IpSink']  ) 
 
-ThreadScanNetwork = UDP_Socket.ThreadScanNet(4,"Thread-Network")
+ThreadFlusSystem= UDP_Socket.ThreadFlusSystem(4,"Thread-FlusSystem")
 #else:
 #    ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpStation, node_variables.IpDefaultGateway ) 
 
@@ -83,7 +83,7 @@ if (str(nodeIP)==str(config['GENERAL']['IpSink'])):
 
 
 
-ThreadScanNetwork.start()
+ThreadFlusSystem.start()
 #
 #ThreadPrintInfo.start()
 

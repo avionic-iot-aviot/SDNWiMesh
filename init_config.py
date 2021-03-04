@@ -54,29 +54,29 @@ def GetNeighboors():
     neigh=[]
     flag=True
     while flag:
-        result = subprocess.Popen("ip neigh", shell=True, stdout=subprocess.PIPE)
+        result = subprocess.Popen("fping -A -D -a -q -g -a -i 1 -r 0 "+str(config['GENERAL']['IpSink'])[:-1]+"0/24", shell=True, stdout=subprocess.PIPE)
         s = result.stdout.read()
         s1 = s.decode('utf-8', 'ignore')
-        list = s1.splitlines()        
-        size = len(list)
+        neigh = s1.splitlines()        
+        #size = len(list)
         print("Network Scanning..arp stabilizing")
-        if size < int(config['GENERAL']['NumberOfNodes']):
-            print("Arp table size:", len(list))
-            flag = False
-            for h in list:
-                field = h.split(" ")
-                if str(config['GENERAL']['IpSink'])[:-2] in str(field[0]) and str(field[2]) == "br-lan" and str(field[5]) != "router" and str(field[8]) != "FAILED":
-                    neigh.append(str(field[0]))
+        #if size < int(config['GENERAL']['NumberOfNodes']):
+            #print("Arp table size:", len(list))
+            #flag = False
+        #for h in list:
+            #neigh.append(h)
+                #field = h.split(" ")
+                #if str(config['GENERAL']['IpSink'])[:-2] in str(field[0]) and str(field[2]) == "br-lan" and str(field[5]) != "router" and str(field[8]) != "FAILED":
+        
 
     return neigh
 
 
 
 
-def ScanNetwork():    
+def FlusSystem():    
     os.system("ip neigh flush ./")    
     sys.stdout.flush()
-    os.system("fping -A -D -a -q -g -a -i 1 -r 0 "+str(config['GENERAL']['IpSink'])[:-1]+"0/24")
     #os.system("ping -c 1 192.168.3."+str(i+1))
     sys.stdout.flush()
     os.system("rm -rf /tmp/luci*")
