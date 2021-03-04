@@ -27,11 +27,11 @@ config.read('config.ini')
        # AudioFile()
 
 
-def GetAudio():
+def GetAudio(action):
     #time.sleep(5)
     #nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
     #while True:
-    print("FUNZIONAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    print("Microphone "+action)
         #obj = wave.open('/tmp/SDNPy-master/sound.wav', 'r')
        # print("Number of channels", obj.getnchannels())
         #print("Sample width", obj.getsampwidth())
