@@ -30,7 +30,7 @@ def UdpSocketReceiverFromNode(port):
     # Create a UDP socket
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     # Bind the socket to the port
-    server_address = (config['GENERAL']['IpSink'], port)
+    server_address = (init_config.GetIp(config['GENERAL']['StationInterface']), port)
     s.bind(server_address)
    
     while True:
