@@ -72,23 +72,24 @@ def UdpSocketReceiverFromController(ip,port):
 
 # --- Thread Beacon Udp Packets --- #
 class ThreadBeacon (threading.Thread):
-   def __init__(self, threadID, name, beacon, port):
+   def __init__(self, threadID, name, beacon, ip, port):
       threading.Thread.__init__(self)
       self.threadID = threadID
       self.name = name
       self.beacon = beacon
       self.port = port
+      self.ip = ip
 
    def run(self):
       print ("Starting " + self.name)
-      SendUdpPacketBroadcastLoop(self.beacon, self.port)
+      SendUdpPacketBroadcastLoop(self.beacon, self.ip,self.port)
 
-def SendUdpPacketBroadcastLoop(beacon,port):
+def SendUdpPacketBroadcastLoop(beacon,ip,port):
    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
    print("Do Ctrl+c to exit the program !!")
    # Let's send data through UDP protocol
    while True:     
-      s.sendto(beacon, (config['GENERAL']['IpSink'], port))
+      s.sendto(beacon, (ip, port))
       print("\n\n 1. Node Send Beacon: ", beacon, "\n\n")
       # close the socket
       print("Beacon Send!")

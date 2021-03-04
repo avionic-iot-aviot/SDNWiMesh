@@ -46,11 +46,11 @@ ThreadUdpReceiverFromController = UDP_Socket.ThreadReceiverUdpPacketsFromControl
 
 
 pckBeacon = BeaconPacket (config['GENERAL']['NetId'], config['GENERAL']['IpSink'] , nodeIP, config['GENERAL']['TTL'], config['GENERAL']['IpSink'], "" )
-ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['Port']) )
+ThreadUdpBeacon = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , config['GENERAL']['IpSink'],int(config['GENERAL']['Port']) )
 
 
 pckBeaconS = BeaconPacket (config['GENERAL']['NetId'], config['GENERAL']['IpController'] , nodeIP, config['GENERAL']['TTL'], config['GENERAL']['IpController'], "" )
-ThreadUdpBeaconS = UDP_Socket.ThreadBeacon( 2, "Thread-Beacon", pckBeacon.getBytesFromPackets() , int(config['GENERAL']['PortController']) )
+ThreadUdpBeaconS = UDP_Socket.ThreadBeacon( 7, "Thread-Beacon", pckBeacon.getBytesFromPackets() , config['GENERAL']['IpController'],int(config['GENERAL']['PortController']) )
 
 
 
