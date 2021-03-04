@@ -19,6 +19,7 @@ from AudioFile import GetAudio
 def PacketHandler(data, address):
     packet = Packets.getPacketFromBytes(data)
     print (packet.printLitePacket())
+    print("--->", init_config.GetIp(config['GENERAL']['StationInterface']))
 
     if (packet.Destination == init_config.GetIp(config['GENERAL']['StationInterface'])):
         #print ("Yess - è per me")
@@ -28,6 +29,8 @@ def PacketHandler(data, address):
         if(int(packet.Type) == 1):
             TypeReport(packet)
         if(int(packet.Type) == 2):
+            TypeData(packet)
+        if(int(packet.Type) == 3):
             TypeData(packet)
     #else:
         #print("NO - non è per me")
