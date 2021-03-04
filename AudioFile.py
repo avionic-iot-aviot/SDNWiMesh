@@ -29,9 +29,9 @@ config.read('config.ini')
 
 def GetAudio():
     #time.sleep(5)
-    nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
-    while True:
-        print("FUNZIONAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    #nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
+    #while True:
+    print("FUNZIONAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         #obj = wave.open('/tmp/SDNPy-master/sound.wav', 'r')
        # print("Number of channels", obj.getnchannels())
         #print("Sample width", obj.getsampwidth())
