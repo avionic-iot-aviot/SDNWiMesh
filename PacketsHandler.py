@@ -76,6 +76,7 @@ def TypeFunction(packet):
     if (packet.NextHop==str(config['GENERAL']['IpSinkOnWan']) and init_config.GetIp(config['GENERAL']['StationWanInterface'])==str(config['GENERAL']['IpSinkOnWan'])):
         print("Function PKT Received from: ", packet.Source)
         data = packet.getBytesFromPackets()
+        print("Invio a, ", packet.Destination)
         UDP_Socket.SendUdpPacketUnicast(data, packet.Destination, int(config['GENERAL']['Port']))
     if (packet.Destination == init_config.GetIp(config['GENERAL']['StationInterface'])):
         GetAudio()
