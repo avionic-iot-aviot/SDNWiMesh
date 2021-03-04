@@ -20,7 +20,7 @@ def PacketHandler(data, address):
     packet = Packets.getPacketFromBytes(data)
     print (packet.printLitePacket())
 
-    if (packet.Destination == str(config['GENERAL']['IpSink'])):
+    if (packet.Destination == init_config.GetIp(config['GENERAL']['StationInterface'])):
         #print ("Yess - è per me")
         # print("######## ", packet.TTL)
         if(int(packet.Type) == 0):
@@ -29,21 +29,24 @@ def PacketHandler(data, address):
             TypeReport(packet)
         if(int(packet.Type) == 2):
             TypeData(packet)
-        if(int(packet.Type) == 3):
-            TypeFunction(packet)
-    else:
+    #else:
         #print("NO - non è per me")
-        packet.DecreaseTTL()
+       # packet.DecreaseTTL()
         #print("@@@@@@@ ", packet.TTL)
-        data = packet.getBytesFromPackets()
-        UDP_Socket.SendUdpPacketUnicast(
-            data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))
+       # data = packet.getBytesFromPackets()
+       # UDP_Socket.SendUdpPacketUnicast(
+            #data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))
+    if (packet.NextHop == str(config['GENERAL']['IpSinkOnWan'])):        
+        if(int(packet.Type) == 3):
+            TypeData(packet)
+    
 
 
 def TypeBeacon(packet):
 
     
     if (packet.Destination==str(config['GENERAL']['IpSink']) and init_config.GetIp(config['GENERAL']['StationInterface'])==str(config['GENERAL']['IpSink']) ):
+
         #Packets.getPacketFromBytes(data).printLitePacket()
         print("Beacon Received from: ", packet.Source)
         data = packet.getBytesFromPackets()
