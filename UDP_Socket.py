@@ -57,11 +57,14 @@ class ThreadReceiverUdpPacketsFromController (threading.Thread):
 
 def UdpSocketReceiverFromController(ip,port):
     # Create a UDP socket
-    sC = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    #sC = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sC = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     # Bind the socket to the port
-    server_address = (ip, port)
-    sC.bind(server_address)
-   
+    #server_address = (ip, port)
+    sC.bind(('',port))
+
+
+
     while True:
        print("####### Node is listening #######")
        data, address = sC.recvfrom(4096)
