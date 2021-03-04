@@ -79,6 +79,8 @@ if (str(nodeIP)==str(config['GENERAL']['IpSink'])):
     ThreadUdpReceiver.start()
     ThreadUdpBeaconS.start()
 
+ThreadUdpReceiverFromController()
+
 ThreadScanNetwork.start()
 #
 #ThreadPrintInfo.start()
