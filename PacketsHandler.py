@@ -39,7 +39,7 @@ def PacketHandler(data, address):
        # data = packet.getBytesFromPackets()
        # UDP_Socket.SendUdpPacketUnicast(
             #data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))
-    if (packet.NextHop == str(config['GENERAL']['IpSinkOnWan'])):        
+    if (packet.NextHop == str(config['GENERAL']['IpSinkOnWan'])and init_config.GetIp(config['GENERAL']['StationInterface'])==str(config['GENERAL']['IpSink'])):        
         if(int(packet.Type) == 3):
             TypeFunction(packet)
     
