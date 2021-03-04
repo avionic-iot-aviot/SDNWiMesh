@@ -69,6 +69,7 @@ if (str(nodeIP)!=str(config['GENERAL']['IpSink'])):
     print("Processo avviato. Non sono il sink: ", str(nodeIP))
     ThreadUdpBeacon.start() #da indentare correttamente
     ThreadUdpReport.start()
+    ThreadUdpReceiver.start()
    # ThreadAudioFile.start()
   
 
