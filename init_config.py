@@ -59,7 +59,7 @@ def GetNeighboors():
     s = result.stdout.read()
     s1 = s.decode('utf-8', 'ignore')
     neigh = s1.splitlines()
-    neight=neigh.remove(init_config.GetIp(config['GENERAL']['StationInterface']))        
+    neigh.remove(init_config.GetIp(config['GENERAL']['StationInterface']))        
         #size = len(list)
     print("Network Scanning..arp stabilizing")
         #if size < int(config['GENERAL']['NumberOfNodes']):
@@ -71,7 +71,7 @@ def GetNeighboors():
                 #if str(config['GENERAL']['IpSink'])[:-2] in str(field[0]) and str(field[2]) == "br-lan" and str(field[5]) != "router" and str(field[8]) != "FAILED":
         
 
-    return neight
+    return neigh
 
 
 
