@@ -42,7 +42,7 @@ def UdpSocketReceiverFromNode(port):
 
 
 class ThreadReceiverUdpPacketsFromController (threading.Thread):
-   def __init__(self, threadID, name, port,ip):
+   def __init__(self, threadID, name,ip,port):
       threading.Thread.__init__(self)
       self.threadID = threadID
       self.name = name
