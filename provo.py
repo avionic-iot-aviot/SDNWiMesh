@@ -1,16 +1,11 @@
-import socket
-import sys
+from socket import *
+
+serverPort=4100
 
 
-ip = "192.168.1.152"
-port = 4100
-
-
-# Create a UDP socket
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s = socket(AF_INET,SOCK_DGRAM)
 # Bind the socket to the port
-server_address = (ip, port)
-s.bind(server_address)
+s.bind(('',serverPort))
 
 
 while True:
