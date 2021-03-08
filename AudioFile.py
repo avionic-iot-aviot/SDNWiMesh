@@ -42,6 +42,7 @@ def GetAudio(action):
         ser = serial.Serial('/dev/ttyS1')  # open serial port
         audioT=readAudio(action,ser)
         audioT.start()
+        audioT.join()
 
         
     if action == "OFF":
@@ -90,5 +91,6 @@ class readAudio (threading.Thread):
           UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port']))
           if self.ser.isOpen()==False:
               sys.exit()
+              break
       if self.ser.isOpen()==False:
           sys.exit()
