@@ -78,14 +78,14 @@ def GetAudio(action):
 class readAudio (threading.Thread):
    def __init__(self,action,ser):
       threading.Thread.__init__(self)
-      print ("Id thread------>", threading.current_thread())
+      
       self.action=action
       self.ser=ser
 
    def run(self):
 
       print ("Starting readAudio Thread")
-      
+      print ("Id thread------>", threading.current_thread())
       while self.ser.is_open:
           print("Microphone "+self.action)
           payload= str(self.ser.readline())
