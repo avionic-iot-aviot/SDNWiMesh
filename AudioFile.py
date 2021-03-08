@@ -12,8 +12,10 @@ from Packets import DataPacket
 import node_variables
 import init_config
 from configparser import ConfigParser
+import serial
 config = ConfigParser()
 config.read('config.ini')
+
 
 #class ThreadSendDataAudio (threading.Thread):
  #   def __init__(self, threadID, name):
@@ -31,7 +33,16 @@ def GetAudio(action):
     #time.sleep(5)
     #nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
     #while True:
-    print("Microphone "+action)
+    ser = serial.Serial('/dev/ttyS1')  # open serial port    
+    if action =="ON":
+        print("Microphone "+action)
+        payload= str(ser.readline())
+        print(payload)
+        pckData = DataPacket(config['GENERAL']['NetId'],config['GENERAL']['IpSink'], init_config.GetIp(config['GENERAL']['StationInterface']), "100",config['GENERAL']['IpSink'],payload)
+        UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port'])) 
+    if action == "OFF":
+        ser.close()
+
         #obj = wave.open('/tmp/SDNPy-master/sound.wav', 'r')
        # print("Number of channels", obj.getnchannels())
         #print("Sample width", obj.getsampwidth())
