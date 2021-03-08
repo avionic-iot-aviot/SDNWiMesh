@@ -14,6 +14,7 @@ import init_config
 from configparser import ConfigParser
 import serial
 config = ConfigParser()
+import subprocess
 config.read('config.ini')
 
 
@@ -34,9 +35,10 @@ def GetAudio(action):
     #nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
     #while True:
     ser = serial.Serial('/dev/ttyS1')  # open serial port    
+    print("Microphone "+action)
     if action =="ON":
         while action =="ON":
-            print("Microphone "+action)
+            
             payload= str(ser.readline())
             print(payload)
             print ("send mic data")
@@ -44,6 +46,8 @@ def GetAudio(action):
             UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port'])) 
     if action == "OFF":
         ser.close()
+        subprocess.Popen("fuser -k /dev/ttyS1", shell=True, stdout=subprocess.PIPE)        
+        
 
         #obj = wave.open('/tmp/SDNPy-master/sound.wav', 'r')
        # print("Number of channels", obj.getnchannels())
