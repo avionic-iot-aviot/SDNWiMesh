@@ -40,12 +40,15 @@ def GetAudio(action):
     
     if action =="ON":
         ser = serial.Serial('/dev/ttyS1')  # open serial port
-        readAudio(action,ser)
+        audioT=readAudio(action,ser)
+        audioT.start()
+
         
     if action == "OFF":
         print("Microphone "+action)
         subprocess.Popen("pkill -9 /dev/ttyS1", shell=True, stdout=subprocess.PIPE)
-        subprocess.Popen("pkill -9 /dev/ttyS1", shell=True, stdout=subprocess.PIPE) 
+        subprocess.Popen("pkill -9 /dev/ttyS1", shell=True, stdout=subprocess.PIPE)
+  
        
 
 
@@ -84,4 +87,8 @@ class readAudio (threading.Thread):
           payload= str(self.ser.readline())
           print ("send mic data")
           pckData = DataPacket(config['GENERAL']['NetId'],config['GENERAL']['IpSink'], init_config.GetIp(config['GENERAL']['StationInterface']), "100",config['GENERAL']['IpSink'],payload)
-          UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port'])) 
+          UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port']))
+          if self.ser.isOpen()==False:
+              sys.exit()
+      if self.ser.isOpen()==False:
+          sys.exit()
