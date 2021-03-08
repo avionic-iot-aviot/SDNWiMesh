@@ -30,6 +30,8 @@ config.read('config.ini')
        # AudioFile()
 
 
+
+
 def GetAudio(action):
     #time.sleep(5)
     #nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
@@ -37,19 +39,14 @@ def GetAudio(action):
         
     
     if action =="ON":
-        ser = serial.Serial('/dev/ttyS1')  # open serial port        
-        while ser.isOpen():
-            print("Microphone "+action)            
-            payload= str(ser.readline())
-            print(payload)
-            print ("send mic data")
-            pckData = DataPacket(config['GENERAL']['NetId'],config['GENERAL']['IpSink'], init_config.GetIp(config['GENERAL']['StationInterface']), "100",config['GENERAL']['IpSink'],payload)
-            UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port'])) 
+        ser = serial.Serial('/dev/ttyS1')  # open serial port
+        readAudio(action,ser)
+        
     if action == "OFF":
         print("Microphone "+action)
+        subprocess.Popen("pkill -9 /dev/ttyS1", shell=True, stdout=subprocess.PIPE)
         subprocess.Popen("pkill -9 /dev/ttyS1", shell=True, stdout=subprocess.PIPE) 
-        #ser.close()        
-        subprocess.Popen("fuser -k /dev/ttyS1", shell=True, stdout=subprocess.PIPE)   
+       
 
 
               
@@ -71,3 +68,20 @@ def GetAudio(action):
         #time.sleep(float(config['FileWave']['TimeSleepBetweenTwoFrame']))
         #obj.close()
         #time.sleep(int(config['FileWave']['TimeSleepBetweenTwoPlay']))
+
+
+
+class readAudio (threading.Thread):
+   def __init__(self,action,ser):
+      threading.Thread.__init__(self)
+      self.action=action
+      self.ser=ser
+
+   def run(self):
+      print ("Starting readAudio Thread")
+      while self.ser.isOpen():
+          print("Microphone "+self.action)
+          payload= str(self.ser.readline())
+          print ("send mic data")
+          pckData = DataPacket(config['GENERAL']['NetId'],config['GENERAL']['IpSink'], init_config.GetIp(config['GENERAL']['StationInterface']), "100",config['GENERAL']['IpSink'],payload)
+          UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port'])) 
