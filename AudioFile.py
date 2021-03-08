@@ -44,7 +44,7 @@ def GetAudio(action):
         ser = serial.Serial('/dev/ttyS1')  # open serial port
         audioT=readAudio(action,ser)
         audioT.start()
-        audioT.join()
+        
 
         
     if action == "OFF":
