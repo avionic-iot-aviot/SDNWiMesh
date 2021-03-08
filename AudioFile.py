@@ -34,19 +34,25 @@ def GetAudio(action):
     #time.sleep(5)
     #nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
     #while True:
-    ser = serial.Serial('/dev/ttyS1')  # open serial port    
-    print("Microphone "+action)
+        
+    
     if action =="ON":
-        while action =="ON":
-            
+        ser = serial.Serial('/dev/ttyS1')  # open serial port        
+        while ser.isOpen():
+            print("Microphone "+action)            
             payload= str(ser.readline())
             print(payload)
             print ("send mic data")
             pckData = DataPacket(config['GENERAL']['NetId'],config['GENERAL']['IpSink'], init_config.GetIp(config['GENERAL']['StationInterface']), "100",config['GENERAL']['IpSink'],payload)
             UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port'])) 
     if action == "OFF":
-        ser.close()
-        subprocess.Popen("fuser -k /dev/ttyS1", shell=True, stdout=subprocess.PIPE)        
+        print("Microphone "+action)
+        subprocess.Popen("pkill -9 /dev/ttyS1", shell=True, stdout=subprocess.PIPE) 
+        #ser.close()        
+        subprocess.Popen("fuser -k /dev/ttyS1", shell=True, stdout=subprocess.PIPE)   
+
+
+              
         
 
         #obj = wave.open('/tmp/SDNPy-master/sound.wav', 'r')
