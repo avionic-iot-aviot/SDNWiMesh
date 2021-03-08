@@ -29,7 +29,7 @@ config.read('config.ini')
       #  #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
        # AudioFile()
 
-
+ser = serial
 
 
 def GetAudio(action):
@@ -48,7 +48,7 @@ def GetAudio(action):
         print("Microphone "+action)
         subprocess.Popen("pkill -9 /dev/ttyS1", shell=True, stdout=subprocess.PIPE)
         subprocess.Popen("pkill -9 /dev/ttyS1", shell=True, stdout=subprocess.PIPE)
-  
+        ser.close()
        
 
 
@@ -82,7 +82,7 @@ class readAudio (threading.Thread):
 
    def run(self):
       print ("Starting readAudio Thread")
-      while self.ser.isOpen():
+      while self.ser.is_open:
           print("Microphone "+self.action)
           payload= str(self.ser.readline())
           print ("send mic data")
