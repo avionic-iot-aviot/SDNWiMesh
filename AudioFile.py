@@ -48,7 +48,7 @@ def GetAudio(action):
         
     if action == "OFF":
         print("Microphone "+action)
-        os.system("kill -SIGKILL " + node_variables.ThreadId)
+        os.system("kill -SIGKILL " + str(node_variables.ThreadId))
 
 
               
