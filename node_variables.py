@@ -1,9 +1,11 @@
 
+import threading
 # IP
 IpStation = ""
 IpClient = ""
 IpDefaultGateway = ""
-ThreadId=0
+ThreadId= threading.Thread
+
 
 # Neighbor
 list_neighbor = []
