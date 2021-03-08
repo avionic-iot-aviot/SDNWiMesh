@@ -42,16 +42,14 @@ def GetAudio(action):
     
     if action =="ON":
         ser = serial.Serial('/dev/ttyS1')  # open serial port
-        audioT=readAudio(action,ser)
-        node_variables.ThreadId = audioT
+        audioT = readAudio(action,ser)
         audioT.start()
         
 
         
     if action == "OFF":
         print("Microphone "+action)
-        node_variables.ThreadId._delete
-        #os.system("kill -SIGKILL " + str(node_variables.ThreadId))
+        os.system("kill -SIGKILL " + str(node_variables.ThreadId))
 
 
               
@@ -87,8 +85,8 @@ class readAudio (threading.Thread):
 
       print ("Starting TreadAudio Thread")
       #node_variables.ThreadId=int(threading.get_ident())
-      #node_variables.ThreadId=int(threading.current_thread().ident)
-      print ("Id thread------>", str(node_variables.ThreadId ))
+      node_variables.ThreadId=int(os.getpid())
+      print ("Id thread------>", node_variables.ThreadId )
       while self.ser.is_open:
           print("Microphone "+self.action)
           payload= str(self.ser.readline())

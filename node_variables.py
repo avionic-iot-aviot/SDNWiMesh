@@ -4,7 +4,7 @@ import threading
 IpStation = ""
 IpClient = ""
 IpDefaultGateway = ""
-ThreadId= threading.Thread
+
 
 
 # Neighbor
