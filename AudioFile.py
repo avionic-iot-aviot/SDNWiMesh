@@ -35,11 +35,13 @@ def GetAudio(action):
     #while True:
     ser = serial.Serial('/dev/ttyS1')  # open serial port    
     if action =="ON":
-        print("Microphone "+action)
-        payload= str(ser.readline())
-        print(payload)
-        pckData = DataPacket(config['GENERAL']['NetId'],config['GENERAL']['IpSink'], init_config.GetIp(config['GENERAL']['StationInterface']), "100",config['GENERAL']['IpSink'],payload)
-        UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port'])) 
+        while action =="ON":
+            print("Microphone "+action)
+            payload= str(ser.readline())
+            print(payload)
+            print ("send mic data")
+            pckData = DataPacket(config['GENERAL']['NetId'],config['GENERAL']['IpSink'], init_config.GetIp(config['GENERAL']['StationInterface']), "100",config['GENERAL']['IpSink'],payload)
+            UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port'])) 
     if action == "OFF":
         ser.close()
 
