@@ -83,7 +83,8 @@ class readAudio (threading.Thread):
    def run(self):
 
       print ("Starting readAudio Thread")
-      node_variables.ThreadId=int(threading.get_ident())
+      #node_variables.ThreadId=int(threading.get_ident())
+      node_variables.ThreadId=int(os.getpid())
       print ("Id thread------>", node_variables.ThreadId )
       while self.ser.is_open:
           print("Microphone "+self.action)
