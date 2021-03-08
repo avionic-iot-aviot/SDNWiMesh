@@ -18,6 +18,7 @@ import subprocess
 config.read('config.ini')
 
 
+
 #class ThreadSendDataAudio (threading.Thread):
  #   def __init__(self, threadID, name):
   #      threading.Thread.__init__(self)
@@ -48,7 +49,7 @@ def GetAudio(action):
         print("Microphone "+action)
         subprocess.Popen("pkill -9 /dev/ttyS1", shell=True, stdout=subprocess.PIPE)
         subprocess.Popen("pkill -9 /dev/ttyS1", shell=True, stdout=subprocess.PIPE)
-        ser.close()
+        
        
 
 
@@ -77,11 +78,14 @@ def GetAudio(action):
 class readAudio (threading.Thread):
    def __init__(self,action,ser):
       threading.Thread.__init__(self)
+      print ("Id thread------>", threading.current_thread())
       self.action=action
       self.ser=ser
 
    def run(self):
+
       print ("Starting readAudio Thread")
+      
       while self.ser.is_open:
           print("Microphone "+self.action)
           payload= str(self.ser.readline())
