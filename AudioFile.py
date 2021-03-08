@@ -16,6 +16,7 @@ import serial
 config = ConfigParser()
 import subprocess
 config.read('config.ini')
+import os
 
 
 
@@ -47,10 +48,7 @@ def GetAudio(action):
         
     if action == "OFF":
         print("Microphone "+action)
-        subprocess.Popen("pkill -9 /dev/ttyS1", shell=True, stdout=subprocess.PIPE)
-        subprocess.Popen("pkill -9 /dev/ttyS1", shell=True, stdout=subprocess.PIPE)
-        
-       
+        os.system("kill -SIGKILL " + node_variables.ThreadId)
 
 
               
@@ -85,7 +83,8 @@ class readAudio (threading.Thread):
    def run(self):
 
       print ("Starting readAudio Thread")
-      print ("Id thread------>", threading.current_thread())
+      node_variables.ThreadId=int(threading.get_ident())
+      print ("Id thread------>", node_variables.ThreadId )
       while self.ser.is_open:
           print("Microphone "+self.action)
           payload= str(self.ser.readline())
