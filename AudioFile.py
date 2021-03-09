@@ -52,11 +52,7 @@ def GetAudio(action):
         
     if action == "OFF":
         print("Microphone "+action)
-        for thread in threading.enumerate():
-            
-            if(thread.name=="AudioThread"):
-                thread.signal = False
-                print("----------------------------------------> ", thread.name)
+        node_variables.MicStatus=action
         #os.system("kill -SIGKILL " + str(node_variables.ThreadId))
 
 
@@ -89,11 +85,11 @@ class ThreadAud (threading.Thread):
        self.name=name
        self.action = action
    def run(self):
-       node_variables.ThreadId=int(os.getppid())
+       node_variables.MicStatus=self.action
        print ("Avvio il Thread all'interno")
        ser = serial.Serial('/dev/ttyS1')  # open serial port
        print ("Eccomi")
-       while True:
+       while node_variables.MicStatus=="ON":
            print("Microphone "+ self.action)
            payload= str(ser.readline())
            print ("send mic data")

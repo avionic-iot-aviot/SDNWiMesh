@@ -4,7 +4,7 @@
 IpStation = ""
 IpClient = ""
 IpDefaultGateway = ""
-ThreadId = 0
+MicStatus = ""
 
 
 # Neighbor
