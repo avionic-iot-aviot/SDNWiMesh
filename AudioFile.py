@@ -87,9 +87,9 @@ class ThreadAud (threading.Thread):
    def run(self):
        node_variables.MicStatus=self.action
        print ("Avvio il Thread all'interno")
-       ser = serial.Serial('/dev/ttyS1')  # open serial port
+       ser = serial.Serial('/dev/ttyS1',115200)  # open serial port
        print ("Eccomi")
-       while node_variables.MicStatus=="ON":
+       while node_variables.MicStatus=="ON":           
            print("Microphone "+ self.action)
            payload= str(ser.readline())
            print ("send mic data")
