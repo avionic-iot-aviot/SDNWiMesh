@@ -28,11 +28,10 @@ from multiprocessing import Process
     #    self.name = name
 
     #def run(self):
-     #   print("Starting " + self.name)
-      #  #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
-       # AudioFile()
+    #   print("Starting " + self.name)
+    #  #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
+    # AudioFile()
 
-ser = serial
 
 
 def GetAudio(action):
@@ -42,10 +41,12 @@ def GetAudio(action):
         
     
     if action =="ON":
-        ser = serial.Serial('/dev/ttyS1')  # open serial port
-        audioT =Process(target=readAudio, args=(action,ser))
+        
+        audioT =Process(target=readAudio, args=(action))
         audioT.start()
         audioT.join()
+        print("Thread Audio Started")
+        return
         
 
         
@@ -81,22 +82,22 @@ def readAudio (action,ser):
       #node_variables.ThreadId=int(threading.get_ident())
       node_variables.ThreadId=int(os.getppid())
       print ("Id thread------>", node_variables.ThreadId )
-      t = ThreadAud(action,ser)
+      t = ThreadAud(action)
       t.start()
       return
       
 
 class ThreadAud (threading.Thread):
-   def __init__(self, action,ser):
+   def __init__(self, action):
       threading.Thread.__init__(self)
       self.action = action
-      self.ser = ser
    def run(self):
-      loopAudio(self.action,self.ser)
+      loopAudio(self.action)
 
 
 
-def loopAudio(action,ser):
+def loopAudio(action):
+    ser = serial.Serial('/dev/ttyS1')  # open serial port
     while ser.is_open:
           print("Microphone "+ action)
           payload= str(ser.readline())
