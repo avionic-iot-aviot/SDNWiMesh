@@ -84,20 +84,22 @@ def readAudio (action,ser):
       print ("Id thread------>", node_variables.ThreadId )
       t = ThreadAud(action)
       t.start()
-      return
+    
       
 
 class ThreadAud (threading.Thread):
    def __init__(self, action):
-      threading.Thread.__init__(self)
-      self.action = action
+       threading.Thread.__init__(self)
+       self.action = action
    def run(self):
-      loopAudio(self.action)
+       print ("Avvio il Thread all'interno")
+       loopAudio(self.action)
 
 
 
 def loopAudio(action):
     ser = serial.Serial('/dev/ttyS1')  # open serial port
+    print ("Eccomi")
     while ser.is_open:
           print("Microphone "+ action)
           payload= str(ser.readline())
