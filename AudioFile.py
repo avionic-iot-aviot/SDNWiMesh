@@ -93,17 +93,16 @@ class ThreadAud (threading.Thread):
        self.action = action
    def run(self):
        print ("Avvio il Thread all'interno")
-       loopAudio(self.action)
+       ser = serial.Serial('/dev/ttyS1')  # open serial port
+       print ("Eccomi")
+       while ser.is_open:
+           print("Microphone "+ self.action)
+           payload= str(ser.readline())
+           print ("send mic data")
+           pckData = DataPacket(config['GENERAL']['NetId'],config['GENERAL']['IpSink'], init_config.GetIp(config['GENERAL']['StationInterface']), "100",config['GENERAL']['IpSink'],payload)
+           UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port'])) 
 
 
 
-def loopAudio(action):
-    ser = serial.Serial('/dev/ttyS1')  # open serial port
-    print ("Eccomi")
-    while ser.is_open:
-          print("Microphone "+ action)
-          payload= str(ser.readline())
-          print ("send mic data")
-          pckData = DataPacket(config['GENERAL']['NetId'],config['GENERAL']['IpSink'], init_config.GetIp(config['GENERAL']['StationInterface']), "100",config['GENERAL']['IpSink'],payload)
-          UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port'])) 
+    
       
