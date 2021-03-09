@@ -52,7 +52,9 @@ def GetAudio(action):
         
     if action == "OFF":
         print("Microphone "+action)
-        os.system("kill -SIGKILL " + str(node_variables.ThreadId))
+        for thread in threading.enumerate():
+            print("----------------------------------------> ", thread.name)
+        #os.system("kill -SIGKILL " + str(node_variables.ThreadId))
 
 
               
