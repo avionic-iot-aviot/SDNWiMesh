@@ -42,7 +42,7 @@ def GetAudio(action):
     
     if action =="ON":
         
-        t = ThreadAud(action)
+        t = ThreadAud("AudioThread",action)
         t.start()
         #audioT.join()
         print("Thread Audio Started")
@@ -81,8 +81,9 @@ def GetAudio(action):
 
 
 class ThreadAud (threading.Thread):
-   def __init__(self, action):
+   def __init__(self,name, action):
        threading.Thread.__init__(self)
+       self.name=name
        self.action = action
    def run(self):
        node_variables.ThreadId=int(os.getppid())
