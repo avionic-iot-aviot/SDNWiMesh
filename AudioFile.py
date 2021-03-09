@@ -54,7 +54,7 @@ def GetAudio(action):
         print("Microphone "+action)
         for thread in threading.enumerate():
             if(thread.name=="AudioThread"):
-                thread.stop()
+                
                 thread.delete()
                 thread.kill()
                 print("----------------------------------------> ", thread.name)
