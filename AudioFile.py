@@ -44,9 +44,9 @@ def GetAudio(action):
         
         audioT =Process(target=readAudio, args=(action))
         audioT.start()
-        audioT.join()
+        #audioT.join()
         print("Thread Audio Started")
-        return
+        #return
         
 
         
