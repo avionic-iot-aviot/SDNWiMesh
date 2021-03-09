@@ -42,8 +42,8 @@ def GetAudio(action):
     
     if action =="ON":
         
-        audioT =Process(target=readAudio, args=(action))
-        audioT.start()
+        t = ThreadAud(action)
+        t.start()
         #audioT.join()
         print("Thread Audio Started")
         #return
@@ -77,25 +77,17 @@ def GetAudio(action):
 
 
 
-def readAudio (action,ser):
-      print ("Starting TreadAudio Thread")
-      #node_variables.ThreadId=int(threading.get_ident())
-      node_variables.ThreadId=int(os.getppid())
-      print ("Id thread------>", node_variables.ThreadId )
-      t = ThreadAud(action)
-      t.start()
-    
-      
 
 class ThreadAud (threading.Thread):
    def __init__(self, action):
        threading.Thread.__init__(self)
        self.action = action
    def run(self):
+       node_variables.ThreadId=int(os.getppid())
        print ("Avvio il Thread all'interno")
        ser = serial.Serial('/dev/ttyS1')  # open serial port
        print ("Eccomi")
-       while ser.is_open:
+       while True:
            print("Microphone "+ self.action)
            payload= str(ser.readline())
            print ("send mic data")
