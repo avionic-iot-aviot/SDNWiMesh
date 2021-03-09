@@ -81,7 +81,23 @@ def readAudio (action,ser):
       #node_variables.ThreadId=int(threading.get_ident())
       node_variables.ThreadId=int(os.getppid())
       print ("Id thread------>", node_variables.ThreadId )
-      while ser.is_open:
+      t = ThreadAud(action,ser)
+      t.start()
+      return
+      
+
+class ThreadAud (threading.Thread):
+   def __init__(self, action,ser):
+      threading.Thread.__init__(self)
+      self.action = action
+      self.ser = ser
+   def run(self):
+      loopAudio(self.action,self.ser)
+
+
+
+def loopAudio(action,ser):
+    while ser.is_open:
           print("Microphone "+ action)
           payload= str(ser.readline())
           print ("send mic data")
