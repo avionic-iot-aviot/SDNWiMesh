@@ -17,6 +17,7 @@ config = ConfigParser()
 import subprocess
 config.read('config.ini')
 import os
+from multiprocessing import Process
 
 
 
@@ -42,8 +43,9 @@ def GetAudio(action):
     
     if action =="ON":
         ser = serial.Serial('/dev/ttyS1')  # open serial port
-        audioT = readAudio(action,ser)
+        audioT =Process(target=readAudio, args=(action,ser))
         audioT.start()
+        audioT.join()
         
 
         
@@ -74,22 +76,14 @@ def GetAudio(action):
 
 
 
-class readAudio (threading.Thread):
-   def __init__(self,action,ser):
-      threading.Thread.__init__(self)
-      
-      self.action=action
-      self.ser=ser
-
-   def run(self):
-
+def readAudio (action,ser):
       print ("Starting TreadAudio Thread")
       #node_variables.ThreadId=int(threading.get_ident())
-      node_variables.ThreadId=int(os.getpid())
+      node_variables.ThreadId=int(os.getppid())
       print ("Id thread------>", node_variables.ThreadId )
-      while self.ser.is_open:
-          print("Microphone "+self.action)
-          payload= str(self.ser.readline())
+      while ser.is_open:
+          print("Microphone "+ action)
+          payload= str(ser.readline())
           print ("send mic data")
           pckData = DataPacket(config['GENERAL']['NetId'],config['GENERAL']['IpSink'], init_config.GetIp(config['GENERAL']['StationInterface']), "100",config['GENERAL']['IpSink'],payload)
           UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port'])) 
