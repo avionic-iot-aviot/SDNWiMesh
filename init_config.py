@@ -77,7 +77,8 @@ def GetNeighboors():
 
 
 def FlusSystem():    
-    os.system("ip neigh flush ./")    
+    os.system("ip neigh flush ./")
+    subprocess.Popen("fping -A -D -a -q -g -a -i 1 "+str(config['GENERAL']['IpSink'])[:-1]+"0/24", shell=True, stdout=subprocess.PIPE)    
     sys.stdout.flush()
     #os.system("ping -c 1 192.168.3."+str(i+1))
     sys.stdout.flush()
