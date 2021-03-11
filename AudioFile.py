@@ -84,7 +84,7 @@ class ThreadAud (threading.Thread):
             payload = ""
             while len(payload) <= 5000:
                 payload = payload+" " +str(ser.readline().decode("utf-8")).rstrip()
-                print(len(payload))
+                #print(len(payload))
 
             print("send mic data:", payload)
             pckData = DataPacket(config['GENERAL']['NetId'], config['GENERAL']['IpSink'], init_config.GetIp(
