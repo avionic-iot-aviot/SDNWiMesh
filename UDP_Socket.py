@@ -35,7 +35,7 @@ def UdpSocketReceiverFromNode(port):
    
     while True:
        print("####### Node is listening #######")
-       data, address = s.recvfrom(4096)
+       data, address = s.recvfrom(8192)
        #s.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
        #print("\n\n 2. Node received: ", data.decode('utf-8'), "\n\n")
        PacketsHandler.PacketHandler(data,address)

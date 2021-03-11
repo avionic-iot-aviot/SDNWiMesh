@@ -82,7 +82,7 @@ class ThreadAud (threading.Thread):
         while node_variables.MicStatus == "ON":
             print("Microphone " + self.action)
             payload = ""
-            while len(payload) <= 11500:
+            while len(payload) <= 1000:
                 payload = payload+" " +str(ser.readline().decode("utf-8")).rstrip()
 
             print("send mic data:", payload)
