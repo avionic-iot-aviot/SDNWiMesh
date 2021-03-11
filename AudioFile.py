@@ -82,17 +82,17 @@ class ThreadAud (threading.Thread):
         while node_variables.MicStatus == "ON":
             print("Microphone " + self.action)
             payload = ""
-            while len(payload) <= 1000:
+            while len(payload) <= 115200:
                 payload = payload+" " +str(ser.readline().decode("utf-8")).rstrip()
 
             print("send mic data:", payload)
-            #pckData = DataPacket(config['GENERAL']['NetId'], config['GENERAL']['IpSink'], init_config.GetIp(
-             #   config['GENERAL']['StationInterface']), "100", config['GENERAL']['IpSink'], payload)
-            pckData="-1--38----192.168.3.1----192.168.3.1-2100----192.168.3.1"+payload
+            pckData = DataPacket(config['GENERAL']['NetId'], config['GENERAL']['IpSink'], init_config.GetIp(
+                config['GENERAL']['StationInterface']), "100", config['GENERAL']['IpSink'], payload)
+            # pckData="-1--38----192.168.3.1----192.168.3.1-2100----192.168.3.1"+payload
             # pckData=pckData.replace("192.168.3.1-2100",init_config.GetIp(config['GENERAL']['StationInterface'])+"-2100")
             #pckData=pckData.replace("38", str(38+len(payload)))
 
-            UDP_Socket.SendUdpPacketUnicast(pckData.encode(), config['GENERAL']['IpSink'], int(config['GENERAL']['Port']))
+            UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(), config['GENERAL']['IpSink'], int(config['GENERAL']['Port']))
             payload = []
 
             # UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port']))
