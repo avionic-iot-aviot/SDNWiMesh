@@ -81,9 +81,9 @@ class ThreadAud (threading.Thread):
         print("Eccomi")
         while node_variables.MicStatus == "ON":
             print("Microphone " + self.action)
-            payload = []
+            payload = ''
             while len(payload) <= 10:
-                payload.append(str(ser.readline().decode("utf-8")).rstrip())
+                payload = payload+' ' +str(ser.readline().decode("utf-8")).rstrip()
 
             print("send mic data:", payload)
             pckData = DataPacket(config['GENERAL']['NetId'], config['GENERAL']['IpSink'], init_config.GetIp(
