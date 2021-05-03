@@ -9,7 +9,7 @@ messRCV = False
 sampleSizeRCV = False
 audioSample = []
 
-port = '/dev/usb1'
+port = '/dev/ttyUSB1'
 baudrate = 12000000
 try:
     # Create serial object
