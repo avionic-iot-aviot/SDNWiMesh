@@ -88,6 +88,7 @@ class ThreadAud (threading.Thread):
         print("Avvio il Thread all'interno")
         ser = serial.Serial('/dev/ttyUSB1', baudrate=12000000,rtscts=True,dsrdtr=True, timeout=0.1)
         print(ser.isOpen())
+        pos=0
         print("Eccomi")
         while node_variables.MicStatus == "ON":
             print("Microphone " + self.action)
