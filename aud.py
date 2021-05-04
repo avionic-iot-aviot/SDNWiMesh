@@ -13,13 +13,12 @@ audioSample = []
 # Create serial object
 ser = serial.Serial('/dev/ttyUSB1', baudrate=12000000,rtscts=True,dsrdtr=True, timeout=0.1)
 # Open serial
-ser.port = port
+
 try:
     ser.open()
 except:
     print("gia aperta")
-# Start data transmission
-ser.write('start'.encode('utf-8'))
+
 # Start looking for the message
 while done == False:
     messRCV = False
