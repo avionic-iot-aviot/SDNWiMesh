@@ -20,6 +20,15 @@ config = ConfigParser()
 config.read('config.ini')
 
 
+buffSize = 3
+inBuff = [bytes(0)] * buffSize
+pos = 0
+
+messRCV = False
+sampleSizeRCV = False
+audioSample = []
+
+
 # class ThreadSendDataAudio (threading.Thread):
 #   def __init__(self, threadID, name):
 #      threading.Thread.__init__(self)
@@ -77,23 +86,37 @@ class ThreadAud (threading.Thread):
     def run(self):
         node_variables.MicStatus = self.action
         print("Avvio il Thread all'interno")
-        ser = serial.Serial('/dev/ttyS1', 115200)  # open serial port
+        ser = serial.Serial('/dev/ttyUSB1', baudrate=12000000,rtscts=True,dsrdtr=True, timeout=0.1)
+        print(ser.isOpen())
         print("Eccomi")
         while node_variables.MicStatus == "ON":
             print("Microphone " + self.action)
-            payload = ""
-            while len(payload) <= 5000:
-                payload = payload+" " +str(ser.readline().decode("utf-8")).rstrip()
+            audioSample = []
+            while len(audioSample) <= 2500:
+                messRCV = False
+                strVal = ser.read(1)
+                print(strVal)
+                if strVal == ('<').encode():
+                    while not messRCV:
+                        if pos == buffSize:  # and val == ('\r').encode():
+                            audioSample.append(int.from_bytes(inBuff[0] + inBuff[1] + inBuff[2], "big", signed="True"))                            
+                            messRCV = True
+                            pos = 0
+                            inBuff = [bytes(0)] * buffSize
+                        else:
+                            val = ser.read(1)
+                            inBuff[pos] = bytes(val)
+                            pos = pos + 1
                 #print(len(payload))
 
-            print("send mic data:", payload)
+            print("send mic data:", audioSample)
             pckData = DataPacket(config['GENERAL']['NetId'], config['GENERAL']['IpSink'], init_config.GetIp(
-                config['GENERAL']['StationInterface']), "100", config['GENERAL']['IpSink'], payload)
+                config['GENERAL']['StationInterface']), "100", config['GENERAL']['IpSink'], audioSample)
             # pckData="-1--38----192.168.3.1----192.168.3.1-2100----192.168.3.1"+payload
             # pckData=pckData.replace("192.168.3.1-2100",init_config.GetIp(config['GENERAL']['StationInterface'])+"-2100")
             #pckData=pckData.replace("38", str(38+len(payload)))
 
             UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(), config['GENERAL']['IpSink'], int(config['GENERAL']['Port']))
-            payload = []
+        
 
             # UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port']))
