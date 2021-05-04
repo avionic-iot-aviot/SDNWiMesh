@@ -20,13 +20,7 @@ config = ConfigParser()
 config.read('config.ini')
 
 
-buffSize = 3
-inBuff = [bytes(0)] * buffSize
-pos = 0
 
-messRCV = False
-sampleSizeRCV = False
-audioSample = []
 
 
 # class ThreadSendDataAudio (threading.Thread):
@@ -89,6 +83,11 @@ class ThreadAud (threading.Thread):
         ser = serial.Serial('/dev/ttyUSB1', baudrate=12000000,rtscts=True,dsrdtr=True, timeout=0.1)
         print(ser.isOpen())
         pos=0
+        buffSize = 3
+        inBuff = [bytes(0)] * buffSize
+        messRCV = False
+        sampleSizeRCV = False
+        audioSample = []
         print("Eccomi")
         while node_variables.MicStatus == "ON":
             print("Microphone " + self.action)
