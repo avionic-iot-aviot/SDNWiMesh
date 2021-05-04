@@ -80,7 +80,7 @@ class ThreadAud (threading.Thread):
     def run(self):
         node_variables.MicStatus = self.action
         print("Avvio il Thread all'interno")
-        ser = serial.Serial('/dev/ttyUSB1', baudrate=12000000,rtscts=True,dsrdtr=True, timeout=0.1)
+        ser = serial.Serial('/dev/ttyUSB1', baudrate=12000000,rtscts=True,dsrdtr=True, timeout=0)
         print(ser.isOpen())
         pos=0
         buffSize = 3
@@ -92,7 +92,7 @@ class ThreadAud (threading.Thread):
         while node_variables.MicStatus == "ON":
             print("Microphone " + self.action)
             audioSample = []
-            while len(audioSample) <= 1500:
+            while len(audioSample) <= 1000:
                 messRCV = False
                 strVal = ser.read(1)
                 print(strVal)
