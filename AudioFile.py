@@ -92,7 +92,7 @@ class ThreadAud (threading.Thread):
         while node_variables.MicStatus == "ON":
             print("Microphone " + self.action)
             audioSample = []
-            while len(audioSample) <= 2500:
+            while len(audioSample) <= 10:
                 messRCV = False
                 strVal = ser.read(1)
                 print(strVal)
@@ -109,7 +109,7 @@ class ThreadAud (threading.Thread):
                             pos = pos + 1
                 #print(len(payload))
 
-            print("send mic data:", audioSample)
+            print("send mic data:", str(audioSample))
             pckData = DataPacket(config['GENERAL']['NetId'], config['GENERAL']['IpSink'], init_config.GetIp(
                 config['GENERAL']['StationInterface']), "100", config['GENERAL']['IpSink'], str(audioSample))
             # pckData="-1--38----192.168.3.1----192.168.3.1-2100----192.168.3.1"+payload
