@@ -92,7 +92,7 @@ class ThreadAud (threading.Thread):
         while node_variables.MicStatus == "ON":
             print("Microphone " + self.action)
             audioSample = []
-            while len(audioSample) <= 1000:
+            while len(audioSample) <= 1500:
                 messRCV = False
                 strVal = ser.read(1)
                 print(strVal)
