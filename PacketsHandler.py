@@ -10,7 +10,7 @@ import threading
 import node_variables
 from configparser import ConfigParser
 config = ConfigParser()
-config.read('config.ini')
+config.read('/etc/SDNPy-SDNWiMesh/config.ini')
 from AudioFile import GetAudio
 
 # verifco se il pacchetto è per me o no

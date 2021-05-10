@@ -17,7 +17,7 @@ import init_config
 from configparser import ConfigParser
 import serial
 config = ConfigParser()
-config.read('config.ini')
+config.read('/etc/SDNPy-SDNWiMesh/config.ini')
 
 
 

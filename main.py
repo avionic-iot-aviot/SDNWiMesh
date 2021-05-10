@@ -13,7 +13,7 @@ import threading
 import node_variables
 from configparser import ConfigParser
 config = ConfigParser()
-config.read('config.ini')
+config.read('/etc/SDNPy-SDNWiMesh/config.ini')
 
 
 ############ 0. Asseganre gli Indirizzi Ip Nuovi ############

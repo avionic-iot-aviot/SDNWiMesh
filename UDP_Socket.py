@@ -10,7 +10,7 @@ import node_variables
 from configparser import ConfigParser
 import init_config
 config = ConfigParser()
-config.read('config.ini')
+config.read('/etc/SDNPy-SDNWiMesh/config.ini')
 ttl=1
 # --- Thread Receiver Udp Packets --- #
 class ThreadReceiverUdpPackets (threading.Thread):

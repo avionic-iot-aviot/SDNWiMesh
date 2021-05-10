@@ -8,7 +8,7 @@ import threading
 import node_variables
 from configparser import ConfigParser
 config = ConfigParser()
-config.read('config.ini')
+config.read('/etc/SDNPy-SDNWiMesh/config.ini')
 
 
 class Packets:
