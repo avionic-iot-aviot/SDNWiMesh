@@ -103,9 +103,6 @@ class ThreadAud (threading.Thread):
                             
                             #print("---------->", int.from_bytes(inBuff[0] + inBuff[1] + inBuff[2], "big", signed="True") )
                             print("---------->",inBuff[0] + inBuff[1] + inBuff[2])
-                            print("1->",inBuff[0])
-                            print("2->", inBuff[1] )
-                            print("3->", inBuff[2])
                             audioSample.extend(inBuff[0] + inBuff[1] + inBuff[2])
                             #audioSample.append(int.from_bytes(inBuff[0] + inBuff[1] + inBuff[2], "big", signed="True"))                            
                             messRCV = True

@@ -83,7 +83,8 @@ class Packets:
             frame5 = bytearray(self.Type,'utf-8')
             frame6 = bytearray(self.TTL,'utf-8')
             frame7 = bytearray(self.NextHop,'utf-8')
-            frame8 = bytearray(self.Payload,'utf-8')
+            #frame8 = bytearray(self.Payload,'utf-8')
+            frame8=self.Payload
             frame = frame1 + frame2 + frame3 + frame4 + frame5 + frame6 + frame7 + frame8
             ##print(frame)
             return frame
