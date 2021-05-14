@@ -75,7 +75,7 @@ class Packets:
         
     def getBytesFromPackets(self):
         self.fixTheLen()
-        if ( (len(self.NetId) == int(config['PACKET']['LenNetId']))  and (len(self.Length) == int(config['PACKET']['LenLength'])) and (len(self.Destination) == int(config['PACKET']['LenDestination'])) and (len(self.Source) == int(config['PACKET']['LenSource'])) and (len(self.Type) == int(config['PACKET']['LenType'])) and (len(self.TTL) == int(config['PACKET']['LenTTL'])) and (len(self.NextHop) == int(config['PACKET']['LenNextHop'])) and (len(self.Payload) <= int(config['PACKET']['LenPayload'])) ) :
+        if ( (len(self.NetId) == int(config['PACKET']['LenNetId']))  and (len(self.Length) == int(config['PACKET']['LenLength'])) and (len(self.Destination) == int(config['PACKET']['LenDestination'])) and (len(self.Source) == int(config['PACKET']['LenSource'])) and (len(self.Type) == int(config['PACKET']['LenType'])) and (len(self.TTL) == int(config['PACKET']['LenTTL'])) and (len(self.NextHop) == int(config['PACKET']['LenNextHop'])) ) : # and (len(self.Payload) <= int(config['PACKET']['LenPayload']))
             frame1 = bytearray(self.NetId.encode())
             frame2 = bytearray(self.Length.encode())
             frame3 = bytearray(self.Destination.encode())
@@ -84,7 +84,7 @@ class Packets:
             frame6 = bytearray(self.TTL.encode())
             frame7 = bytearray(self.NextHop.encode())
             frame8 = self.Payload
-            
+            print("---------------------------->",type(frame8))
             frame = frame1 + frame2 + frame3 + frame4 + frame5 + frame6 + frame7 + frame8
             ##print(frame)
             return frame
