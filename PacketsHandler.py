@@ -29,7 +29,7 @@ def PacketHandler(data, address):
         if(int(packet.Type) == 1):
             TypeReport(packet)
         if(int(packet.Type) == 2):
-            TypeData(data, packet.Source)
+            TypeData(packet, packet.Source)
         if(int(packet.Type) == 3):
             TypeFunction(packet)
     #else:
@@ -64,10 +64,10 @@ def TypeReport(packet):
         UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController']))
 
 
-def TypeData(data,s):
+def TypeData(packet,s):
     #if (packet.Destination==str(config['GENERAL']['IpSink'])and init_config.GetIp(config['GENERAL']['StationInterface'])==str(config['GENERAL']['IpSink'])):
     print("Data Received from: ", s)
-    print("caneeeeee--->", str(data))
+    data = packet.getBytesFromPackets()
     #data = packet.getBytesFromPackets()
     UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController']))
 
