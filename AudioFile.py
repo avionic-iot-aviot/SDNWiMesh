@@ -40,7 +40,7 @@ def GetAudio(action):
     #nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
     # while True:
 
-    if action.decode('utf-8') == "ON":
+    if action == "ON":
 
         t = ThreadAud("AudioThread", action)
         t.start()
@@ -48,8 +48,8 @@ def GetAudio(action):
         print("Thread Audio Started")
         # return
 
-    if action.decode('utf-8') == "OFF":
-        print("Microphone "+action.decode('utf-8'))
+    if action == "OFF":
+        print("Microphone "+action)
         node_variables.MicStatus = action
         #os.system("kill -SIGKILL " + str(node_variables.ThreadId))
 
@@ -75,7 +75,7 @@ class ThreadAud (threading.Thread):
     def __init__(self, name, action):
         threading.Thread.__init__(self)
         self.name = name
-        self.action = action.decode('utf-8')
+        self.action = action
 
     def run(self):
         node_variables.MicStatus = self.action
@@ -91,8 +91,8 @@ class ThreadAud (threading.Thread):
         print("Eccomi")
         while node_variables.MicStatus == "ON":
             print("Microphone " + self.action)
-            #audioSample = []
-            audioSample= bytearray()
+            audioSample = []
+            #audioSample= bytearray()
             while len(audioSample) <= 1000:
                 messRCV = False
                 strVal = ser.read(1)
@@ -101,10 +101,10 @@ class ThreadAud (threading.Thread):
                     while not messRCV:
                         if pos == buffSize:  # and val == ('\r').encode():
                             
-                            #print("---------->", int.from_bytes(inBuff[0] + inBuff[1] + inBuff[2], "big", signed="True") )
-                            print("---------->",inBuff[0] + inBuff[1] + inBuff[2])
-                            audioSample.extend(inBuff[0] + inBuff[1] + inBuff[2])
-                            #audioSample.append(int.from_bytes(inBuff[0] + inBuff[1] + inBuff[2], "big", signed="True"))                            
+                            print("---------->", int.from_bytes(inBuff[0] + inBuff[1] + inBuff[2], "big", signed="True") )
+                            #print("---------->",inBuff[0] + inBuff[1] + inBuff[2])
+                            #audioSample.extend(inBuff[0] + inBuff[1] + inBuff[2])
+                            audioSample.append(int.from_bytes(inBuff[0] + inBuff[1] + inBuff[2], "big", signed="True"))                            
                             messRCV = True
                             pos = 0
                             inBuff = [bytes(0)] * buffSize
@@ -116,7 +116,7 @@ class ThreadAud (threading.Thread):
 
             print("send mic data:", str(audioSample))
             pckData = DataPacket(config['GENERAL']['NetId'], config['GENERAL']['IpSink'], init_config.GetIp(
-                config['GENERAL']['StationInterface']), "100", config['GENERAL']['IpSink'], audioSample)
+                config['GENERAL']['StationInterface']), "100", config['GENERAL']['IpSink'], str(audioSample))
             # pckData="-1--38----192.168.3.1----192.168.3.1-2100----192.168.3.1"+payload
             # pckData=pckData.replace("192.168.3.1-2100",init_config.GetIp(config['GENERAL']['StationInterface'])+"-2100")
             #pckData=pckData.replace("38", str(38+len(payload)))

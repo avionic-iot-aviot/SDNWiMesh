@@ -71,11 +71,9 @@ class Packets:
         while frame7.decode("utf-8")[0] == "-":
             frame7 = frame7[1:]
 
-        if isinstance(frame8, str):
-            return cls(frame1.decode("utf-8"), frame2.decode("utf-8"), frame3.decode("utf-8"), frame4.decode("utf-8"), frame5.decode("utf-8"), frame6.decode("utf-8"), frame7.decode("utf-8"), frame8.decode("utf-8") )
-        else:
-            return cls(frame1.decode("utf-8"), frame2.decode("utf-8"), frame3.decode("utf-8"), frame4.decode("utf-8"), frame5.decode("utf-8"), frame6.decode("utf-8"), frame7.decode("utf-8"), str(frame8).decode("utf-8") )
-    
+   
+        return cls(frame1.decode("utf-8"), frame2.decode("utf-8"), frame3.decode("utf-8"), frame4.decode("utf-8"), frame5.decode("utf-8"), frame6.decode("utf-8"), frame7.decode("utf-8"), frame8.decode("utf-8") )
+     
         
     def getBytesFromPackets(self):
         self.fixTheLen()
@@ -88,10 +86,8 @@ class Packets:
             frame5 = bytearray(self.Type,'utf-8')
             frame6 = bytearray(self.TTL,'utf-8')
             frame7 = bytearray(self.NextHop,'utf-8')
-            if isinstance(self.Payload, str):
-                frame8 = bytearray(str(self.Payload),'utf-8')
-            else:
-                frame8.extend(self.Payload)
+            frame8 = bytearray(self.Payload,'utf-8')
+            
 
 
           
