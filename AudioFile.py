@@ -40,7 +40,7 @@ def GetAudio(action):
     #nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
     # while True:
 
-    if action == "ON":
+    if action.decode('utf-8') == "ON":
 
         t = ThreadAud("AudioThread", action)
         t.start()
@@ -48,7 +48,7 @@ def GetAudio(action):
         print("Thread Audio Started")
         # return
 
-    if action == "OFF":
+    if action.decode('utf-8') == "OFF":
         print("Microphone "+action)
         node_variables.MicStatus = action
         #os.system("kill -SIGKILL " + str(node_variables.ThreadId))
@@ -89,7 +89,7 @@ class ThreadAud (threading.Thread):
         sampleSizeRCV = False
         audioSample = []
         print("Eccomi")
-        while node_variables.MicStatus == "ON":
+        while node_variables.MicStatus.decode('utf-8') == "ON":
             print("Microphone " + self.action)
             #audioSample = []
             audioSample= bytearray()
