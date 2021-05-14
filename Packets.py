@@ -83,7 +83,7 @@ class Packets:
             frame5 = bytearray(self.Type.encode())
             frame6 = bytearray(self.TTL.encode())
             frame7 = bytearray(self.NextHop.encode())
-            frame8 = self.Payload
+            frame8 =  bytearray(self.Payload.encode())
             print("---------------------------->",type(frame8))
             frame = frame1 + frame2 + frame3 + frame4 + frame5 + frame6 + frame7 + frame8
             ##print(frame)
