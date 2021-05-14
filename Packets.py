@@ -71,7 +71,11 @@ class Packets:
         while frame7.decode("utf-8")[0] == "-":
             frame7 = frame7[1:]
 
-        return cls(frame1.decode("utf-8"), frame2.decode("utf-8"), frame3.decode("utf-8"), frame4.decode("utf-8"), frame5.decode("utf-8"), frame6.decode("utf-8"), frame7.decode("utf-8"), frame8.decode("utf-8") )
+        if isinstance(frame8, str):
+            return cls(frame1.decode("utf-8"), frame2.decode("utf-8"), frame3.decode("utf-8"), frame4.decode("utf-8"), frame5.decode("utf-8"), frame6.decode("utf-8"), frame7.decode("utf-8"), frame8.decode("utf-8") )
+        else:
+            return cls(frame1.decode("utf-8"), frame2.decode("utf-8"), frame3.decode("utf-8"), frame4.decode("utf-8"), frame5.decode("utf-8"), frame6.decode("utf-8"), frame7.decode("utf-8"), frame8 )
+    
         
     def getBytesFromPackets(self):
         self.fixTheLen()
