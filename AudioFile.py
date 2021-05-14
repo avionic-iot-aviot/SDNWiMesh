@@ -100,7 +100,7 @@ class ThreadAud (threading.Thread):
                 if strVal == ('<').encode():
                     while not messRCV:
                         if pos == buffSize:  # and val == ('\r').encode():
-                            print("---------->", inBuff[0] + inBuff[1] + inBuff[2] )
+                            print("---------->", int.from_bytes(inBuff[0] + inBuff[1] + inBuff[2], "big", signed="True") )
                             audioSample.append( inBuff[0] + inBuff[1] + inBuff[2])
                             #audioSample.append(int.from_bytes(inBuff[0] + inBuff[1] + inBuff[2], "big", signed="True"))                            
                             messRCV = True
