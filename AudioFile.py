@@ -49,7 +49,7 @@ def GetAudio(action):
         # return
 
     if action.decode('utf-8') == "OFF":
-        print("Microphone "+action)
+        print("Microphone "+action.decode('utf-8'))
         node_variables.MicStatus = action
         #os.system("kill -SIGKILL " + str(node_variables.ThreadId))
 
