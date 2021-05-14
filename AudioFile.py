@@ -75,7 +75,7 @@ class ThreadAud (threading.Thread):
     def __init__(self, name, action):
         threading.Thread.__init__(self)
         self.name = name
-        self.action = action
+        self.action = action.decode('utf-8')
 
     def run(self):
         node_variables.MicStatus = self.action
@@ -89,7 +89,7 @@ class ThreadAud (threading.Thread):
         sampleSizeRCV = False
         audioSample = []
         print("Eccomi")
-        while node_variables.MicStatus.decode('utf-8') == "ON":
+        while node_variables.MicStatus == "ON":
             print("Microphone " + self.action)
             #audioSample = []
             audioSample= bytearray()
