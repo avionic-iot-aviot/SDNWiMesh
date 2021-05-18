@@ -78,7 +78,7 @@ def TypeFunction(packet):
     #config['GENERAL']['StationWanInterface']
     print("Wan IP->", init_config.GetIp("br-lan1") ," vs->",str(config['GENERAL']['IpSinkOnWan']))
     print("packet destnation->",packet.Destination , " vs->",init_config.GetIp(config['GENERAL']['StationInterface'])) 
-    if (packet.NextHop==str(config['GENERAL']['IpSinkOnWan']) and init_config.GetIp(config['GENERAL']['StationWanInterface'])==str(config['GENERAL']['IpSinkOnWan'])):
+    if (packet.NextHop==str(config['GENERAL']['IpSinkOnWan']) and init_config.GetIp("br-lan1")==str(config['GENERAL']['IpSinkOnWan'])):
         print("Function PKT Received from: ", packet.Source)
         dest = packet.Destination
         data = packet.getBytesFromPackets()
