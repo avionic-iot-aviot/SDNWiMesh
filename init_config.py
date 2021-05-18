@@ -27,6 +27,7 @@ def GetIp(interface):
     for adapter in adapters:
         if (adapter.nice_name == interface):
             temp = adapter.ips[0].ip
+            print("--------------------------->", temp)
     
     return temp
 
