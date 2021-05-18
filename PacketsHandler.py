@@ -86,6 +86,7 @@ def TypeFunction(packet):
         UDP_Socket.SendUdpPacketUnicast(data,dest, int(config['GENERAL']['Port']))
     if (packet.Destination == init_config.GetIp(config['GENERAL']['StationInterface'])):
         GetAudio(packet.Payload)
+        #ciao
 
 
 
