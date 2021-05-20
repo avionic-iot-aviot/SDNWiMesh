@@ -69,7 +69,9 @@ def TypeData(packet,s):
     print("Data Received from: ", s)
     data = packet.getBytesFromPackets()
     #data = packet.getBytesFromPackets()
-    UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController']))
+    UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController'])) #da commentare
+    #da aggiungere funzione per scrittura su file
+
 
 
 def TypeFunction(packet):
