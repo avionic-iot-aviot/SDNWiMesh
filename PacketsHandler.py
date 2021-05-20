@@ -67,9 +67,10 @@ def TypeReport(packet):
 def TypeData(packet,s):
     #if (packet.Destination==str(config['GENERAL']['IpSink'])and init_config.GetIp(config['GENERAL']['StationInterface'])==str(config['GENERAL']['IpSink'])):
     print("Data Received from: ", s)
-    data = packet.getBytesFromPackets()
     #data = packet.getBytesFromPackets()
-    UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController'])) #da commentare
+    #data = packet.getBytesFromPackets()
+    #UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController'])) #da commentare
+    print("Salvo su file------->", str(packet.Payload) )
     #da aggiungere funzione per scrittura su file
 
 
