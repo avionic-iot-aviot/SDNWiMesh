@@ -70,7 +70,10 @@ def TypeData(packet,s):
     #data = packet.getBytesFromPackets()
     #data = packet.getBytesFromPackets()
     #UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController'])) #da commentare
-    print("Salvo su file------->", str(packet.Payload) )
+    #print("Salvo su file------->", str(packet.Payload) )
+    f = open("/etc/AUDIO/sample.txt", "wb")
+    f. write(packet.Payload)
+    f. close()
     #da aggiungere funzione per scrittura su file
 
 
