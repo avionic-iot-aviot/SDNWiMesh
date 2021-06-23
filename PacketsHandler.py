@@ -65,15 +65,15 @@ def TypeReport(packet):
 
 
 def TypeData(packet,s):
-    #if (packet.Destination==str(config['GENERAL']['IpSink'])and init_config.GetIp(config['GENERAL']['StationInterface'])==str(config['GENERAL']['IpSink'])):
+    #if (packet.Destination==str(config['GENERAL']['IpSink'])and init_config.GetIp(config['GENERAL']['StationInterface'])==str(config['GENERAL']['IpSink'])): no
     print("Data Received from: ", s)
-    #data = packet.getBytesFromPackets()
-    #data = packet.getBytesFromPackets()
-    #UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IpController'], int(config['GENERAL']['PortController'])) #da commentare
+    #data = packet.getBytesFromPackets() #si
+    #data = packet.getBytesFromPackets() #si
+    #UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IPRasp'], int(config['GENERAL']['PortRasp'])) #si
     #print("Salvo su file------->", str(packet.Payload) )
-    f = open("/etc/AUDIO/sample.txt", "wb")
-    f. write(packet.Payload)
-    f. close()
+    f = open("/etc/AUDIO/sample.txt", "wb") #commen
+    f. write(packet.Payload) #comme
+    f. close() #comm
     #da aggiungere funzione per scrittura su file
 
 
