@@ -12,6 +12,7 @@ from configparser import ConfigParser
 config = ConfigParser()
 config.read('/etc/SDNPy-SDNWiMesh/config.ini')
 from AudioFile import GetAudio
+from Packets import DataPacket
 
 # verifco se il pacchetto è per me o no
 
@@ -67,14 +68,20 @@ def TypeReport(packet):
 def TypeData(packet,s):
     #if (packet.Destination==str(config['GENERAL']['IpSink'])and init_config.GetIp(config['GENERAL']['StationInterface'])==str(config['GENERAL']['IpSink'])): no
     print("Data Received from: ", s)
-    #data = packet.getBytesFromPackets() #si
-    #data = packet.getBytesFromPackets() #si
-    #UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IPRasp'], int(config['GENERAL']['PortRasp'])) #si
+    pckData = DataPacket(
+        config['GENERAL']['NetId'],
+        config['GENERAL']['IpRasp'],
+        config['GENERAL']['IpSink'],
+        "100",
+        config['GENERAL']['IpRasp'],
+        packet.Payload
+    )
+    data = pckData.getBytesFromPackets()
+    UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IPRasp'], int(config['GENERAL']['PortRasp']))
     #print("Salvo su file------->", str(packet.Payload) )
-    f = open("/etc/AUDIO/sample.txt", "wb") #commen
-    f. write(packet.Payload) #comme
-    f. close() #comm
-    #da aggiungere funzione per scrittura su file
+    #f = open("/etc/AUDIO/sample.txt", "wb") #commen
+    #f. write(packet.Payload) #comme
+    #f. close() #comm
 
 
 

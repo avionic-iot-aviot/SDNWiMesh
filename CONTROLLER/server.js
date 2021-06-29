@@ -10,9 +10,9 @@ var serveStatic = require('serve-static')
 app.use(serveStatic('./'))
 
 
-var IpSink= "192.168.1.95"
+var IpSink= "10.11.0.190"
 var PortSink=4100
-var MyIp="192.168.1.189"
+var MyIp="10.11.0.8"
 var LenNetId = 2
 var LenLength = 4
 var LenDestination = 15

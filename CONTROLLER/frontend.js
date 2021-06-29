@@ -17,7 +17,7 @@ function reset() {
     links = []
 }
 // client code here
-var socket = io.connect(':3000');
+var socket = io.connect(':30030');
 
 socket.on('connect', function (message) {
     console.log("Connected")
