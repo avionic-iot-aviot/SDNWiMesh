@@ -12,7 +12,7 @@ app.use(serveStatic('./'))
 
 var IpSink= "10.11.0.190"
 var PortSink=4100
-var MyIp="10.11.0.8"
+var MyIp="10.11.0.4"
 var LenNetId = 2
 var LenLength = 4
 var LenDestination = 15
