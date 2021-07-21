@@ -18,3 +18,5 @@ melo_netifaces
 netifaces
 netifaces-0.10.9.dist-info
 share
+.vscode
+__pycache__
