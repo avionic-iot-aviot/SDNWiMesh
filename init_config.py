@@ -9,7 +9,7 @@ import init_config
 from configparser import ConfigParser
 
 config = ConfigParser()
-config.read('/etc/SDNPy-SDNWiMesh/config.ini')
+config.read('config.ini')
 
 
 def SetDeviceOnStart():

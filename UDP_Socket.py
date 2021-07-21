@@ -11,7 +11,7 @@ from configparser import ConfigParser
 import init_config
 
 config = ConfigParser()
-config.read('/etc/SDNPy-SDNWiMesh/config.ini')
+config.read('config.ini')
 ttl = 1
 
 

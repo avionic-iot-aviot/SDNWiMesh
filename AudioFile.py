@@ -18,7 +18,7 @@ from configparser import ConfigParser
 import serial
 
 config = ConfigParser()
-config.read('/etc/SDNPy-SDNWiMesh/config.ini')
+config.read('config.ini')
 
 # class ThreadSendDataAudio (threading.Thread):
 #   def __init__(self, threadID, name):

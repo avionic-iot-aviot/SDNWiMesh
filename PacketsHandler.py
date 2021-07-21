@@ -11,7 +11,7 @@ import node_variables
 from configparser import ConfigParser
 
 config = ConfigParser()
-config.read('/etc/SDNPy-SDNWiMesh/config.ini')
+config.read('config.ini')
 from AudioFile import GetAudio
 from Packets import DataPacket
 

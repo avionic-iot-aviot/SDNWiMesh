@@ -4,7 +4,7 @@ from configparser import ConfigParser
 import init_config
 
 config = ConfigParser()
-config.read('/etc/SDNPy-SDNWiMesh/config.ini')
+config.read('config.ini')
 
 ip = "192.168.3.1"
 port = 3567
