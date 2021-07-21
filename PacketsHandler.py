@@ -89,10 +89,12 @@ def TypeData(packet, s):
     data = pckData.getBytesFromPackets()
     UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IPRasp'],
                                     int(config['GENERAL']['PortRasp']))
-    #print("Salvo su file------->", str(packet.Payload) )
-    #f = open("/etc/AUDIO/sample.txt", "wb") #commen
-    #f. write(packet.Payload) #comme
-    #f. close() #comm
+    print("Sent an UDP Datagram. Source: {} <--> Size: {}B".format(packet.Source, len(packet.Payload)))
+    if config['DEBUG']['WRITE_FILE'] is True:
+        print("Saving inside the file ------->", str(packet.Source) )
+        f = open("/etc/AUDIO/{}.txt".format(packet.Source), "wb") #commen
+        f. write(packet.Payload) #comme
+        f. close() #comm
 
 
 def TypeFunction(packet):
