@@ -84,7 +84,7 @@ def TypeData(packet, s):
         print("Data Received from: ", s)
     pckData = DataPacket(config['GENERAL']['NetId'],
                          config['GENERAL']['IpRasp'],
-                         config['GENERAL']['IpSink'], "100",
+                         packet.Source, "100",
                          config['GENERAL']['IpRasp'], packet.Payload)
     data = pckData.getBytesFromPackets()
     UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IPRasp'],
