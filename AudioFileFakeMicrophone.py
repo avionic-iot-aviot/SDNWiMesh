@@ -74,10 +74,10 @@ class ThreadAud(threading.Thread):
         self.action = action.decode('utf-8')
 
     def run(self):
-        if config['DEBUG']['PRINT_LOGS'] is True:
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("CIAOOOOOOO SONO QUIIIIIIIIIII")
         node_variables.MicStatus = self.action
-        if config['DEBUG']['PRINT_LOGS'] is True:
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("Avvio il Thread all'interno")
         #        ser = serial.Serial('/dev/ttyUSB1', baudrate=12000000,rtscts=True,dsrdtr=True, timeout=0)
         #        print(ser.isOpen())
@@ -123,7 +123,7 @@ class ThreadAud(threading.Thread):
 #                            inBuff[pos] = bytes(val)
 #                            pos = pos + 1
 
-            if config['DEBUG']['PRINT_LOGS'] is True:
+            if config.getboolean('DEBUG','PRINT_LOGS') is True:
                 print("send mic data:", str(counter))
             total_bytes_sent += len(audioSample)
             pckData = DataPacket(

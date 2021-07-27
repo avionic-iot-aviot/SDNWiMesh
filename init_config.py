@@ -19,7 +19,7 @@ def SetDeviceOnStart():
     os.system('/etc/init.d/network restart')
     sys.stdout.flush()
     time.sleep(50)
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("Tutto ok")
 
 
@@ -30,7 +30,7 @@ def GetIp(interface):
     for adapter in adapters:
         if (adapter.nice_name == interface):
             temp = adapter.ips[0].ip
-            if config['DEBUG']['PRINT_LOGS'] is True:
+            if config.getboolean('DEBUG','PRINT_LOGS') is True:
                 print(interface + "--------------------------->", temp)
 
     return temp
@@ -70,7 +70,7 @@ def GetNeighboors():
     neigh = s1.splitlines()
     neigh.remove(init_config.GetIp(config['GENERAL']['StationInterface']))
     #size = len(list)
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("Network Scanning..arp stabilizing")
     #if size < int(config['GENERAL']['NumberOfNodes']):
     #print("Arp table size:", len(list))

@@ -76,14 +76,14 @@ class ThreadAud(threading.Thread):
 
     def run(self):
         node_variables.MicStatus = self.action
-        if config['DEBUG']['PRINT_LOGS'] is True:
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("Avvio il Thread all'interno")
         ser = serial.Serial('/dev/ttyUSB1',
                             baudrate=12000000,
                             rtscts=True,
                             dsrdtr=True,
                             timeout=0)
-        if config['DEBUG']['PRINT_LOGS'] is True:
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print(ser.isOpen())
         pos = 0
         buffSize = 3
@@ -91,7 +91,7 @@ class ThreadAud(threading.Thread):
         messRCV = False
         sampleSizeRCV = False
         audioSample = []
-        if config['DEBUG']['PRINT_LOGS'] is True:
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("Eccomi")
         while node_variables.MicStatus == "ON":
             print("Microphone " + self.action)
@@ -106,7 +106,7 @@ class ThreadAud(threading.Thread):
                         if pos == buffSize:  # and val == ('\r').encode():
 
                             #print("---------->", int.from_bytes(inBuff[0] + inBuff[1] + inBuff[2], "big", signed="True") )
-                            if config['DEBUG']['PRINT_LOGS'] is True:
+                            if config.getboolean('DEBUG','PRINT_LOGS') is True:
                                 print("---------->",
                                       inBuff[0] + inBuff[1] + inBuff[2])
                             audioSample.extend(inBuff[0] + inBuff[1] +
@@ -120,7 +120,7 @@ class ThreadAud(threading.Thread):
                             inBuff[pos] = bytes(val)
                             pos = pos + 1
 
-            if config['DEBUG']['PRINT_LOGS'] is True:
+            if config.getboolean('DEBUG','PRINT_LOGS') is True:
                 print("send mic data:", str(audioSample))
             pckData = DataPacket(
                 config['GENERAL']['NetId'], config['GENERAL']['IpSink'],

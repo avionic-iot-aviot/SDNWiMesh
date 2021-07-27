@@ -17,7 +17,7 @@ print("Do Ctrl+c to exit the program !!")
 while True:
     send_data = input("Type some text to send =>")
     s.sendto(send_data.encode('utf-8'), (ip, port))
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("\n\n 1. Client Sent : ", send_data, "\n\n")
 # close the socket
 s.close()

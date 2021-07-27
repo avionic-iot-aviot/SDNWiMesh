@@ -111,11 +111,11 @@ class Packets:
                 frame8.extend(self.Payload)
 
             frame = frame1 + frame2 + frame3 + frame4 + frame5 + frame6 + frame7 + frame8
-            if config['DEBUG']['PRINT_LOGS'] is True:
+            if config.getboolean('DEBUG','PRINT_LOGS') is True:
                 print(frame)
             return frame
         else:
-            if config['DEBUG']['PRINT_LOGS'] is True:
+            if config.getboolean('DEBUG','PRINT_LOGS') is True:
                 print("Error Packet Size")
 
     def fixTheLen(self):
