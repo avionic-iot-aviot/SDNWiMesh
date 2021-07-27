@@ -89,7 +89,7 @@ def TypeData(packet, s):
     data = pckData.getBytesFromPackets()
     UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IPRasp'],
                                     int(config['GENERAL']['PortRasp']))
-    if config['DEBUG']['WRITE_FILE'] is True:
+    if config.getboolean('DEBUG','WRITE_FILE') is True:
         print("Saving inside the file ------->", str(packet.Source) )
         f = open("/etc/AUDIO/{}.txt".format(packet.Source), "wb") #commen
         f. write(packet.Payload) #comme
