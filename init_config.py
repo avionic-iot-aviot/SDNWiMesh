@@ -19,7 +19,7 @@ def SetDeviceOnStart():
     os.system('/etc/init.d/network restart')
     sys.stdout.flush()
     time.sleep(50)
-    if config.getboolean('DEBUG','PRINT_LOGS') is True:
+    if config['DEBUG']['PRINT_LOGS'] is True:
         print("Tutto ok")
 
 
@@ -30,7 +30,7 @@ def GetIp(interface):
     for adapter in adapters:
         if (adapter.nice_name == interface):
             temp = adapter.ips[0].ip
-            if config.getboolean('DEBUG','PRINT_LOGS') is True:
+            if config['DEBUG']['PRINT_LOGS'] is True:
                 print(interface + "--------------------------->", temp)
 
     return temp
@@ -70,7 +70,7 @@ def GetNeighboors():
     neigh = s1.splitlines()
     neigh.remove(init_config.GetIp(config['GENERAL']['StationInterface']))
     #size = len(list)
-    if config.getboolean('DEBUG','PRINT_LOGS') is True:
+    if config['DEBUG']['PRINT_LOGS'] is True:
         print("Network Scanning..arp stabilizing")
     #if size < int(config['GENERAL']['NumberOfNodes']):
     #print("Arp table size:", len(list))
@@ -83,12 +83,20 @@ def GetNeighboors():
     return neigh
 
 
-def FlusSystem():
+def RefreshARP():
+    neigh=[]
     os.system("ip neigh flush ./")
-    subprocess.Popen("fping -A -D -a -q -g -a -i 1 " +
-                     str(config['GENERAL']['IpSink'])[:-1] + "0/24",
+    result=subprocess.Popen("fping -A -D -r 0 -q -g -a -i 1 " +
+                     str(config['GENERAL']['IpSink'])[:-1] + "1 "+str(config['GENERAL']['IpSink'])[:-1] + "10",
                      shell=True,
                      stdout=subprocess.PIPE)
+    s = result.stdout.read()
+    s1 = s.decode('utf-8', 'ignore')
+    neigh = s1.splitlines()
+    neigh.remove(init_config.GetIp(config['GENERAL']['StationInterface']))
+    if config['DEBUG']['PRINT_LOGS'] is True:
+        print("Network Scanning..arp stabilizing")
+
     sys.stdout.flush()
     #os.system("ping -c 1 192.168.3."+str(i+1))
     sys.stdout.flush()
@@ -97,4 +105,4 @@ def FlusSystem():
     os.system("sync | echo 3 > /proc/sys/vm/drop_caches")
     sys.stdout.flush()
 
-    return
+    return neigh
