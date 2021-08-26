@@ -9,11 +9,11 @@ from Packets import Packets
 import node_variables
 from configparser import ConfigParser
 import init_config
+from queue import Queue
 
 config = ConfigParser()
 config.read('config.ini')
 ttl = 1
-
 
 # --- Thread Receiver Udp Packets --- #
 class ThreadReceiverUdpPackets(threading.Thread):
@@ -89,16 +89,16 @@ class ThreadBeacon(threading.Thread):
 
     def run(self):
         print("Starting " + self.name)
-        SendUdpPacketBroadcastLoop(self.beacon, self.ip, self.port)
+        SendUdpPacketBeacon(self.beacon, self.ip, self.port)
 
 
-def SendUdpPacketBroadcastLoop(beacon, ip, port):
+def SendUdpPacketBeacon(beacon, ip, port):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
     print("Do Ctrl+c to exit the program !!")
     # Let's send data through UDP protocol
     while True:
         s.sendto(beacon, (ip, port))
-        if config.getboolean('DEBUG','PRINT_LOGS') is True:
+        if config['DEBUG']['PRINT_LOGS'] is True:
             print("\n\n 1. Node Send Beacon: ", beacon, "\n\n")
             # close the socketù
             print("Beacon Send!")
@@ -107,35 +107,37 @@ def SendUdpPacketBroadcastLoop(beacon, ip, port):
 
 # --- Thread Report Udp Packets --- #
 class ThreadReport(threading.Thread):
-    def __init__(self, threadID, name, port, s_address, d_address):
+    def __init__(self, threadID, name, port, s_address, d_address, neighbours):
         threading.Thread.__init__(self)
         self.threadID = threadID
         self.name = name
         self.port = port
         self.s_address = s_address
         self.d_address = d_address
-
+        self.neighbours=neighbours
     def run(self):
         print("Starting " + self.name)
-        SendUdpPacketUnicastLoop(self.port, self.s_address, self.d_address)
+        SendUdpPacketReport(self.port, self.s_address, self.d_address, self.neighbours)
 
 
-def SendUdpPacketUnicastLoop(port, src, dst):
+def SendUdpPacketReport(port, src, dst, queue):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
     print("Do Ctrl+c to exit the program !!")
     # Let's send data through UDP protocol
+    neighbours=[]
     while True:
-        neigh = init_config.GetNeighboors()
+        if not queue.empty():
+            neighbours=queue.get()       
         pckReort = ReportPacket(config['GENERAL']['NetId'], dst, src,
                                 config['GENERAL']['TTL'], dst,
-                                ", ".join(neigh))
+                                ", ".join(neighbours))
         bytesToSend = pckReort.getBytesFromPackets()
         s.sendto(bytesToSend, (dst, port))
-        if config.getboolean('DEBUG','PRINT_LOGS') is True:
+        if config['DEBUG']['PRINT_LOGS'] is True:
             print("\n\n 1. Node Send Report : ", bytesToSend, "\n\n")
             # close the socket
             print("Unicast Report Send!")
-        time.sleep(int(config['GENERAL']['BeaconSleep']))
+        time.sleep(int(config['GENERAL']['ReportSleep']))
 
 
 # --- Generic Function For Send Udp Packets --- #
@@ -179,14 +181,14 @@ def PrintBasicInfo(NeighborInfo, OtherInfo):
         time.sleep(int(config['GENERAL']['InfoSleep']))
 
 
-class ThreadFlusSystem(threading.Thread):
-    def __init__(self, threadID, name):
+class ThreadRefreshARP(threading.Thread):
+    def __init__(self, threadID, name, neighbours):
         threading.Thread.__init__(self)
         self.threadID = threadID
         self.name = name
-
+        self.neighbours= neighbours
     def run(self):
         while True:
             print("Starting " + self.name)
-            init_config.FlusSystem()
+            self.neighbours.put(init_config.RefreshARP())
             time.sleep(int(config['GENERAL']['ScanNetSleep']))
