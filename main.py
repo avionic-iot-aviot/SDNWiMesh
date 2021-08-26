@@ -12,9 +12,10 @@ import AudioFile
 import threading
 import node_variables
 from configparser import ConfigParser
+from queue import Queue
 config = ConfigParser()
 config.read('config.ini')
-
+neighbours=Queue()
 
 ############ 0. Asseganre gli Indirizzi Ip Nuovi ############
 
@@ -55,16 +56,16 @@ ThreadUdpBeaconS = UDP_Socket.ThreadBeacon( 7, "Thread-Beacon", pckBeacon.getByt
 
 
 #if (config.get(socket.gethostname(),'Sink') == "NO"):
-ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), nodeIP, config['GENERAL']['IpSink']  ) 
+ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), nodeIP, config['GENERAL']['IpSink'], neighbours  ) 
 
-ThreadFlusSystem= UDP_Socket.ThreadFlusSystem(4,"Thread-FlusSystem")
+ThreadRefreshARP= UDP_Socket.ThreadRefreshARP(4,"Thread-RefreshARP",neighbours)
 #else:
 #    ThreadUdpReport = UDP_Socket.ThreadReport(3, "Thread-Report", int(config['GENERAL']['Port']), node_variables.IpStation, node_variables.IpDefaultGateway ) 
 
 #ThreadPrintInfo = UDP_Socket.ThreadPrintInfoNode(4,"Thread-Info")
 #ThreadAudioFile = AudioFile.ThreadSendDataAudio(5,"Tread-Audio")
 
-
+ThreadRefreshARP.start()
 if (str(nodeIP)!=str(config['GENERAL']['IpSink'])):
     print("Processo avviato. Non sono il sink: ", str(nodeIP))
     ThreadUdpBeacon.start() #da indentare correttamente
@@ -83,7 +84,7 @@ if (str(nodeIP)==str(config['GENERAL']['IpSink'])):
 
 
 
-ThreadFlusSystem.start()
+
 #
 #ThreadPrintInfo.start()
 
