@@ -1,6 +1,6 @@
 import serial
 
-onionCode = 0
+onionCode = 1
 
 #Init buffer containing the received data
 buffSize = 360
@@ -61,7 +61,7 @@ finally :
     ser.close()
     #Save normalized file to text
     if onionCode == 1:
-        fHandler = open('/home/microphone/audio.txt', 'w')
+        fHandler = open('/etc/audio.txt', 'w')
     else:
         fHandler = open('C:/Users/ruben/Desktop/Test_9.txt', 'w')
         
