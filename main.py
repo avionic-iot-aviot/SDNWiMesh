@@ -21,6 +21,12 @@ neighbours=Queue()
 
 print("\n\n\t\tSTART SDNWISE\n\n")
 
+hostname=config['GENERAL']['IPRasp']
+config['GENERAL']['IPRasp']=socket.gethostbyname(hostname)
+hostname=config['GENERAL']['IpSinkOnWan']
+config['GENERAL']['IpSinkOnWan']=socket.gethostbyname(hostname)
+print("Ip Rasp on Wan: {}".format(config['GENERAL']['IPRasp']))
+print("Ip Sink on Wan: {}".format(config['GENERAL']['IPSinkOnWan']))
 #init_config.SetDeviceOnStart()
 
 #print("\n\tIndirizzi Ip Asseganti\n")
