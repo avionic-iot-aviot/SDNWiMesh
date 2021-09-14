@@ -61,14 +61,19 @@ def GetNeighboors():
     neigh = []
     #flag=True
     #while flag:
-    result = subprocess.Popen("fping -A -D -a -q -g -a -i 1 " +
+    result = subprocess.Popen("fping -A -D -a -q -a -i 1 -g " +
                               str(config['GENERAL']['IpSink'])[:-1] + "0/24",
                               shell=True,
                               stdout=subprocess.PIPE)
     s = result.stdout.read()
     s1 = s.decode('utf-8', 'ignore')
     neigh = s1.splitlines()
-    neigh.remove(init_config.GetIp(config['GENERAL']['StationInterface']))
+    try:
+        neigh.remove(init_config.GetIp(config['GENERAL']['IpSink']))
+    except:
+        print(
+            "Error neigh.remove(init_config.GetIp(config['GENERAL']['IpSink']))"
+        )
     #size = len(list)
     if config['DEBUG']['PRINT_LOGS'] is True:
         print("Network Scanning..arp stabilizing")
@@ -84,17 +89,24 @@ def GetNeighboors():
 
 
 def RefreshARP():
-    neigh=[]
+    neigh = []
     os.system("ip neigh flush ./")
-    result=subprocess.Popen("fping -A -D -r 0 -q -g -a -i 1 " +
-                     str(config['GENERAL']['IpSink'])[:-1] + "1 "+str(config['GENERAL']['IpSink'])[:-1] + "10",
-                     shell=True,
-                     stdout=subprocess.PIPE)
+    result = subprocess.Popen("fping -A -D -a -q -a -i 1 -r 0 -g " +
+                              str(config['GENERAL']['IpSink'])[:-1] + "1 " +
+                              str(config['GENERAL']['IpSink'])[:-1] + "10",
+                              shell=True,
+                              stdout=subprocess.PIPE)
+
     s = result.stdout.read()
     s1 = s.decode('utf-8', 'ignore')
     neigh = s1.splitlines()
-    neigh.remove(init_config.GetIp(config['GENERAL']['StationInterface']))
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    try:
+        neigh.remove(init_config.GetIp(config['GENERAL']['IpSink']))
+    except:
+        print(
+            "Error neigh.remove(init_config.GetIp(config['GENERAL']['IpSink']))"
+        )
+    if config.getboolean('DEBUG', 'PRINT_LOGS') is True:
         print("Network Scanning..arp stabilizing")
 
     sys.stdout.flush()
