@@ -15,6 +15,11 @@ config.read('config.ini')
 from AudioFile import GetAudio
 from Packets import DataPacket
 
+hostname=config['GENERAL']['IPRasp']
+config['GENERAL']['IPRasp']=socket.gethostbyname(hostname)
+hostname=config['GENERAL']['IpSinkOnWan']
+config['GENERAL']['IpSinkOnWan']=socket.gethostbyname(hostname)
+
 # verifco se il pacchetto è per me o no
 
 
