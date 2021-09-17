@@ -63,7 +63,7 @@ def TypeBeacon(packet):
             == str(config['GENERAL']['IpSink'])):
 
         #Packets.getPacketFromBytes(data).printLitePacket()
-        if config['DEBUG']['PRINT_LOGS'] is True:
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("Beacon Received from: ", packet.Source)
         data = packet.getBytesFromPackets()
         UDP_Socket.SendUdpPacketUnicast(
@@ -75,7 +75,7 @@ def TypeReport(packet):
     if (packet.Destination == str(config['GENERAL']['IpSink'])
             and init_config.GetIp(config['GENERAL']['StationInterface'])
             == str(config['GENERAL']['IpSink'])):
-        if config['DEBUG']['PRINT_LOGS'] is True:
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("Report Received from: ", packet.Source)
         data = packet.getBytesFromPackets()
         UDP_Socket.SendUdpPacketUnicast(
@@ -85,43 +85,43 @@ def TypeReport(packet):
 
 def TypeData(packet, s):
     #if (packet.Destination==str(config['GENERAL']['IpSink'])and init_config.GetIp(config['GENERAL']['StationInterface'])==str(config['GENERAL']['IpSink'])): no
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("Data Received from: ", s)
     pckData = DataPacket(config['GENERAL']['NetId'],
                          config['GENERAL']['IpRasp'],
-                         config['GENERAL']['IpSink'], "100",
+                         packet.Source, "100",
                          config['GENERAL']['IpRasp'], packet.Payload)
     data = pckData.getBytesFromPackets()
     UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IPRasp'],
                                     int(config['GENERAL']['PortRasp']))
-    if config['DEBUG']['WRITE_FILE'] is True:
+    if config.getboolean('DEBUG','WRITE_FILE') is True:
         print("Saving inside the file ------->", str(packet.Source) )
-        f = open("/etc/AUDIO/{}.txt".format(packet.Source), "wb") #commen
+        f = open("/etc/AUDIO/{}.txt".format(packet.Source), "ab") #commen
         f. write(packet.Payload) #comme
         f. close() #comm
 
 
 def TypeFunction(packet):
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("Sono nella TypeFunction")
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("Next hop->", packet.NextHop, " vs->",
               str(config['GENERAL']['IpSinkOnWan']))
     #config['GENERAL']['StationWanInterface']
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("Wan IP->", init_config.GetIp("br-lan1"), " vs->",
               str(config['GENERAL']['IpSinkOnWan']))
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("packet destnation->", packet.Destination, " vs->",
               init_config.GetIp(config['GENERAL']['StationInterface']))
     if (packet.NextHop == str(config['GENERAL']['IpSinkOnWan'])
             and init_config.GetIp("br-lan1") == str(
                 config['GENERAL']['IpSinkOnWan'])):
-        if config['DEBUG']['PRINT_LOGS'] is True:
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("Function PKT Received from: ", packet.Source)
         dest = packet.Destination
         data = packet.getBytesFromPackets()
-        if config['DEBUG']['PRINT_LOGS'] is True:
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("Invio a, ", dest)
         UDP_Socket.SendUdpPacketUnicast(data, dest,
                                         int(config['GENERAL']['Port']))

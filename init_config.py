@@ -19,7 +19,7 @@ def SetDeviceOnStart():
     os.system('/etc/init.d/network restart')
     sys.stdout.flush()
     time.sleep(50)
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("Tutto ok")
 
 
@@ -30,7 +30,7 @@ def GetIp(interface):
     for adapter in adapters:
         if (adapter.nice_name == interface):
             temp = adapter.ips[0].ip
-            if config['DEBUG']['PRINT_LOGS'] is True:
+            if config.getboolean('DEBUG','PRINT_LOGS') is True:
                 print(interface + "--------------------------->", temp)
 
     return temp
@@ -61,21 +61,16 @@ def GetNeighboors():
     neigh = []
     #flag=True
     #while flag:
-    result = subprocess.Popen("fping -A -D -a -q -a -i 1 -g " +
-                              str(config['GENERAL']['IpSink'])[:-1] + "0/24",
+    result = subprocess.Popen("fping -A -D -a -q -g -a -i 1 " +
+                              str(config['GENERAL']['IpSink'])[:-1] + "1 "+str(config['GENERAL']['IpSink'])[:-1] + "10",
                               shell=True,
                               stdout=subprocess.PIPE)
     s = result.stdout.read()
     s1 = s.decode('utf-8', 'ignore')
     neigh = s1.splitlines()
-    try:
-        neigh.remove(init_config.GetIp(config['GENERAL']['IpSink']))
-    except:
-        print(
-            "Error neigh.remove(init_config.GetIp(config['GENERAL']['IpSink']))"
-        )
+    neigh.remove(init_config.GetIp(config['GENERAL']['StationInterface']))
     #size = len(list)
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("Network Scanning..arp stabilizing")
     #if size < int(config['GENERAL']['NumberOfNodes']):
     #print("Arp table size:", len(list))
@@ -89,13 +84,13 @@ def GetNeighboors():
 
 
 def RefreshARP():
-    neigh = []
+    neigh=[]
     os.system("ip neigh flush ./")
-    result = subprocess.Popen("fping -A -D -a -q -a -i 1 -r 0 -g " +
-                              str(config['GENERAL']['IpSink'])[:-1] + "1 " +
-                              str(config['GENERAL']['IpSink'])[:-1] + "10",
-                              shell=True,
-                              stdout=subprocess.PIPE)
+    result= subprocess.Popen("fping -A -D -a -q -a -i 1 -r 0 -g " +
+                     str(config['GENERAL']['IpSink'])[:-1] + "1 "+str(config['GENERAL']['IpSink'])[:-1] + "10",
+                     shell=True,
+                     stdout=subprocess.PIPE)
+
 
     s = result.stdout.read()
     s1 = s.decode('utf-8', 'ignore')
@@ -103,12 +98,11 @@ def RefreshARP():
     try:
         neigh.remove(init_config.GetIp(config['GENERAL']['IpSink']))
     except:
-        print(
-            "Error neigh.remove(init_config.GetIp(config['GENERAL']['IpSink']))"
-        )
-    if config.getboolean('DEBUG', 'PRINT_LOGS') is True:
+        print("Error neigh.remove(init_config.GetIp(config['GENERAL']['IpSink']))")
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("Network Scanning..arp stabilizing")
 
+    
     sys.stdout.flush()
     #os.system("ping -c 1 192.168.3."+str(i+1))
     sys.stdout.flush()

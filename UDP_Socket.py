@@ -38,7 +38,7 @@ def UdpSocketReceiverFromNode(port):
     s.bind(server_address)
 
     while True:
-        if config['DEBUG']['PRINT_LOGS'] is True:
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("####### Node is listening #######")
         data, address = s.recvfrom(8192)
         #s.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
@@ -69,7 +69,7 @@ def UdpSocketReceiverFromController(ip, port):
     sC.bind(('', port))
 
     while True:
-        if config['DEBUG']['PRINT_LOGS'] is True:
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("####### Node is listening #######")
         data, address = sC.recvfrom(4096)
         #s.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
@@ -98,7 +98,7 @@ def SendUdpPacketBeacon(beacon, ip, port):
     # Let's send data through UDP protocol
     while True:
         s.sendto(beacon, (ip, port))
-        if config['DEBUG']['PRINT_LOGS'] is True:
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("\n\n 1. Node Send Beacon: ", beacon, "\n\n")
             # close the socketù
             print("Beacon Send!")
@@ -146,7 +146,7 @@ def SendUdpPacketReport(port, src, dst, queue):
 def SendUdpPacketUnicast(data, address, port):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
     s.sendto(data, (address, port))
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("\n\n 1. Packet sent: ", data, "\n\n")
 
 
@@ -164,7 +164,7 @@ class ThreadPrintInfoNode(threading.Thread):
 
 def PrintBasicInfo(NeighborInfo, OtherInfo):
     while True:
-        if config['DEBUG']['PRINT_LOGS'] is True:
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("\n[B-INFO] Network ID: ",
                   config.get(socket.gethostname(), 'NetId'))
             print("[B-INFO] Node ID: ", config.get(socket.gethostname(), 'Id'))
