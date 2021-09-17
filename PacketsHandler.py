@@ -15,19 +15,21 @@ config.read('config.ini')
 from AudioFile import GetAudio
 from Packets import DataPacket
 
+# verifco se il pacchetto è per me o no
+
 hostname=config['GENERAL']['IPRasp']
 config['GENERAL']['IPRasp']=socket.gethostbyname(hostname)
 hostname=config['GENERAL']['IpSinkOnWan']
 config['GENERAL']['IpSinkOnWan']=socket.gethostbyname(hostname)
-
-# verifco se il pacchetto è per me o no
+print("Ip Rasp on Wan: {}".format(config['GENERAL']['IPRasp']))
+print("Ip Sink on Wan: {}".format(config['GENERAL']['IPSinkOnWan']))
 
 
 def PacketHandler(data, address):
     packet = Packets.getPacketFromBytes(data)
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print(packet.printLitePacket())
-    if config['DEBUG']['PRINT_LOGS'] is True:
+    if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("--->", init_config.GetIp(config['GENERAL']['StationInterface']))
 
     if (packet.Destination == init_config.GetIp(
