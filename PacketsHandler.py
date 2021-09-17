@@ -17,13 +17,15 @@ from Packets import DataPacket
 
 # verifco se il pacchetto è per me o no
 
-hostname=config['GENERAL']['IPRasp']
-config['GENERAL']['IPRasp']=socket.gethostbyname(hostname)
-hostname=config['GENERAL']['IpSinkOnWan']
-config['GENERAL']['IpSinkOnWan']=socket.gethostbyname(hostname)
-print("Ip Rasp on Wan: {}".format(config['GENERAL']['IPRasp']))
-print("Ip Sink on Wan: {}".format(config['GENERAL']['IPSinkOnWan']))
-
+try:
+    hostname=config['GENERAL']['IPRasp']
+    config['GENERAL']['IPRasp']=socket.gethostbyname(hostname)
+    hostname=config['GENERAL']['IpSinkOnWan']
+    config['GENERAL']['IpSinkOnWan']=socket.gethostbyname(hostname)
+    print("Ip Rasp on Wan: {}".format(config['GENERAL']['IPRasp']))
+    print("Ip Sink on Wan: {}".format(config['GENERAL']['IPSinkOnWan']))
+except:
+    print("Ip resolution can't be perfomed on normal Onions!")
 
 def PacketHandler(data, address):
     packet = Packets.getPacketFromBytes(data)
