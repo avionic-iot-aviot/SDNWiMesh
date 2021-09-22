@@ -43,11 +43,11 @@ class ThreadAud(threading.Thread):
         ser = serial.Serial(None, baudrate, timeout = 0.1)
         ser.port = port
         ser.open()
+        ser.write('start'.encode('utf-8'))
         counter_packets = 0
         print("Microphone " + self.action)     
 
         while node_variables.MicStatus == "ON":
-            ser.write('start'.encode('utf-8'))
             bufferedData = bytearray()
             counter = 0
             while counter < 5:
@@ -55,7 +55,7 @@ class ThreadAud(threading.Thread):
                 bufferedData.extend(inBuff)
                 counter += 1
             self.queue.put(bufferedData)
-            audioSample.extend(bufferedData)
+            #audioSample.extend(bufferedData)
             counter_packets += 1
             #print("AUDIO: ", len(inBuff))
 
