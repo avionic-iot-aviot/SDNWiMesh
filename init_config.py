@@ -86,8 +86,9 @@ def GetNeighboors():
 def RefreshARP():
     neigh=[]
     os.system("ip neigh flush ./ > /dev/null")
+    prefix=".".join(str(config['GENERAL']['IpSink']).split(".")[:-1])+"."
     result= subprocess.Popen("fping -A -D -a -q -a -i 1 -r 0 -g " +
-                     str(config['GENERAL']['IpSink'])[:-1] + "1 "+str(config['GENERAL']['IpSink'])[:-1] + "10",
+                     prefix + "1 "+prefix + "10",
                      shell=True,
                      stdout=subprocess.PIPE)
 
@@ -96,7 +97,9 @@ def RefreshARP():
     s1 = s.decode('utf-8', 'ignore')
     neigh = s1.splitlines()
     try:
-        neigh.remove(init_config.GetIp(config['GENERAL']['StationInterface']))
+        ip=init_config.GetIp(config['GENERAL']['StationInterface'])
+        if ip in neigh:
+            neigh.remove(init_config.GetIp(config['GENERAL']['StationInterface']))
     except:
         print("Error neigh.remove(init_config.GetIp(config['GENERAL']['StationInterface']))")
     if config.getboolean('DEBUG','PRINT_LOGS') is True:
