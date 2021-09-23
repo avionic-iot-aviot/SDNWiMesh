@@ -25,8 +25,8 @@ try:
         config['GENERAL']['IpSinkOnWan']=socket.gethostbyname(hostname)
         print("Ip Rasp on Wan: {}".format(config['GENERAL']['IPRasp']))
         print("Ip Sink on Wan: {}".format(config['GENERAL']['IPSinkOnWan']))
-except:
-    print("Ip resolution can't be perfomed on normal Onions!")
+except Exception as error:
+    print("Ip resolution can't be perfomed: ", error)
 
 def PacketHandler(data, address):
     packet = Packets.getPacketFromBytes(data)
