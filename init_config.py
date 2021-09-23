@@ -85,7 +85,7 @@ def GetNeighboors():
 
 def RefreshARP():
     neigh=[]
-    os.system("ip neigh flush ./")
+    os.system("ip neigh flush ./ > /dev/null")
     result= subprocess.Popen("fping -A -D -a -q -a -i 1 -r 0 -g " +
                      str(config['GENERAL']['IpSink'])[:-1] + "1 "+str(config['GENERAL']['IpSink'])[:-1] + "10",
                      shell=True,
