@@ -25,8 +25,13 @@ class ThreadReceiverUdpPackets(threading.Thread):
 
     def run(self):
         print("Starting " + self.name)
-        #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
-        UdpSocketReceiverFromNode(self.port)
+        while True:
+            try:
+                #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
+                UdpSocketReceiverFromNode(self.port)
+            except:
+                print("Error on thread " + self.name+" - Restarting")
+                time.sleep(3)
 
 
 def UdpSocketReceiverFromNode(port):
@@ -56,9 +61,13 @@ class ThreadReceiverUdpPacketsFromController(threading.Thread):
 
     def run(self):
         print("Starting " + self.name)
-        #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
-        UdpSocketReceiverFromController(self.ip, self.port)
-
+        while True:
+            try:
+                #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
+                UdpSocketReceiverFromController(self.ip, self.port)
+            except:
+                print("Error on thread " + self.name+" - Restarting")
+                time.sleep(3)
 
 def UdpSocketReceiverFromController(ip, port):
     # Create a UDP socket
@@ -89,7 +98,12 @@ class ThreadBeacon(threading.Thread):
 
     def run(self):
         print("Starting " + self.name)
-        SendUdpPacketBeacon(self.beacon, self.ip, self.port)
+        while True:
+            try:
+                SendUdpPacketBeacon(self.beacon, self.ip, self.port)
+            except:
+                print("Error on thread " + self.name+" - Restarting")
+                time.sleep(3)
 
 
 def SendUdpPacketBeacon(beacon, ip, port):
@@ -117,7 +131,12 @@ class ThreadReport(threading.Thread):
         self.neighbours=neighbours
     def run(self):
         print("Starting " + self.name)
-        SendUdpPacketReport(self.port, self.s_address, self.d_address, self.neighbours)
+        while True:
+            try:
+                SendUdpPacketReport(self.port, self.s_address, self.d_address, self.neighbours)
+            except:
+                print("Error on thread " + self.name+" - Restarting")
+                time.sleep(3)
 
 
 def SendUdpPacketReport(port, src, dst, queue):
@@ -158,8 +177,13 @@ class ThreadPrintInfoNode(threading.Thread):
 
     def run(self):
         print("Starting " + self.name)
-        #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
-        PrintBasicInfo(1, 0)
+        while True:
+            try:
+                #UdpSocketReceiver( config.get(socket.gethostname(),'IpStation') , int(config['GENERAL']['Port']) )
+                PrintBasicInfo(1, 0)
+            except:
+                print("Error on thread " + self.name+" - Restarting")
+                time.sleep(3)
 
 
 def PrintBasicInfo(NeighborInfo, OtherInfo):
@@ -189,6 +213,10 @@ class ThreadRefreshARP(threading.Thread):
         self.neighbours= neighbours
     def run(self):
         while True:
-            print("Starting " + self.name)
-            self.neighbours.put(init_config.RefreshARP())
-            time.sleep(int(config['GENERAL']['ScanNetSleep']))
+            try:
+                print("Starting " + self.name)
+                self.neighbours.put(init_config.RefreshARP())
+                time.sleep(int(config['GENERAL']['ScanNetSleep']))
+            except:
+                print("Error on thread " + self.name+" - Restarting")
+                time.sleep(3)
