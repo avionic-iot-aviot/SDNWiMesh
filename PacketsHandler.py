@@ -19,21 +19,18 @@ from Packets import DataPacket
 
 try:
     if str(init_config.GetIp(config['GENERAL']['StationInterface'])) == str(config['GENERAL']['IpSink']):
-        hostname=config['GENERAL']['IPRasp']
-        config['GENERAL']['IPRasp']=socket.gethostbyname(hostname)
-        hostname=config['GENERAL']['IpSinkOnWan']
-        config['GENERAL']['IpSinkOnWan']=socket.gethostbyname(hostname)
-        print("Ip Rasp on Wan: {}".format(config['GENERAL']['IPRasp']))
-        print("Ip Sink on Wan: {}".format(config['GENERAL']['IPSinkOnWan']))
+        config['GENERAL']['IPRasp']=socket.gethostbyname(config['GENERAL']['IPRasp'])
+        config['GENERAL']['IpSinkOnWan']=socket.gethostbyname(config['GENERAL']['IpSinkOnWan'])
+        config['GENERAL']['IpController']=socket.gethostbyname(config['GENERAL']['IpController'])
 except Exception as error:
-    print("Ip resolution can't be perfomed: ", error)
+    print("PacketHandler.py Error when trying to resolve names: ", error)
 
 def PacketHandler(data, address):
     try:
         # It tries to resolve the IP of the given name. NB if the the value is an IP it will return the IP itself
-        config['GENERAL']['IPRasp']=socket.gethostbyname(config['GENERAL']['IPRasp'])
-        config['GENERAL']['IpSinkOnWan']=socket.gethostbyname(config['GENERAL']['IpSinkOnWan'])
-        config['GENERAL']['IpController']=socket.gethostbyname(config['GENERAL']['IpController'])
+        ip_rasp=socket.gethostbyname(config['GENERAL']['IPRasp'])
+        ip_sink_wan=socket.gethostbyname(config['GENERAL']['IpSinkOnWan'])
+        ip_controller=socket.gethostbyname(config['GENERAL']['IpController'])
         packet = Packets.getPacketFromBytes(data)
         if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print(packet.printLitePacket())
@@ -45,9 +42,9 @@ def PacketHandler(data, address):
             #print ("Yess - è per me")
             # print("######## ", packet.TTL)
             if (int(packet.Type) == 0):
-                TypeBeacon(packet)
+                TypeBeacon(packet, ip_controller)
             if (int(packet.Type) == 1):
-                TypeReport(packet)
+                TypeReport(packet, ip_controller)
             if (int(packet.Type) == 2):
                 TypeData(packet, packet.Source)
             if (int(packet.Type) == 3):
@@ -59,16 +56,16 @@ def PacketHandler(data, address):
         # data = packet.getBytesFromPackets()
         # UDP_Socket.SendUdpPacketUnicast(
         #data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))        
-        if (packet.NextHop == str(config['GENERAL']['IpSinkOnWan'])
+        if (packet.NextHop == str(ip_sink_wan)
                 and init_config.GetIp(config['GENERAL']['StationInterface'])
                 == str(config['GENERAL']['IpSink'])):
             if (int(packet.Type) == 3):
-                TypeFunction(packet)
+                TypeFunction(packet,ip_sink_wan)
     except Exception as e:
         print("Error in PacketHandler: ", e)
 
 
-def TypeBeacon(packet):
+def TypeBeacon(packet, ip_controller):
 
     if (packet.Destination == str(config['GENERAL']['IpSink'])
             and init_config.GetIp(config['GENERAL']['StationInterface'])
@@ -79,11 +76,11 @@ def TypeBeacon(packet):
             print("Beacon Received from: ", packet.Source)
         data = packet.getBytesFromPackets()
         UDP_Socket.SendUdpPacketUnicast(
-            data, config['GENERAL']['IpController'],
+            data, ip_controller,
             int(config['GENERAL']['PortController']))
 
 
-def TypeReport(packet):
+def TypeReport(packet, ip_controller):
     if (packet.Destination == str(config['GENERAL']['IpSink'])
             and init_config.GetIp(config['GENERAL']['StationInterface'])
             == str(config['GENERAL']['IpSink'])):
@@ -91,7 +88,7 @@ def TypeReport(packet):
             print("Report Received from: ", packet.Source)
         data = packet.getBytesFromPackets()
         UDP_Socket.SendUdpPacketUnicast(
-            data, config['GENERAL']['IpController'],
+            data, ip_controller,
             int(config['GENERAL']['PortController']))
 
 
@@ -113,22 +110,22 @@ def TypeData(packet, s):
         f. close() #comm
 
 
-def TypeFunction(packet):
+def TypeFunction(packet, ip_sink_wan):
     if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("Sono nella TypeFunction")
     if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("Next hop->", packet.NextHop, " vs->",
-              str(config['GENERAL']['IpSinkOnWan']))
+              str(ip_sink_wan))
     #config['GENERAL']['StationWanInterface']
     if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("Wan IP->", init_config.GetIp("br-lan1"), " vs->",
-              str(config['GENERAL']['IpSinkOnWan']))
+              str(ip_sink_wan))
     if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("packet destnation->", packet.Destination, " vs->",
               init_config.GetIp(config['GENERAL']['StationInterface']))
-    if (packet.NextHop == str(config['GENERAL']['IpSinkOnWan'])
+    if (packet.NextHop == str(ip_sink_wan)
             and init_config.GetIp("br-lan1") == str(
-                config['GENERAL']['IpSinkOnWan'])):
+                ip_sink_wan)):
         if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("Function PKT Received from: ", packet.Source)
         dest = packet.Destination
@@ -154,3 +151,5 @@ def FindIpInTheNeighborList(ip):
 
 def SendReportToSink(packet):
     print(packet.TTL)
+
+
