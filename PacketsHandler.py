@@ -29,36 +29,43 @@ except Exception as error:
     print("Ip resolution can't be perfomed: ", error)
 
 def PacketHandler(data, address):
-    packet = Packets.getPacketFromBytes(data)
-    if config.getboolean('DEBUG','PRINT_LOGS') is True:
-        print(packet.printLitePacket())
-    if config.getboolean('DEBUG','PRINT_LOGS') is True:
-        print("--->", init_config.GetIp(config['GENERAL']['StationInterface']))
+    try:
+        # It tries to resolve the IP of the given name. NB if the the value is an IP it will return the IP itself
+        config['GENERAL']['IPRasp']=socket.gethostbyname(config['GENERAL']['IPRasp'])
+        config['GENERAL']['IpSinkOnWan']=socket.gethostbyname(config['GENERAL']['IpSinkOnWan'])
+        config['GENERAL']['IpController']=socket.gethostbyname(config['GENERAL']['IpController'])
+        packet = Packets.getPacketFromBytes(data)
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
+            print(packet.printLitePacket())
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
+            print("--->", init_config.GetIp(config['GENERAL']['StationInterface']))
 
-    if (packet.Destination == init_config.GetIp(
-            config['GENERAL']['StationInterface'])):
-        #print ("Yess - è per me")
-        # print("######## ", packet.TTL)
-        if (int(packet.Type) == 0):
-            TypeBeacon(packet)
-        if (int(packet.Type) == 1):
-            TypeReport(packet)
-        if (int(packet.Type) == 2):
-            TypeData(packet, packet.Source)
-        if (int(packet.Type) == 3):
-            TypeFunction(packet)
-    #else:
-    #print("NO - non è per me")
-    # packet.DecreaseTTL()
-    #print("@@@@@@@ ", packet.TTL)
-    # data = packet.getBytesFromPackets()
-    # UDP_Socket.SendUdpPacketUnicast(
-    #data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))
-    if (packet.NextHop == str(config['GENERAL']['IpSinkOnWan'])
-            and init_config.GetIp(config['GENERAL']['StationInterface'])
-            == str(config['GENERAL']['IpSink'])):
-        if (int(packet.Type) == 3):
-            TypeFunction(packet)
+        if (packet.Destination == init_config.GetIp(
+                config['GENERAL']['StationInterface'])):
+            #print ("Yess - è per me")
+            # print("######## ", packet.TTL)
+            if (int(packet.Type) == 0):
+                TypeBeacon(packet)
+            if (int(packet.Type) == 1):
+                TypeReport(packet)
+            if (int(packet.Type) == 2):
+                TypeData(packet, packet.Source)
+            if (int(packet.Type) == 3):
+                TypeFunction(packet)
+        #else:
+        #print("NO - non è per me")
+        # packet.DecreaseTTL()
+        #print("@@@@@@@ ", packet.TTL)
+        # data = packet.getBytesFromPackets()
+        # UDP_Socket.SendUdpPacketUnicast(
+        #data, node_variables.IpDefaultGateway, int(config['GENERAL']['Port']))        
+        if (packet.NextHop == str(config['GENERAL']['IpSinkOnWan'])
+                and init_config.GetIp(config['GENERAL']['StationInterface'])
+                == str(config['GENERAL']['IpSink'])):
+            if (int(packet.Type) == 3):
+                TypeFunction(packet)
+    except Exception as e:
+        print("Error in PacketHandler: ", e)
 
 
 def TypeBeacon(packet):
