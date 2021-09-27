@@ -6,9 +6,12 @@ import init_config
 from configparser import ConfigParser
 import serial
 from queue import Queue
+import time
 
 config = ConfigParser()
 config.read('config.ini')
+nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
+q = Queue()
 
 
 def GetAudio(action):
@@ -45,7 +48,7 @@ class ThreadAud(threading.Thread):
         ser.open()
         ser.write('start'.encode('utf-8'))
         counter_packets = 0
-        print("Microphone " + self.action)     
+        print("Microphone " + self.action)
 
         while node_variables.MicStatus == "ON":
             bufferedData = bytearray()
@@ -61,6 +64,12 @@ class ThreadAud(threading.Thread):
 
         ser.write('stop'.encode('utf-8'))
         print("Packets sent: {}".format(counter_packets))
+        for i in range(10):
+            time.sleep(0.1)
+            UDP_Socket.SendUdpPacketMicStatus(int(config['GENERAL']['Port']),
+                                                nodeIP,
+                                                config['GENERAL']['IpSink'],
+                                                "OFF")
 # SCRITTURA SU FILE NELLA onion
 #        fHandler = open('/etc/SDNPy-SDNWiMesh/audio.bin', 'wb')
 #        fHandler.write(audioSample)
@@ -76,6 +85,7 @@ class ThreadWriter(threading.Thread):
         self.queue = queue
 
     def run(self):
+        latest_notification_time = time.time()
         while True:
             print("Elements in queue: {}".format(self.queue.qsize()))
             bufferedData = self.queue.get()
@@ -88,9 +98,15 @@ class ThreadWriter(threading.Thread):
             UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),
                                             config['GENERAL']['IpSink'],
                                             int(config['GENERAL']['Port']))
+            
+            now = time.time()
+            if now - latest_notification_time > 1:
+                latest_notification_time = now
+                UDP_Socket.SendUdpPacketMicStatus(int(config['GENERAL']['Port']),
+                                                nodeIP,
+                                                config['GENERAL']['IpSink'],
+                                                "ON")
 
-
-q = Queue()
 tw = ThreadWriter("WriterThread", q)
 tw.start()
 
