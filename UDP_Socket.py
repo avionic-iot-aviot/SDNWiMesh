@@ -5,6 +5,7 @@ import time
 import PacketsHandler
 from Packets import ReportPacket
 from Packets import BeaconPacket
+from Packets import MicStatusPacket
 from Packets import Packets
 import node_variables
 from configparser import ConfigParser
@@ -157,6 +158,20 @@ def SendUdpPacketReport(port, src, dst, queue):
             # close the socket
             print("Unicast Report Send!")
         time.sleep(int(config['GENERAL']['ReportSleep']))
+        
+def SendUdpPacketMicStatus(port, src, dst, action):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
+    print("Do Ctrl+c to exit the program !!")
+    # Let's send data through UDP protocol  
+    pckReort = MicStatusPacket(config['GENERAL']['NetId'], dst, src,
+                                config['GENERAL']['TTL'], dst,
+                                action)
+    bytesToSend = pckReort.getBytesFromPackets()
+    s.sendto(bytesToSend, (dst, port))
+    if config['DEBUG']['PRINT_LOGS'] is True:
+        print("\n\n 1. Node Send MicStatus : ", bytesToSend, "\n\n")
+        # close the socket
+        print("Unicast MicStatus Sent!")
 
 
 # --- Generic Function For Send Udp Packets --- #
