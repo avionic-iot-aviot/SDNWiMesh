@@ -9,28 +9,27 @@ import UDP_Socket
 import threading
 import node_variables
 from configparser import ConfigParser
+import traceback
 
 config = ConfigParser()
 config.read('config.ini')
 from AudioFile import GetAudio
 from Packets import DataPacket
 
-# verifco se il pacchetto è per me o no
-
 try:
-    if str(init_config.GetIp(config['GENERAL']['StationInterface'])) == str(config['GENERAL']['IpSink']):
-        config['GENERAL']['IPRasp']=socket.gethostbyname(config['GENERAL']['IPRasp'])
-        config['GENERAL']['IpSinkOnWan']=socket.gethostbyname(config['GENERAL']['IpSinkOnWan'])
-        config['GENERAL']['IpController']=socket.gethostbyname(config['GENERAL']['IpController'])
-except Exception as error:
-    print("PacketHandler.py Error when trying to resolve names: ", error)
+    if init_config.GetIp(config['GENERAL']['StationInterface']) == str(config['GENERAL']['IpSink']):
+            config['GENERAL']['IpRasp'] = socket.gethostbyname(config['GENERAL']['IpRasp'])
+            config['GENERAL']['IpController'] = socket.gethostbyname(config['GENERAL']['IpController'])
+            config['GENERAL']['IpSinkOnWan'] = socket.gethostbyname(config['GENERAL']['IpSinkOnWan'])
+except Exception as e:
+    print("Error in PacketsHandler.py: " + e)
 
 def PacketHandler(data, address):
     try:
         # It tries to resolve the IP of the given name. NB if the the value is an IP it will return the IP itself
-        ip_rasp=socket.gethostbyname(config['GENERAL']['IPRasp'])
-        ip_sink_wan=socket.gethostbyname(config['GENERAL']['IpSinkOnWan'])
-        ip_controller=socket.gethostbyname(config['GENERAL']['IpController'])
+        ip_rasp = config['GENERAL']['IpRasp']
+        ip_controller = config['GENERAL']['IpController']
+        ip_sink_wan = config['GENERAL']['IpSinkOnWan']
         packet = Packets.getPacketFromBytes(data)
         if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print(packet.printLitePacket())
@@ -46,9 +45,9 @@ def PacketHandler(data, address):
             if (int(packet.Type) == 1):
                 TypeReport(packet, ip_controller)
             if (int(packet.Type) == 2):
-                TypeData(packet, packet.Source)
+                TypeData(packet, packet.Source, ip_rasp)
             if (int(packet.Type) == 3):
-                TypeFunction(packet)
+                TypeFunction(packet, ip_sink_wan)
             if (int(packet.Type) == 4):
                 TypeMicStatus(packet, ip_controller)
         #else:
@@ -65,6 +64,7 @@ def PacketHandler(data, address):
                 TypeFunction(packet,ip_sink_wan)
     except Exception as e:
         print("Error in PacketHandler: ", e)
+        print(traceback.format_exc())
 
 
 def TypeBeacon(packet, ip_controller):
@@ -108,20 +108,22 @@ def TypeReport(packet, ip_controller):
             int(config['GENERAL']['PortController']))
 
 
-def TypeData(packet, s):
+def TypeData(packet, source, ip_rasp):
     #if (packet.Destination==str(config['GENERAL']['IpSink'])and init_config.GetIp(config['GENERAL']['StationInterface'])==str(config['GENERAL']['IpSink'])): no
     if config.getboolean('DEBUG','PRINT_LOGS') is True:
-        print("Data Received from: ", s)
+        print("Data Received from: ", source)
+    
     pckData = DataPacket(config['GENERAL']['NetId'],
-                         config['GENERAL']['IpRasp'],
-                         packet.Source, "100",
-                         config['GENERAL']['IpRasp'], packet.Payload)
+                         ip_rasp,
+                         source, "100",
+                         ip_rasp, packet.Payload)
+    
     data = pckData.getBytesFromPackets()
-    UDP_Socket.SendUdpPacketUnicast(data, config['GENERAL']['IPRasp'],
+    UDP_Socket.SendUdpPacketUnicast(data, ip_rasp,
                                     int(config['GENERAL']['PortRasp']))
     if config.getboolean('DEBUG','WRITE_FILE') is True:
-        print("Saving inside the file ------->", str(packet.Source) )
-        f = open("/etc/AUDIO/{}.txt".format(packet.Source), "ab") #commen
+        print("Saving inside the file ------->", str(source) )
+        f = open("/etc/AUDIO/{}.txt".format(source), "ab") #commen
         f. write(packet.Payload) #comme
         f. close() #comm
 
