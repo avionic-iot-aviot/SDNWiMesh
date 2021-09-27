@@ -49,6 +49,8 @@ def PacketHandler(data, address):
                 TypeData(packet, packet.Source)
             if (int(packet.Type) == 3):
                 TypeFunction(packet)
+            if (int(packet.Type) == 4):
+                TypeMicStatus(packet, ip_controller)
         #else:
         #print("NO - non è per me")
         # packet.DecreaseTTL()
@@ -74,6 +76,20 @@ def TypeBeacon(packet, ip_controller):
         #Packets.getPacketFromBytes(data).printLitePacket()
         if config.getboolean('DEBUG','PRINT_LOGS') is True:
             print("Beacon Received from: ", packet.Source)
+        data = packet.getBytesFromPackets()
+        UDP_Socket.SendUdpPacketUnicast(
+            data, ip_controller,
+            int(config['GENERAL']['PortController']))
+        
+def TypeMicStatus(packet, ip_controller):
+    
+    if (packet.Destination == str(config['GENERAL']['IpSink'])
+            and init_config.GetIp(config['GENERAL']['StationInterface'])
+            == str(config['GENERAL']['IpSink'])):
+
+        #Packets.getPacketFromBytes(data).printLitePacket()
+        if config.getboolean('DEBUG','PRINT_LOGS') is True:
+            print("MicStatus Received from: ", packet.Source)
         data = packet.getBytesFromPackets()
         UDP_Socket.SendUdpPacketUnicast(
             data, ip_controller,

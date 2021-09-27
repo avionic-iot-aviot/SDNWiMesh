@@ -212,3 +212,9 @@ class FunctionPacket(Packets):
         super().__init__(NetId, "", Destination, Source, "3", TTL, NextHop,
                          Payload)  #2 data
         super().LengthCalcolator()
+
+class MicStatusPacket(Packets):
+    def __init__(self, NetId, Destination, Source, TTL, NextHop, Payload):
+        super().__init__(NetId, "", Destination, Source, "4", TTL, NextHop,
+                         Payload)  #1 report
+        super().LengthCalcolator()
