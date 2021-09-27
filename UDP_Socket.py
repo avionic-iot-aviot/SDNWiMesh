@@ -109,7 +109,6 @@ class ThreadBeacon(threading.Thread):
 
 def SendUdpPacketBeacon(beacon, ip, port):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
-    print("Do Ctrl+c to exit the program !!")
     # Let's send data through UDP protocol
     while True:
         s.sendto(beacon, (ip, port))
@@ -142,7 +141,6 @@ class ThreadReport(threading.Thread):
 
 def SendUdpPacketReport(port, src, dst, queue):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
-    print("Do Ctrl+c to exit the program !!")
     # Let's send data through UDP protocol
     neighbours=[]
     while True:
@@ -161,7 +159,6 @@ def SendUdpPacketReport(port, src, dst, queue):
         
 def SendUdpPacketMicStatus(port, src, dst, action):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
-    print("Do Ctrl+c to exit the program !!")
     # Let's send data through UDP protocol  
     pckReort = MicStatusPacket(config['GENERAL']['NetId'], dst, src,
                                 config['GENERAL']['TTL'], dst,
