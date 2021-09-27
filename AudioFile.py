@@ -12,7 +12,7 @@ config = ConfigParser()
 config.read('config.ini')
 nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
 q = Queue()
-
+seconds_to_wait_before_notify = 2
 
 def GetAudio(action):
 
@@ -64,7 +64,7 @@ class ThreadAud(threading.Thread):
 
         ser.write('stop'.encode('utf-8'))
         print("Packets sent: {}".format(counter_packets))
-        for i in range(10):
+        for i in range(5):
             time.sleep(0.1)
             UDP_Socket.SendUdpPacketMicStatus(int(config['GENERAL']['Port']),
                                                 nodeIP,
@@ -100,7 +100,7 @@ class ThreadWriter(threading.Thread):
                                             int(config['GENERAL']['Port']))
             
             now = time.time()
-            if now - latest_notification_time > 1:
+            if now - latest_notification_time > seconds_to_wait_before_notify:
                 latest_notification_time = now
                 UDP_Socket.SendUdpPacketMicStatus(int(config['GENERAL']['Port']),
                                                 nodeIP,

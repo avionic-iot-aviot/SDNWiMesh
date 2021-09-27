@@ -19,6 +19,8 @@ import serial
 
 config = ConfigParser()
 config.read('config.ini')
+nodeIP = init_config.GetIp(config['GENERAL']['StationInterface'] )
+seconds_to_wait_before_notify = 2
 
 # class ThreadSendDataAudio (threading.Thread):
 #   def __init__(self, threadID, name):
@@ -93,6 +95,7 @@ class ThreadAud(threading.Thread):
         #        print("Microphone " + self.action)
         audioSample = bytearray()
         total_bytes_sent = 0
+        latest_notification_time = time.time()
         while node_variables.MicStatus == "ON":
             counter = counter + 1
             if counter <= 255:
@@ -137,8 +140,21 @@ class ThreadAud(threading.Thread):
             UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),
                                             config['GENERAL']['IpSink'],
                                             int(config['GENERAL']['Port']))
-            time.sleep(0.125)
+            now = time.time()
+            if now - latest_notification_time > seconds_to_wait_before_notify:
+                latest_notification_time = now
+                UDP_Socket.SendUdpPacketMicStatus(int(config['GENERAL']['Port']),
+                                                nodeIP,
+                                                config['GENERAL']['IpSink'],
+                                                "ON")
+            time.sleep(0.250)
         counter = 0
         print("Total bytes sent: {}".format(total_bytes_sent))
+        for i in range(5):
+            time.sleep(0.1)
+            UDP_Socket.SendUdpPacketMicStatus(int(config['GENERAL']['Port']),
+                                                nodeIP,
+                                                config['GENERAL']['IpSink'],
+                                                "OFF")
 
         # UDP_Socket.SendUdpPacketUnicast(pckData.getBytesFromPackets(),config['GENERAL']['IpSink'],int(config['GENERAL']['Port']))
