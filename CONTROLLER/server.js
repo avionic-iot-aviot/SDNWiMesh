@@ -10,9 +10,9 @@ var serveStatic = require('serve-static')
 app.use(serveStatic('./'))
 
 
-var IpSink= "10.11.0.190"
-var PortSink=4100
-var MyIp="10.11.0.4"
+var IpSink = "10.11.0.190"
+var PortSink = 4100
+var MyIp = "10.11.0.4"
 var LenNetId = 2
 var LenLength = 4
 var LenDestination = 15
@@ -29,7 +29,7 @@ const fs = require('fs');
 
 
 var pktTool = require('./FixPacket.js');
-var pkt = require( './packet.js');
+var pkt = require('./packet.js');
 
 
 
@@ -47,19 +47,19 @@ io.on('connection', (socket) => {
         console.log('Microphone activated on node: ' + data);
         socket.broadcast.emit('on', data);
         //     -1--45--192.168.1.131--192.168.1.189-3100--192.168.1.1892
-       //    var packet = new pkt(NetId, Length, Destination, Source, Type, TTL, NextHop, Payload)
-       var buffLen='1'+IpSink+ MyIp+"3"+"100"+IpSink+data
-    
+        //    var packet = new pkt(NetId, Length, Destination, Source, Type, TTL, NextHop, Payload)
+        var buffLen = '1' + IpSink + MyIp + "3" + "100" + IpSink + data
+
         //var AudioPacket = new pkt(pktTool.leftFillNum('1', LenNetId), pktTool.leftFillNum(buffLen.length,LenLength), pktTool.leftFillNum(data,LenDestination),pktTool.leftFillNum(MyIp,LenSource),pktTool.leftFillNum('3',LenType),pktTool.leftFillNum('100',LenTTL),pktTool.leftFillNum(IpSink,LenNextHop),"ON")
-        var AudioPacket = Buffer.from(pktTool.leftFillNum('1', LenNetId) + pktTool.leftFillNum(buffLen.length,LenLength)+pktTool.leftFillNum(data,LenDestination)+pktTool.leftFillNum(MyIp,LenSource)+pktTool.leftFillNum('3',LenType)+pktTool.leftFillNum('100',LenTTL)+pktTool.leftFillNum(IpSink,LenNextHop)+"ON")
-    
+        var AudioPacket = Buffer.from(pktTool.leftFillNum('1', LenNetId) + pktTool.leftFillNum(buffLen.length, LenLength) + pktTool.leftFillNum(data, LenDestination) + pktTool.leftFillNum(MyIp, LenSource) + pktTool.leftFillNum('3', LenType) + pktTool.leftFillNum('100', LenTTL) + pktTool.leftFillNum(IpSink, LenNextHop) + "ON")
+
         console.log("Packet to send: ", AudioPacket.toString())
 
-        server.send(AudioPacket.toString(),PortSink,IpSink,function(err, bytes) {
+        server.send(AudioPacket.toString(), PortSink, IpSink, function (err, bytes) {
             if (err) throw err;
-            console.log('UDP message sent to ' + IpSink +':'+ PortSink);
-           // server.close();
-          });
+            console.log('UDP message sent to ' + IpSink + ':' + PortSink);
+            // server.close();
+        });
 
     });
 
@@ -70,22 +70,22 @@ io.on('connection', (socket) => {
 
 
 
-    
+
     socket.on('MicOff', (data) => {
         socket.broadcast.emit('off', data);
         console.log('Microphone deactivated on node: ' + data);
-        var buffLen='1'+IpSink+ MyIp+"3"+"100"+IpSink+data
-    
+        var buffLen = '1' + IpSink + MyIp + "3" + "100" + IpSink + data
+
         //var AudioPacket = new pkt(pktTool.leftFillNum('1', LenNetId), pktTool.leftFillNum(buffLen.length,LenLength), pktTool.leftFillNum(data,LenDestination),pktTool.leftFillNum(MyIp,LenSource),pktTool.leftFillNum('3',LenType),pktTool.leftFillNum('100',LenTTL),pktTool.leftFillNum(IpSink,LenNextHop),"ON")
-        var AudioPacket = Buffer.from(pktTool.leftFillNum('1', LenNetId) + pktTool.leftFillNum(buffLen.length,LenLength)+pktTool.leftFillNum(data,LenDestination)+pktTool.leftFillNum(MyIp,LenSource)+pktTool.leftFillNum('3',LenType)+pktTool.leftFillNum('100',LenTTL)+pktTool.leftFillNum(IpSink,LenNextHop)+"OFF")
-    
+        var AudioPacket = Buffer.from(pktTool.leftFillNum('1', LenNetId) + pktTool.leftFillNum(buffLen.length, LenLength) + pktTool.leftFillNum(data, LenDestination) + pktTool.leftFillNum(MyIp, LenSource) + pktTool.leftFillNum('3', LenType) + pktTool.leftFillNum('100', LenTTL) + pktTool.leftFillNum(IpSink, LenNextHop) + "OFF")
+
         console.log("Packet to send: ", AudioPacket.toString())
 
-        server.send(AudioPacket.toString(),PortSink,IpSink,function(err, bytes) {
+        server.send(AudioPacket.toString(), PortSink, IpSink, function (err, bytes) {
             if (err) throw err;
-            console.log('UDP message sent to ' + IpSink +':'+ PortSink);
-           // server.close();
-          });
+            console.log('UDP message sent to ' + IpSink + ':' + PortSink);
+            // server.close();
+        });
 
     });
 
@@ -117,25 +117,24 @@ server.on('message', (msg, rinfo) => {
             break;
         case "2":
             console.log("Data");
-            data=PacketRcv.Payload.replace("[","").replace("]","").split(",");
+            data = PacketRcv.Payload.replace("[", "").replace("]", "").split(",");
             console.log(data)
-            for(i=0; i<= data.length-1; i++){
+            for (i = 0; i <= data.length - 1; i++) {
                 //console.log(data[i])
                 fs.appendFileSync('message.txt', "\n");
                 fs.appendFileSync('message.txt', data[i])
-                
-
             }
-         
-  
-        
-            
-
-          
-
-
-
-
+            break;
+        case "4":
+            console.log("Mic Status");
+            data = PacketRcv.Source;
+            micStatus = PacketRcv.Payload;
+            if(micStatus == "ON") {
+                io.emit('on', data);
+            } else {
+                io.emit('off', data);
+            }
+            console.log(data, micStatus)
             break;
         default:
             console.log("Packet not recognized");
