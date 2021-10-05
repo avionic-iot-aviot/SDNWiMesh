@@ -102,11 +102,11 @@ def RefreshARP():
     s1 = s.decode('utf-8', 'ignore')
     neigh = s1.splitlines()
     try:
-        ip=init_config.GetIp(config['GENERAL']['StationInterface'])
+        ip=GetIp(config['GENERAL']['StationInterface'])
         if ip in neigh:
-            neigh.remove(init_config.GetIp(config['GENERAL']['StationInterface']))
+            neigh.remove(ip)
     except:
-        print("Error neigh.remove(init_config.GetIp(config['GENERAL']['StationInterface']))")
+        print("Error neigh.remove(GetIp(config['GENERAL']['StationInterface']))")
     if config.getboolean('DEBUG','PRINT_LOGS') is True:
         print("Network Scanning..arp stabilizing")
 
