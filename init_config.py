@@ -4,12 +4,12 @@ import sys
 import ifaddr
 import os
 import time
-import init_config
 
 from configparser import ConfigParser
 
 config = ConfigParser()
 config.read('config.ini')
+my_startup_ips = dict()
 
 
 def SetDeviceOnStart():
@@ -24,6 +24,10 @@ def SetDeviceOnStart():
 
 
 def GetIp(interface):
+    if interface in my_startup_ips:
+        #print("Ip for inteface {} was inside the dict: {}".format(interface,my_startup_ips[interface]))
+        return my_startup_ips[interface]
+
     adapters = ifaddr.get_adapters()
 
     temp = ""
@@ -32,7 +36,8 @@ def GetIp(interface):
             temp = adapter.ips[0].ip
             if config.getboolean('DEBUG','PRINT_LOGS') is True:
                 print(interface + "--------------------------->", temp)
-
+    print("Calculated IP for interface {} is: {}".format(interface, temp))
+    my_startup_ips[interface] = temp
     return temp
 
     # addrs = netifaces.ifaddresses('br-wlan')
